@@ -1,5 +1,5 @@
-import Layout from '../components/Layout.js'
+import Layout from '../components/Layout.js';
 
-const Page = () => <p>Hello Next.js</p>
+const Page = () => <p>Hello Next.js</p>;
 
-export default Layout(Page)
+export default Layout(Page);

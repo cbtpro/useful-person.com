@@ -1,5 +1,5 @@
-import Layout from '../components/Layout.js'
+import Layout from '../components/Layout.js';
 
-const Page = () => <p>This is the about page.</p>
+const Page = () => <p>This is the about page.</p>;
 
-export default Layout(Page)
+export default Layout(Page);
