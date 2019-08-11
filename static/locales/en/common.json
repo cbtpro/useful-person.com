@@ -1,7 +1,9 @@
 {
-    "Home": "Home",
-    "about": "About",
-    "join": "Join Us",
-    "join tip": "Join Us, do you want come in looking for something？！！",
+    
+    "welcome": "Welcome to React and react-i18next",
+    "home": "Home",
+    "about us": "About Us",
+    "join us": "Join Us",
+    "join us tip": "Join Us, Do you want come in looking for something？！！",
     "copyright": "Copyright © 2019 Shenzhen Useful Person information technology co., LTD."
 }

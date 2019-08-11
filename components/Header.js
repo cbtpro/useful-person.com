@@ -1,5 +1,5 @@
 import i18n from "i18next";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import Link from 'next/link';
 import Logo from './Logo.js'
 import UserInfo from './UserInfo.js'
@@ -28,8 +28,8 @@ const Header = () => {
         <Link href="/joinUs">
             <a style={linkStyle} title={t('join us tip')}>{t('join us')}</a>
         </Link>
-        <select onChange={($event) => {
-            i18n.changeLanguage($event.target.value)
+        <select defaultValue={i18n.language} onChange={($event) => {
+            i18n.changeLanguage($event.target.value);
         }}>
             <option value="zh">中文</option>
             <option value="en">English</option>

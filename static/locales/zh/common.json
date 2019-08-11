@@ -1,7 +1,8 @@
 {
-    "Home": "首页",
-    "about": "关于我们",
-    "join": "加入我们",
-    "join tip": "加入我们，你不进来看一下吗？！！",
+    "welcome": "欢迎使用 React & react-i18next.",
+    "home": "首页",
+    "about us": "关于我们",
+    "join us": "加入我们",
+    "join us tip": "加入我们，你不进来看一下吗？！！",
     "copyright": "Copyright © 2019 深圳市益人信息科技有限公司。"
 }
