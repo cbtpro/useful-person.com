@@ -9,8 +9,8 @@
     "react-scripts": "3.0.1"
   },
   "scripts": {
-    "dev": "next",
-    "start": "next",
+    "dev": "next -p 3001",
+    "start": "next -p 8888",
     "build": "next build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
