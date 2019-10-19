@@ -1,8 +1,9 @@
 {
-    "welcome": "欢迎使用 React & react-i18next.",
+    "welcome": "改变！从这一刻开始。",
+    "app name": "生而不庸",
     "home": "首页",
     "about us": "关于我们",
     "join us": "加入我们",
     "join us tip": "加入我们，你不进来看一下吗？！！",
-    "copyright": "Copyright © 2019 深圳市益人信息科技有限公司。"
+    "corporation": "{{year}} 深圳市生而不庸软件技术有限责任公司。"
 }

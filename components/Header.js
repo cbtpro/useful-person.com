@@ -1,24 +1,27 @@
-import i18n from "i18next";
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import Logo from './Logo.js'
-import UserInfo from './UserInfo.js'
+import Language from './Language.js';
+// import UserInfo from './UserInfo.js'
 
 const headerStyle = {
-    padding: 15,
+    padding: 0,
     display: 'table',
     width: '100%'
 };
+const logoStyle = {};
 const linkStyle = {
-    marginRight: 15,
+    marginRight: 8,
     verticalAlign: 'middle',
     textAlign: 'center',
-    display: 'table-cell'
+    display: 'table-cell',
+    fontSize: 16
 };
 const Header = () => {
     const { t } = useTranslation();
     return (<div className="header" style={headerStyle}>
-        <Logo />
+        <Logo style={logoStyle} />
         <Link href="/">
             <a style={linkStyle} title="首页">{t('home')}</a>
         </Link>
@@ -28,13 +31,8 @@ const Header = () => {
         <Link href="/joinUs">
             <a style={linkStyle} title={t('join us tip')}>{t('join us')}</a>
         </Link>
-        <select defaultValue={i18n.language} onChange={($event) => {
-            i18n.changeLanguage($event.target.value);
-        }}>
-            <option value="zh">中文</option>
-            <option value="en">English</option>
-        </select>
-        <UserInfo />
+        {/* <Language /> */}
+        {/* <UserInfo /> */}
     </div>)
 };
 
