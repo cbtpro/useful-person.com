@@ -1,5 +1,5 @@
 import React from 'react';
-import './i18n';
+import '../components/i18n.js';
 import { useTranslation } from 'react-i18next';
 import Layout from '../components/Layout.js';
 

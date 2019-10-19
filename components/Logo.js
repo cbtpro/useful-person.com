@@ -1,4 +1,4 @@
-import '../pages/i18n';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 const logoStyle = {
@@ -8,10 +8,10 @@ const logoStyle = {
     textAlign: 'center',
     display: 'table-cell'
 }
-const logoImageStyle = {
-    width: 24,
-    verticalAlign: 'middle'
-}
+// const logoImageStyle = {
+//     width: 24,
+//     verticalAlign: 'middle'
+// }
 const logoText = {
     fontSize: '2rem',
     color: 'orange',
@@ -21,10 +21,11 @@ const logoText = {
     verticalAlign: 'middle',
 }
 
-export default () => {
+const Logo = () => {
     const { t } = useTranslation();
     return (<div style={logoStyle}>
         {/* <img style={logoImageStyle} src="static/logo.png" /> */}
         <div style={logoText}>{t('app name')}</div>
     </div>);
-};
+}
+export default Logo;

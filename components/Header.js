@@ -31,7 +31,7 @@ const Header = () => {
         <Link href="/joinUs">
             <a style={linkStyle} title={t('join us tip')}>{t('join us')}</a>
         </Link>
-        {/* <Language /> */}
+        <Language />
         {/* <UserInfo /> */}
     </div>)
 };
