@@ -6,8 +6,7 @@ const footerStyle = {
     margin: 0,
     padding: 5,
     bottom: 0,
-    textAlign: 'center',
-    position: 'absolute'
+    textAlign: 'center'
 };
 
 const Footer = () => {

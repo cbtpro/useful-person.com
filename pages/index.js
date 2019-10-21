@@ -9,13 +9,39 @@ const Page = () => {
         <style jsx>{`
             .banner {
                 width: 100%;
-                height: 400px;
-                background-color: rgba(241, 242, 246, 0.1);
+                height: 200px;
+                background-color: #2f3542;
                 color: #eccc68;
+                text-align: center;
+            }
+            .slogan {
+                height: 200px;
+                line-height: 200px;
+            }
+            .order-download {
+                padding: 20px;
+                width: 50%;
+                margin: auto;
+            }
+            @media only screen and (max-width: 1100px) {
+                .order-download {
+                    width:50%
+                }
+            }
+            
+            @media only screen and (max-width: 600px) {
+                .order-download {
+                    width:87%
+                }
             }
         `}</style>
         <div className="banner">
-            <center><h3>{t('welcome')}</h3></center>
+            <div className="slogan">{t('welcome')}</div>
+        </div>
+
+        <div className="order-download">
+            <div><input type="tel" className="input-text" placeholder={t('phone placeholder')} /></div>
+            <div><button className="input-button">预约下载</button></div>
         </div>
     </div>)
 };
