@@ -1,4 +1,3 @@
-import React from 'react';
 import '../components/i18n.js';
 import { useTranslation } from 'react-i18next';
 import Layout from '../components/Layout.js';
