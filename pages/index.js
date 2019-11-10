@@ -9,14 +9,18 @@ const Page = () => {
         <style jsx>{`
             .banner {
                 width: 100%;
-                height: 200px;
-                background-color: #2f3542;
                 color: #eccc68;
                 text-align: center;
             }
             .slogan {
+                color: #eb2f06;
                 height: 200px;
                 line-height: 200px;
+                font-size: 2rem;
+                font-weight: 600;
+                background-color: #78e08f;
+                background-size: cover;
+                
             }
             .order-download {
                 padding: 20px;
@@ -36,9 +40,10 @@ const Page = () => {
             }
         `}</style>
         <div className="banner">
-            <div className="slogan">{t('welcome')}</div>
+            <div className="slogan">
+                {t('welcome')}
+            </div>
         </div>
-
         <div className="order-download">
             <div><input type="tel" className="input-text" placeholder={t('phone placeholder')} /></div>
             <div><button className="input-button">预约下载</button></div>

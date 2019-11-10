@@ -5,34 +5,27 @@ import Logo from './Logo.js'
 import Language from './Language.js';
 // import UserInfo from './UserInfo.js'
 
-const headerStyle = {
-    padding: 0,
-    display: 'table',
-    width: '100%'
-};
-const logoStyle = {};
-const linkStyle = {
-    marginRight: 8,
-    verticalAlign: 'middle',
-    textAlign: 'center',
-    display: 'table-cell',
-    fontSize: 16
-};
 const Header = () => {
     const { t } = useTranslation();
-    return (<div className="header" style={headerStyle}>
-        <Logo style={logoStyle} />
-        <Link href="/">
-            <a style={linkStyle} title="首页">{t('home')}</a>
-        </Link>
-        <Link href="/about">
-            <a style={linkStyle} title="关于我们">{t('about us')}</a>
-        </Link>
-        <Link href="/joinUs">
-            <a style={linkStyle} title={t('join us tip')}>{t('join us')}</a>
-        </Link>
-        <Language />
-        {/* <UserInfo /> */}
+    return (<div className="navbar">
+        <div className="navbar-brand">
+            <div className="" >
+                <Logo />
+            </div>
+            <Link href="/">
+                <a className="navbar-item navbar-title navbar-separator" title="首页">{t('home')}</a>
+            </Link>
+            <Link href="/about">
+                <a className="navbar-item navbar-title" title="关于我们">{t('about us')}</a>
+            </Link>
+            <Link href="/joinUs">
+                <a className="navbar-item navbar-title" title={t('join us tip')}>{t('join us')}</a>
+            </Link>
+            <div  className="navbar-item navbar-title navbar-language">
+                <Language/>
+            </div>
+            {/* <UserInfo /> */}
+        </div>
     </div>)
 };
 
