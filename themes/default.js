@@ -3,48 +3,28 @@
 export default function () {
     return (
         <style jsx global>{`
-            html, body {
-                box-sizing: border-box;
-                font-size: 16px!important;
-                min-width: 320px;
-                overflow: hidden;
-                text-rendering: optimizeLegibility;
-                -webkit-text-size-adjust: 100%;
-                -moz-text-size-adjust: 100%;
-                -ms-text-size-adjust: 100%;
-                text-size-adjust: 100%;
-                -ms-overflow-style: -ms-autohiding-scrollbar;
-                -webkit-font-smoothing: antialiased;
-                height: 100%;
-                width: 100%;
-                margin: 0;
-            }
             html {
-                color: #4a4a4a;
-                font-family: BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-                font-weight: 400!important;
-                font-size: 1rem;
-                line-height: 1.5!important;
-                margin: 0;
+                font-size: 18px;
                 height: 100%;
                 width: 100%;
             }
-            a {
-                text-decoration: none;
+            body {
+                font-family: 'Microsoft YaHei', '微软雅黑', STXihei;
+                margin: 0;
+                padding: 0;
             }
-            a:hover {
+            .navbar-item {
+                font-size: 2rem;
             }
-            @media only screen and (min-width: 601px) {
-                .navbar-item {
-                    font-size: 2rem;
+            @media only screen and (min-width: 769px) {
+                .mini-menu-button, .mini-navbar-menu {
+                    display: none;
                 }
             }
-            @media only screen and (max-width: 600px) {
-                .navbar-item {
-                    display: none!important;
+            @media only screen and (max-width: 768px) {
+                .navbar-menu {
+                    display: none;
                 }
-            }
-            .mini-navbar {
             }
             .navbar {
                 color: #3572b0;
@@ -62,26 +42,11 @@ export default function () {
                 width: 100%;
                 display: flex;
             }
-            .navbar-separator:after {
-                content: "|";
-                position: absolute;
-                left: -3px;
-                font-size: 1.7em;
-                color: #3b4d96;
-                margin-top: -3px;
-                padding-right: 5px;
-            }
             .navbar-item {
                 align-items: center;
                 display: flex;
-                flex-grow: 0;
-                flex-shrink: 0;
-                line-height: 1.5;
-                padding: .5rem .75rem;
-                position: relative;
             }
             .navbar-title {
-                font-size: 18px;
                 color: #3572b0;
                 line-height: 1.5;
                 padding: .5rem .75rem;

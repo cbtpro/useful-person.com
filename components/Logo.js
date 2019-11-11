@@ -1,7 +1,8 @@
+import '../components/i18n.js';
 import { useTranslation } from 'react-i18next';
 
 const logoImageStyle = {
-    width: 150
+    width: 220
 }
 
 const Logo = () => {
