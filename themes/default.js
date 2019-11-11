@@ -44,6 +44,8 @@ export default function () {
                     display: none!important;
                 }
             }
+            .mini-navbar {
+            }
             .navbar {
                 color: #3572b0;
                 font-weight: 100;

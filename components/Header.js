@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import Logo from './Logo.js'
 import Language from './Language.js';
+import MiniMenu from './MiniMenu.js'
 // import UserInfo from './UserInfo.js'
 
 const Header = () => {
@@ -25,6 +26,7 @@ const Header = () => {
                 <Language/>
             </div>
             {/* <UserInfo /> */}
+            <MiniMenu />
         </div>
     </div>)
 };
