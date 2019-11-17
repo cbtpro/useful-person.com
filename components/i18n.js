@@ -4,10 +4,10 @@ import { initReactI18next } from "react-i18next";
 
 const resources = {
     zh: {
-        translation: require('../static/locales/zh/common.json')
+        translation: require('../public/static/locales/zh/common.json')
     },
     en: {
-        translation: require('../static/locales/en/common.json')
+        translation: require('../public/static/locales/en/common.json')
     }
 };
 // initialize i18next with catalog and language to use
