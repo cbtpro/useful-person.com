@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 const footerStyle = {
     width: '100%',
     margin: 0,
-    padding: 5,
+    padding: 0,
     bottom: 0,
     textAlign: 'center'
 };

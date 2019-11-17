@@ -9,15 +9,16 @@ const MiniMenu = () => {
     return <div>
         <style jsx>{`
             .mini-menu-button {
+                position: absolute;
+                right: 10px;
                 width: 36px;
                 padding: 18px 30px;
                 cursor: pointer;
             }
             .mini-navbar-menu.active {
-                display: block;
             }
             .mini-navbar-menu {
-                // display: none;
+                display: none;
                 position: absolute;
                 background: rgba(0, 0, 0, 0.2);
                 list-style: none;
@@ -43,13 +44,9 @@ const MiniMenu = () => {
                 color: coral;
             }
         `}</style>
-        <a>
-            <div className="mini-menu-button" onClick={() => {
-                handler();
-            }}>
-                <FontAwesomeIcon icon={faBars} />
-            </div>
-        </a>
+        <div className="mini-menu-button">
+            <FontAwesomeIcon icon={faBars} />
+        </div>
         <ul className="mini-navbar-menu">
             <li>
                 <Link href="/">

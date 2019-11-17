@@ -1,5 +1,5 @@
 import Logo from './Logo.js'
-import Language from './Language.js';
+// import Language from './Language.js';
 import NavbarMenu from './NavbarMenu.js'
 import MiniMenu from './MiniMenu.js'
 // import UserInfo from './UserInfo.js'
@@ -16,8 +16,8 @@ const Header = () => {
             <NavbarMenu />
             {/* <div className="navbar-item navbar-title navbar-language">
                 <Language />
-            </div> */}
-            {/* <UserInfo /> */}
+            </div>
+            <UserInfo /> */}
             <MiniMenu />
         </div>
     </div>)
