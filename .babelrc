@@ -1,6 +1,13 @@
 {
   "plugins": [
     [
+      "styled-jsx/babel",
+      {
+        "optimizeForSpeed": true,
+        "sourceMaps": true
+      }
+    ],
+    [
       "import",
       {
         "libraryName": "antd",
