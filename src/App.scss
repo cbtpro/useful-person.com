@@ -1,0 +1,13 @@
+@import '~antd/dist/antd.css';
+
+.some-class {
+  // some styles
+  &.someOtherClass {
+    // some other styles
+    color:  red;
+  }
+  &-sayWhat {
+    // more styles
+    color: yellow;
+  }
+}
