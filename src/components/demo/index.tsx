@@ -5,6 +5,7 @@ import QueryForm from './QueryForm'
 
 import { demoColumns } from './columns'
 import { DemoResponse } from '../../interfaces/Demo'
+import './index.less'
 
 const Demo = () => {
   const [demo, setDemo] = useState<DemoResponse>(undefined)

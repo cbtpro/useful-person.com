@@ -1,17 +1,16 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import logoImage from '../assets/images/logo.png'
 
 interface IProps {
-  style?: React.CSSProperties
+  style?: CSSProperties
 }
-let logoImageStyle = {
+let logoImageStyle: CSSProperties = {
   width: 180
 }
 
 const HomeLogo = (props: IProps) => {
-  let { style } = props
-  Object.assign(logoImageStyle, style)
-  return <img style={logoImageStyle} src={logoImage} alt="生而不庸" />
+
+  return <img src={logoImage} alt="生而不庸" style={{...logoImageStyle, ...props.style}} />
 }
 
 export default HomeLogo

@@ -1,24 +1,25 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
+import { Link, withRouter } from 'react-router-dom'
 import { Menu } from 'antd'
 
 interface IProps {
-  style?: React.CSSProperties
+  style?: CSSProperties
 }
 
-const HeaderMenu = (props: IProps) => {
+const HeaderMenu = (props: any) => {
+  let defaultKey = props.match.url || '/'
   return (
-    <Menu mode="horizontal" style={props.style} theme="light">
+    <Menu defaultSelectedKeys={[defaultKey]} theme="light" mode="horizontal" style={{ ...props.style }}>
       <Menu.Item key="/" title="首页">
-        首页
+        <Link to="/">首页</Link>
       </Menu.Item>
       <Menu.Item key="/about" title="关于我们">
-        关于我们
+        <Link to="/about">关于我们</Link>
       </Menu.Item>
       <Menu.Item key="/joinUs" title="加入我们">
-        加入我们
+        <Link to="/joinUs">加入我们</Link>
       </Menu.Item>
     </Menu>
   )
 }
-
-export default HeaderMenu
+export default withRouter(HeaderMenu)

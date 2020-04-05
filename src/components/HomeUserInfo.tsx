@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { Avatar } from 'antd'
 
 interface IProps {
-  style: React.CSSProperties
+  style?: CSSProperties
 }
 
 const HomeUserInfo = (props: IProps) => {
-  return <Avatar style={props.style} size="large" />
+  return <Avatar size="large" style={{ ...props.style }} />
 }
 
 export default HomeUserInfo

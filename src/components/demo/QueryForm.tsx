@@ -35,6 +35,7 @@ const QueryFormHook = (props: IProps) => {
 
   useEffect(() => {
     queryDemo({name, sexId})
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
