@@ -20,11 +20,31 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.scss$/,
+        test: /\.(sc|c)ss$/,
         loaders: [
           'style-loader',
           'css-loader',
           'sass-loader'
+        ]
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {}
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192
+            }
+          }
         ]
       }
     ]
