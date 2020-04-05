@@ -1,6 +1,7 @@
 import originAxios from 'axios'
 import { message } from 'antd';
 
+
 const axios = originAxios.create({
   timeout: 20000
 })
@@ -15,6 +16,9 @@ axios.interceptors.response.use(
     return response.data;
   },
   function(error) {
+    // if (error.response && error.response.status === 401) {
+    //   message.error('用户未登录，请登录！');
+    // }
     return Promise.reject(error)
   }
 )
