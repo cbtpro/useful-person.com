@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, DatePicker } from 'antd'
 import HomeLayout from './components/HomeLayout'
+import './themes/default.less'
 import './App.css';
 
 function App() {

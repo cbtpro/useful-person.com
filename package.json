@@ -45,6 +45,8 @@
     "customize-cra": "^0.9.1",
     "http-proxy-middleware": "^1.0.3",
     "http-server": "^0.12.1",
+    "less": "^3.11.1",
+    "less-loader": "^5.0.0",
     "react-app-rewired": "^2.1.5"
   }
 }
