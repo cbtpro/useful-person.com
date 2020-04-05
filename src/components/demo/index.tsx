@@ -1,19 +1,28 @@
 import React, { useState } from 'react'
 import { Table } from 'antd'
 
+import { bindActionCreators, Dispatch } from 'redux'
+import { connect } from 'react-redux'
+
 import QueryForm from './QueryForm'
 
 import { demoColumns } from './columns'
-import { DemoResponse } from '../../interfaces/Demo'
+import { DemoResponse, DemoRequest } from '../../interfaces/Demo'
+import { getDemo } from '../../redux/demo'
 import './index.less'
 
-const Demo = () => {
-  const [demo, setDemo] = useState<DemoResponse>(undefined)
+interface IProps {
+  onGetDemo(param: DemoRequest, callback: () => void): void;
+  demoList: DemoResponse
+}
+
+const Demo = (props: IProps) => {
+  const [loading, setLoading] = useState(false)
 
   const getTotal = () => {
     let total: number
-    if (typeof demo !== 'undefined') {
-      total = demo.length
+    if (typeof props.demoList !== 'undefined') {
+      total = props.demoList.length
     } else {
       total = 0
     }
@@ -22,11 +31,22 @@ const Demo = () => {
 
   return (
     <>
-      <QueryForm onDataChange={setDemo} />
+      <QueryForm getData={props.onGetDemo} setLoading={setLoading} />
       {getTotal()}
-      <Table columns={demoColumns} dataSource={demo} className="table" />
+      <Table columns={demoColumns} dataSource={props.demoList} loading={loading} className="table" />
     </>
   )
 }
 
-export default Demo
+const mapStateToProps = (state: any) => ({
+  demoList: state.demo.demoList
+})
+
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+  onGetDemo: getDemo
+}, dispatch)
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Demo)

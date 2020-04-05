@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Input, Select, Button } from 'antd'
 import { FormProps } from 'antd/lib/form'
-import { get } from '../../http'
-import { GET_DEMO_URL } from '../../constants/urls'
-import { DemoRequest, DemoResponse } from '../../interfaces/Demo'
+
+import { DemoRequest } from '../../interfaces/Demo'
 
 const { Option } = Select
 
 interface IProps extends FormProps {
-  onDataChange(data: DemoResponse): void
+  getData(param: DemoRequest, callback: () => void): void;
+  setLoading: (loading: boolean) => void;
 }
 
 const QueryFormHook = (props: IProps) => {
@@ -16,20 +16,27 @@ const QueryFormHook = (props: IProps) => {
   const [sexId, setSexId] = useState<number | undefined>(undefined);
 
   const handleNameChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setName(e.currentTarget.value)
+    let value = e.currentTarget.value
+    let name = (typeof value === 'undefined') ? '' : value.trim()
+    setName(name)
   }
 
   const handleSexChange = (value: number) => {
     setSexId(value)
   }
 
+  const handleReset = () => {
+    setName('')
+    setSexId(0)
+  }
   const handleSubmit = () => {
     queryDemo({name, sexId})
   }
 
-  const queryDemo = (param: DemoRequest) => {   
-    get(GET_DEMO_URL, param).then(response => {
-      props.onDataChange(response.data)
+  const queryDemo = (param: DemoRequest) => {
+    props.setLoading(true)
+    props.getData(param, () => {
+      props.setLoading(false)
     })
   }
 
@@ -64,6 +71,9 @@ const QueryFormHook = (props: IProps) => {
         </Form.Item>
         <Form.Item>
           <Button type="primary" onClick={handleSubmit}>查询</Button>
+        </Form.Item>
+        <Form.Item>
+            <Button onClick={handleReset}>重置</Button>
         </Form.Item>
       </Form>
     </>
