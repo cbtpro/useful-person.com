@@ -7,7 +7,7 @@ interface IProps {
 
 const HeaderMenu = (props: IProps) => {
   return (
-    <Menu mode="horizontal" style={props.style}>
+    <Menu mode="horizontal" style={props.style} theme="light">
       <Menu.Item key="/" title="首页">
         首页
       </Menu.Item>

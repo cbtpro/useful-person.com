@@ -1,0 +1,1 @@
+export const GET_DEMO_URL = '/api/demo/getDemo.action'
