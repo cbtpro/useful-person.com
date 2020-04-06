@@ -31,7 +31,7 @@ const Signin = (props: IProps) => {
   const submit = (param: any) => {
     props.onSignin(param as ISigninRequest, () => {
       Message.info('登陆成功！')
-      history.push('/profile')
+      history.push('/portal/profile')
     })
   }
   return (

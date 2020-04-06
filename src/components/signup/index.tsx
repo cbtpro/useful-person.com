@@ -20,7 +20,7 @@ class Signup extends React.Component<RouteComponentProps & IProps> {
   onFinish = (param: any) => {
     this.props.onSignup(param as ISignupRequest, () => {
       Message.info('注册成功！')
-      this.props.history.push('/signin')
+      this.props.history.push('/portal/signin')
     })
   }
   render() {

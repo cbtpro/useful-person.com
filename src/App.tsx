@@ -24,14 +24,14 @@ function App() {
     <ConfigProvider locale={zhCN}>
       <Layout>
         <HomeHeader />
-        <Content style={{ padding: '50px 50px' }}>
-          <Route path="/" exact component={Home} />
-          <Route path="/about" exact component={About} />
-          <Route path="/joinUs" exact component={JoinUs} />
-          <Route path="/demo" exact component={Demo} />
-          <Route path="/signin" component={Signin} />
-          <Route path="/signup" component={Signup} />
-        </Content>
+          <Content style={{ padding: '50px 50px' }}>
+            <Route path="/portal/" exact component={Home} />
+            <Route path="/portal/about" exact component={About} />
+            <Route path="/portal/joinUs" exact component={JoinUs} />
+            <Route path="/portal/demo" exact component={Demo} />
+            <Route path="/portal/signin" component={Signin} />
+            <Route path="/portal/signup" component={Signup} />
+          </Content>
         <HomeFooter />
       </Layout>
     </ConfigProvider>

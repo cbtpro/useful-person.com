@@ -46,10 +46,16 @@ const HomeUserInfo = (props: IProps) => {
     props.onGetUserInfoMe()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  const toOkrmWeb = () => {
+    history.push('/ui/okrm-web')
+  }
+  const toOkrmManage = () => {
+    history.push('/ui/okrm-manage')
+  }
   const signout = () => {
     props.onSignout(() => {
       Message.info('用户已退出！')
-      history.push('/')
+      history.push('/portal/')
     })
   }
   const toggleFullscreen = () => {
@@ -75,10 +81,10 @@ const HomeUserInfo = (props: IProps) => {
             &nbsp;<span>{userInfo ? userInfo.username : '未登录'}</span></div>
           }>
             <ItemGroup title="用户中心">
-              {userInfo && <Menu.Item key={0} onClick={() => { }}><UserOutlined />编辑个人信息</Menu.Item> }
-              {userInfo && <Menu.Item key={1} onClick={() => { }}><UserOutlined />修改密码</Menu.Item> }
+              {userInfo && <Menu.Item key={0} onClick={toOkrmWeb}><UserOutlined />编辑个人信息</Menu.Item> }
+              {userInfo && <Menu.Item key={1} onClick={toOkrmManage}><UserOutlined />修改密码</Menu.Item> }
               {userInfo && <Menu.Item key={3} onClick={signout}><LogoutOutlined />退出登录</Menu.Item> }
-              {!userInfo && <Menu.Item key={2} onClick={() => history.push('/signin') }><LoginOutlined />登录</Menu.Item> }
+              {!userInfo && <Menu.Item key={2} onClick={() => history.push('/portal/signin') }><LoginOutlined />登录</Menu.Item> }
             </ItemGroup>
             <ItemGroup title="设置中心">
               <Menu.Item key={4} onClick={toggleFullscreen}>{ isFullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}切换全屏</Menu.Item>
