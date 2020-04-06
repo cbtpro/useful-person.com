@@ -20,10 +20,10 @@ const initialState: State = {
 
 export function getDemo(param: DemoRequest, callback: () => void) {
   return (dispatch: Dispatch) => {
-    get(GET_DEMO_URL, param).then(response => {
+    get<DemoRequest>(GET_DEMO_URL, param).then(response => {
       dispatch({
         type: GET_DEMO,
-        payload: response.data
+        payload: response
       })
       callback();
     })

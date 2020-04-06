@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
 
 import demo from './demo'
+import userInfo from './userInfo'
 
 const reducers = {
-  demo
+  demo,
+  userInfo
 }
 
 export default combineReducers(reducers)

@@ -8,7 +8,7 @@ export default () => {
   return (
     <Layout.Header>
       <HomeLogo style={{ float: 'left' }} />
-      <HomeUserInfo style={{ float: 'right' }} />
+      <HomeUserInfo />
       <HeaderMenu style={{ float: 'right' }} />
     </Layout.Header>
   )
