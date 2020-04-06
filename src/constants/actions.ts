@@ -4,3 +4,7 @@ export const GET_USERINFO_ME = 'GET_USERINFO_ME'
 export const DO_SIGNIN = 'DO_SIGNIN'
 export const DO_SIGNUP = 'DO_SIGNUP'
 export const DO_SIGNOUT = 'DO_SIGNOUT'
+
+// app setting
+export const GET_SIDE_STATUS = 'GET_SIDE_STATUS'
+export const SET_SIDE_STATUS = 'SET_SIDE_STATUS'
