@@ -1,10 +1,10 @@
 import { Dispatch } from 'redux'
 
 import { get, post } from '../../http'
-import { GET_USERINFO_ME_URL, SIGNIN_URL, SIGNOUT_URL } from '../../constants/urls'
-import { GET_USERINFO_ME, DO_SIGNIN, DO_SIGNOUT } from '../../constants/actions'
+import { GET_USERINFO_ME_URL, SIGNIN_URL, SIGNUP_URL, SIGNOUT_URL } from '../../constants/urls'
+import { GET_USERINFO_ME, DO_SIGNIN, DO_SIGNUP, DO_SIGNOUT } from '../../constants/actions'
 import { IResponseData } from '../../interfaces/ResponseData'
-import { ISigninRequest, IUserInfoResponse } from '../../interfaces/UserInfo'
+import { ISigninRequest, IUserInfoResponse, ISignupRequest } from '../../interfaces/UserInfo'
 
 type State = Readonly<{
   userInfo: IUserInfoResponse;
@@ -43,11 +43,23 @@ export function doSignin(param: ISigninRequest, callback?: () => void) {
   }
 }
 
+export function doSignup(param: ISignupRequest, callback?: () => void) {
+  return (dispatch: Dispatch) => {
+    post<IResponseData<IUserInfoResponse>>(SIGNUP_URL, param).then(response => {
+      dispatch({
+        type: DO_SIGNUP,
+        payload: response
+      })
+      callback && callback()
+    })
+  }
+}
 export function doSignout(callback?: () => void) {
   return (dispatch: Dispatch) => {
     get(SIGNOUT_URL).then(response => {
       dispatch({
-        type: DO_SIGNOUT
+        type: DO_SIGNOUT,
+        payload: response
       })
       callback && callback()
     })
@@ -62,6 +74,12 @@ export default function(state = initialState, action: Action) {
         userInfo: action.payload
       }
     case DO_SIGNIN: {
+      return {
+        ...state,
+        userInfo: action.payload
+      }
+    }
+    case DO_SIGNUP: {
       return {
         ...state,
         userInfo: action.payload

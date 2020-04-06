@@ -8,4 +8,6 @@ export const GET_USERINFO_ME_URL = '/api/user/me'
 
 export const SIGNIN_URL = '/api/authentication/form'
 
+export const SIGNUP_URL = '/api/signup'
+
 export const SIGNOUT_URL = '/api/logout'

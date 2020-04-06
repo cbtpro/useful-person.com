@@ -1,9 +1,10 @@
 import originAxios from 'axios'
 import qs from 'qs'
-import { message } from 'antd';
+import { message as Message } from 'antd';
 import { IResponseData } from '../interfaces/ResponseData';
 import MediaType from '../constants/MediaType'
 import HttpStatus from '../constants/HttpStatus'
+import ReturnCode from '../constants/ReturnCode'
 
 
 const axios = originAxios.create({
@@ -12,9 +13,9 @@ const axios = originAxios.create({
 
 axios.interceptors.response.use(
   function(response) {
-    if (response.data && response.data.code === 1) {
+    if (response.data && response.data.code === ReturnCode.ERROR) {
         let errorMsg = response.data.content;
-        message.error(errorMsg);
+        Message.error(errorMsg);
         return Promise.reject(errorMsg);
     }
     return response.data;
@@ -22,12 +23,13 @@ axios.interceptors.response.use(
   function(error) {
     let { response } = error
     if (response) {
-      let { status, data } = response
-      let { content } = data
+      let { status, data: { content } } = response
       if (status === HttpStatus.UNAUTHORIZED) {
-        message.error('用户未登录，请登录！');
-      } else if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
-        message.error(content)
+        Message.error('用户未登录，请登录！');
+      } else if (status === HttpStatus.INTERNAL_SERVER_ERROR || status === HttpStatus.BAD_REQUEST) {
+        Message.error(content)
+      } else if (status === HttpStatus.GATEWAY_TIMEOUT) {
+        Message.error('服务器好像出问题了😅！')
       }
     }
     return Promise.reject(error)

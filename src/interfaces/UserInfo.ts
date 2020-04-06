@@ -4,6 +4,12 @@ export interface ISignin {
   imageCode: string;
   'remember-me'?: boolean;
 }
+export interface ISignup {
+  username: string;
+  nickname?: string;
+  password: string;
+  imageCode: string;
+}
 export interface IUserInfo {
   uuid: string;
   username: string;
@@ -22,4 +28,5 @@ export interface IUserInfo {
 }
 
 export type ISigninRequest = ISignin
+export type ISignupRequest = ISignup
 export type IUserInfoResponse = IUserInfo | undefined
