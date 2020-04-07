@@ -11,7 +11,8 @@ interface IProps {
 const Container = (props: IProps) => {
     return (
         <div className="container">
-            <Tabs>
+            {
+                props.panes.length ? <Tabs type="editable-card" hideAdd>
                 {
                     props.panes.map(pane => {
                         return <Tabs.TabPane key={pane.key} tab={pane.name}>
@@ -19,7 +20,8 @@ const Container = (props: IProps) => {
                         </Tabs.TabPane>
                     })
                 }
-            </Tabs>
+                </Tabs> : <div>首页背景</div>
+            }
         </div>
     )
 }

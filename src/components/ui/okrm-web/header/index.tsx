@@ -23,8 +23,9 @@ const Header = (props: IProps) => {
       <div style={{ padding: '0px 16px' }}>
         {!sideCollapsed && <MenuFoldOutlined style={{ fontSize: 18 }} onClick={toggleSideCollapsed} />}
         {sideCollapsed && <MenuUnfoldOutlined style={{ fontSize: 18 }} onClick={toggleSideCollapsed}  />}
+
+        <HomeUserInfo />
       </div>
-      <HomeUserInfo />
     </Layout.Header>
   )
 }
