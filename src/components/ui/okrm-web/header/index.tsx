@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { Layout } from 'antd'
 import HomeUserInfo from '../UserInfo'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import { getSideCollapsed, setSideCollapsed } from '../../../../redux/app'
+import { getSideCollapsed, setSideCollapsed } from '../../../../redux/appSettings'
 
 interface IProps {
   onGetSideCollapsed(): void;
@@ -14,14 +14,16 @@ interface IProps {
   sideCollapsed: boolean;
 }
 const Header = (props: IProps) => {
+  let { sideCollapsed } = props
   const toggleSideCollapsed = () => {
-    props.onSetSideCollapsed(!props.sideCollapsed)
+    props.onSetSideCollapsed(!sideCollapsed)
   }
   return (
-    <Layout.Header>
-      
-      {!props.sideCollapsed && <MenuFoldOutlined style={{ fontSize: 18 }} onClick={toggleSideCollapsed} />}
-      {props.sideCollapsed && <MenuUnfoldOutlined style={{ fontSize: 18 }} onClick={toggleSideCollapsed}  />}
+    <Layout.Header style={{ 'padding':  '0px'}}>
+      <div style={{ padding: '0px 16px' }}>
+        {!sideCollapsed && <MenuFoldOutlined style={{ fontSize: 18 }} onClick={toggleSideCollapsed} />}
+        {sideCollapsed && <MenuUnfoldOutlined style={{ fontSize: 18 }} onClick={toggleSideCollapsed}  />}
+      </div>
       <HomeUserInfo />
     </Layout.Header>
   )
@@ -29,7 +31,7 @@ const Header = (props: IProps) => {
 
 const mapStateToProps = (state: any) => {
   return {
-    sideCollapsed: state.appSetting.sideCollapsed
+    sideCollapsed: state.appSettings.sideCollapsed
   }
 }
 

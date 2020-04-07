@@ -1,42 +1,64 @@
 import React from 'react'
-import { Menu } from 'antd'
-import { tabs, menu } from './tabs'
 
-class Side extends React.Component {
-    /**
-     * 生成侧边栏菜单
-     */
-    renderMenu = (menu: any) => {
-        if (Array.isArray(menu)) {
-            return menu.map(item => {
-                if (!item.children || !item.children.length) {
-                    return (
-                        <Menu.Item key={item.key || item.name}>
-                            <div><span>{item.name}</span></div>
-                        </Menu.Item>
-                    )
-                } else {
-                    return (
-                        <Menu.SubMenu key={item.key} title={<span>{item.name}</span>}>
-                            {this.renderMenu(item.children)}
-                        </Menu.SubMenu>
-                    )
-                }
+import { bindActionCreators, Dispatch } from 'redux'
+import { connect } from 'react-redux'
+
+import { Menu } from 'antd'
+import { IMenu, tabs, menu } from './tabs'
+
+import './index.less'
+import { addPane } from '../../../../redux/appSettings'
+
+interface IProps {
+    onAddPane(pane: IPane): void
+    panes: IPane[]
+}
+
+const Side = (props: IProps) => {
+    const clickMenu = (item: IMenu) => {
+        const panes = props.panes.slice()
+        const activeMenu = item.key
+        if (!panes.some(pane => pane.key === activeMenu)) {
+            props.onAddPane({
+                name: item.name,
+                key: item.key,
+                content: tabs[item.key]
             })
         }
     }
-    render() {
-        return (
-            <div className={`my-sider`}>
-                <div className={`sider-menu-logo`}>
-                    <img src={require('../../../../assets/images/logo.png')} style={{ width: '45px' }} alt="" />
-                </div>
-                <Menu theme="light" mode="inline" style={{ paddingTop: 16 }}>
-                    {this.renderMenu(menu)}
-                </Menu>
-            </div >
-        )
+    const renderMenu = (menu: any) => {
+        if (Array.isArray(menu)) {
+            return menu.map(item => {
+                return (
+                    <Menu.Item key={item.key}>
+                        <div onClick={() => clickMenu(item)}>{item.icon}<span>{item.name}</span></div>
+                    </Menu.Item>
+                )
+            })
+        }
     }
+    return (
+        <div className={`side`}>
+            <div className={`side-menu-logo`}>
+                <img src={require('../../../../assets/images/shengerbuyong.svg')} alt="" />
+                <h1>生而不庸</h1>
+            </div>
+            <Menu theme="light" mode="inline" style={{ paddingTop: 16 }}>
+                {renderMenu(menu)}
+            </Menu>
+        </div >
+    )
 }
 
-export default Side
+const mapStateToProps = (state: any) => ({
+    panes: state.appSettings.panes
+})
+
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+    onAddPane: addPane
+}, dispatch)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Side)

@@ -2,11 +2,11 @@ import { combineReducers } from 'redux'
 
 import demo from './demo'
 import userInfo from './userInfo'
-import appSetting from './app'
+import appSettings from './appSettings'
 
 const reducers = {
   demo,
-  appSetting,
+  appSettings,
   userInfo
 }
 

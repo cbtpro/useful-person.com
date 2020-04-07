@@ -2,7 +2,7 @@ import React from 'react'
 import reactLoadable from 'react-loadable'
 import Loading from '../components/loading'
 
-const DynamicLoadingComponent = (component: Promise<React.ComponentType>, haveLoading = false) => {
+const DynamicLoadingComponent = (component: any, haveLoading = true) => {
     return reactLoadable({
         loader: () => component,
         loading: () => {

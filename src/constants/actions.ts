@@ -8,3 +8,7 @@ export const DO_SIGNOUT = 'DO_SIGNOUT'
 // app setting
 export const GET_SIDE_STATUS = 'GET_SIDE_STATUS'
 export const SET_SIDE_STATUS = 'SET_SIDE_STATUS'
+
+export const GET_PANES = 'GET_PANES'
+export const ADD_PANE = 'ADD_PANE'
+export const REMOVE_PANE = 'REMOVE_PANE'
