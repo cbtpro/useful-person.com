@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { Layout, Carousel } from 'antd'
-const { Content } = Layout
+import { Carousel } from 'antd'
 
 const items: {
     id: string,
@@ -40,9 +39,7 @@ export default () => {
             } else {
                 temp = img
             }
-            return <Layout key={id} style={{ width: '100wv', height: '100hv' }}>
-                <Content>{temp}</Content>
-            </Layout>
+            return <div key={id} className="container-background">{temp}</div>
         })    
     }
     </Carousel>

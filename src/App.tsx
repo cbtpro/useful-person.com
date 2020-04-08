@@ -13,7 +13,7 @@ import Signup from './components/signup'
 import Demo from './components/demo'
 
 import './themes/default.less'
-import './App.css';
+import './App.less';
 
 const { Content } = Layout
 

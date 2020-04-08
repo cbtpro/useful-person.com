@@ -4,9 +4,8 @@ import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
 import { IUserInfo } from '../../../../interfaces/UserInfo'
-import Typist from 'react-typist'
 
-import { Descriptions } from 'antd'
+import { Descriptions, Card } from 'antd'
 
 
 interface IProps {
@@ -15,13 +14,15 @@ interface IProps {
 
 const WebAbout = (props: IProps) => {
   let { userInfo } = props
-  return <Typist cursor={{ show: false }}>
-    <Descriptions title="关于" column={1} style={{ padding: '36px' }}>
-      <Descriptions.Item label="登陆用户">{userInfo?.nickname}</Descriptions.Item>
-      <Descriptions.Item label="描述">这个人很懒，什么也没留下</Descriptions.Item>
-      <Descriptions.Item label="版本">v1.0.0</Descriptions.Item>
-    </Descriptions>
-</Typist>
+  return <div style={{ padding: '24px' }}>
+    <Card>
+      <Descriptions title="关于" column={1}>
+        <Descriptions.Item label="登陆用户">{userInfo?.nickname}</Descriptions.Item>
+        <Descriptions.Item label="描述">这个人很懒，什么也没留下</Descriptions.Item>
+        <Descriptions.Item label="版本">v1.0.0</Descriptions.Item>
+      </Descriptions>
+    </Card>
+  </div>
 }
 
 const mapStateToProps = (state: any) => ({

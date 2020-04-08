@@ -11,8 +11,6 @@ import { IUserInfo } from '../interfaces/UserInfo'
 import { getUserInfoMe, doSignout } from '../redux/userInfo'
 import { BLANK_AVATAR_URL } from '../constants/urls'
 
-import '../App.css'
-
 const { SubMenu, ItemGroup } = Menu
 
 const styles = {
