@@ -1,6 +1,33 @@
 import React from 'react'
 
-const WebAbout = () => {
-  return <div>这个人很懒，什么也没留下</div>
+import { bindActionCreators, Dispatch } from 'redux'
+import { connect } from 'react-redux'
+
+import { IUserInfo } from '../../../../interfaces/UserInfo'
+import Typist from 'react-typist'
+
+import { Descriptions } from 'antd'
+
+
+interface IProps {
+  userInfo: IUserInfo
 }
-export default WebAbout
+
+const WebAbout = (props: IProps) => {
+  let { userInfo } = props
+  return <Typist cursor={{ show: false }}>
+    <Descriptions title="关于" column={1} style={{ padding: '36px' }}>
+      <Descriptions.Item label="登陆用户">{userInfo?.nickname}</Descriptions.Item>
+      <Descriptions.Item label="描述">这个人很懒，什么也没留下</Descriptions.Item>
+      <Descriptions.Item label="版本">v1.0.0</Descriptions.Item>
+    </Descriptions>
+</Typist>
+}
+
+const mapStateToProps = (state: any) => ({
+  userInfo: state.userInfo.userInfo
+})
+
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(WebAbout)
