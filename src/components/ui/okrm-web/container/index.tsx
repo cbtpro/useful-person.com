@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import { Tabs } from 'antd'
 import { removePane, togglePane } from '../../../../redux/appSettings'
+import ContainerBackground from './ContainerBackground'
 
 interface IProps {
     onClosePane(key: string): void;
@@ -44,7 +45,7 @@ const Container = (props: IProps) => {
                 }
                 </Tabs>
                 :
-                <div>首页背景</div>
+                <ContainerBackground />
             }
         </div>
     )
