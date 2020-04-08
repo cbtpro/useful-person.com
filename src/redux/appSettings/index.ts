@@ -96,11 +96,17 @@ export default function(state = initialState, action: Action) {
     case REMOVE_PANE:
       let newPanes = state.panes.filter(pane => pane.key !== action.payload)
       if (state.activeSideMenu === action.payload) {
-        let closePaneIndex = state.panes.findIndex(pane => pane.key === action.payload)
-        let newActivePane: number
-        closePaneIndex > 0 ? newActivePane = closePaneIndex - 1 : newActivePane = 0
-        let newPane = newPanes[newActivePane]
-        let newPaneKey = newPane ? newPane.key : undefined
+        let newPaneKey: string | undefined
+        if (newPanes.length === 0) {
+          newPaneKey = undefined
+        } else if (newPanes.length === 1) {
+          newPaneKey = newPanes[0].key
+        } else {
+          let closePaneIndex = state.panes.findIndex(pane => pane.key === action.payload)
+          let newActivePane: number
+          closePaneIndex > 0 ? newActivePane = closePaneIndex - 1 : newActivePane = closePaneIndex
+          newPaneKey = newPanes[newActivePane].key
+        }
         return {
           ...state,
           panes: newPanes,
