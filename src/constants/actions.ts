@@ -12,3 +12,5 @@ export const SET_SIDE_STATUS = 'SET_SIDE_STATUS'
 export const GET_PANES = 'GET_PANES'
 export const ADD_PANE = 'ADD_PANE'
 export const REMOVE_PANE = 'REMOVE_PANE'
+
+export const TOGGLE_PANE = 'TOGGLE_PANE'

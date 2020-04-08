@@ -7,11 +7,13 @@ import { Menu } from 'antd'
 import { IMenu, tabs, menu } from './tabs'
 
 import './index.less'
-import { addPane } from '../../../../redux/appSettings'
+import { addPane, togglePane } from '../../../../redux/appSettings'
 
 interface IProps {
-    onAddPane(pane: IPane): void
-    panes: IPane[]
+    onAddPane(pane: IPane): void;
+    onTogglePane(key: string): void;
+    activeMenu: string;
+    panes: IPane[];
 }
 
 const Side = (props: IProps) => {
@@ -25,6 +27,7 @@ const Side = (props: IProps) => {
                 content: tabs[item.key]
             })
         }
+        props.onTogglePane(activeMenu)
     }
     const renderMenu = (menu: any) => {
         if (Array.isArray(menu)) {
@@ -43,7 +46,7 @@ const Side = (props: IProps) => {
                 <img src={require('../../../../assets/images/shengerbuyong.svg')} alt="" />
                 <h1>生而不庸</h1>
             </div>
-            <Menu theme="light" mode="inline" style={{ paddingTop: 16 }}>
+            <Menu selectedKeys={[props.activeMenu]} theme="light" mode="inline" style={{ paddingTop: 16 }}>
                 {renderMenu(menu)}
             </Menu>
         </div >
@@ -51,11 +54,13 @@ const Side = (props: IProps) => {
 }
 
 const mapStateToProps = (state: any) => ({
+    activeMenu: state.appSettings.activeSideMenu,
     panes: state.appSettings.panes
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-    onAddPane: addPane
+    onAddPane: addPane,
+    onTogglePane: togglePane
 }, dispatch)
 
 export default connect(

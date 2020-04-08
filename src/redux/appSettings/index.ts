@@ -1,10 +1,10 @@
 import { Dispatch } from 'redux'
-import { GET_SIDE_STATUS, SET_SIDE_STATUS, GET_PANES, ADD_PANE, REMOVE_PANE } from '../../constants/actions'
+import { GET_SIDE_STATUS, SET_SIDE_STATUS, GET_PANES, ADD_PANE, REMOVE_PANE, TOGGLE_PANE } from '../../constants/actions'
 
 type State = Readonly<{
   theme: string;
   sideCollapsed: boolean;
-  activeSideMenu: string;
+  activeSideMenu: string | undefined;
   panes: IPane[];
 }>
 
@@ -16,7 +16,7 @@ type Action = {
 const initialState: State = {
   theme: 'light',
   sideCollapsed: false,
-  activeSideMenu: 'dashboard',
+  activeSideMenu: undefined,
   panes: []
 }
 
@@ -62,6 +62,14 @@ export function removePane(key: string) {
     })
   }
 }
+export function togglePane(key: string) {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: TOGGLE_PANE,
+      payload: key
+    })
+  }
+}
 
 export default function(state = initialState, action: Action) {
   switch (action.type) {
@@ -86,9 +94,27 @@ export default function(state = initialState, action: Action) {
         panes: state.panes.concat(action.payload as IPane)
       }
     case REMOVE_PANE:
+      let newPanes = state.panes.filter(pane => pane.key !== action.payload)
+      if (state.activeSideMenu === action.payload) {
+        let closePaneIndex = state.panes.findIndex(pane => pane.key === action.payload)
+        let newActivePane: number
+        closePaneIndex > 0 ? newActivePane = closePaneIndex - 1 : newActivePane = 0
+        let newPane = newPanes[newActivePane]
+        let newPaneKey = newPane ? newPane.key : undefined
+        return {
+          ...state,
+          panes: newPanes,
+          activeSideMenu: newPaneKey
+        }
+      }
       return {
         ...state,
-        panes: state.panes.filter(pane => pane.key !== action.payload)
+        panes: newPanes
+      }
+    case TOGGLE_PANE:
+      return {
+        ...state,
+        activeSideMenu: action.payload
       }
     default: 
       return state

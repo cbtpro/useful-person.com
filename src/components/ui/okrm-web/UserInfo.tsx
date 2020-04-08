@@ -76,7 +76,7 @@ const UserInfo = (props: IProps) => {
           <SubMenu title={
             <div style={styles.avatarBox}>
             <Avatar size='small' src={userInfo ? userInfo.avatar : BLANK_AVATAR_URL} />
-            &nbsp;<span>{userInfo ? userInfo.username : '未登录'}</span></div>
+            &nbsp;<span>{userInfo ? userInfo.nickname : '未登录'}</span></div>
           }>
             <ItemGroup title="用户中心">
               {userInfo && <Menu.Item key={0} onClick={toOkrmWeb}><UserOutlined />编辑个人信息</Menu.Item> }

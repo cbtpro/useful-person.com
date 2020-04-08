@@ -24,7 +24,7 @@ const menu: IMenu[] = [
         icon: <UserOutlined />
     },
     {
-        name: 'Dashboard',
+        name: '上帝视角',
         key: 'dashboard',
         icon: <DashboardOutlined />
     },
