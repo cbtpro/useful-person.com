@@ -1,0 +1,1 @@
+export const AVATAR_ACCEPT_IMAGE = ['.png', '.gif', '.jpg', '.jpeg', '.webp'].join(',')

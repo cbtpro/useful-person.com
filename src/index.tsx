@@ -6,9 +6,14 @@ import store from './redux/store'
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
+import { ConfigProvider } from 'antd'
+import zhCN from 'antd/es/locale/zh_CN'
+
 ReactDOM.render(
   <Provider store={store}>
-    <Root />
+    <ConfigProvider locale={zhCN}>
+      <Root />
+    </ConfigProvider>
   </Provider>,
   document.getElementById('root')
 );

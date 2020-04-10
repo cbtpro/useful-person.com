@@ -11,6 +11,8 @@ import { IUserInfo } from '../../../interfaces/UserInfo'
 import { getUserInfoMe, doSignout } from '../../../redux/userInfo'
 import { BLANK_AVATAR_URL } from '../../../constants/urls'
 
+import UpdateProfile from './UpdateProfile'
+
 const { SubMenu, ItemGroup } = Menu
 
 const styles = {
@@ -39,13 +41,14 @@ interface IProps {
 const UserInfo = (props: IProps) => {
   let { userInfo } = props
   let [isFullscreen, setFullscreen] = useState(false)
+  let [ isUpdateProfileOpened, setIsUpdateProfileOpened ] = useState(false)
   let history = useHistory()
   useEffect(() => {
     props.onGetUserInfoMe()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const toOkrmWeb = () => {
-    history.push('/ui/okrm-web')
+  const toUpdateProfile = () => {
+    setIsUpdateProfileOpened(true)
   }
   const toOkrmManage = () => {
     history.push('/ui/okrm-manage')
@@ -79,7 +82,7 @@ const UserInfo = (props: IProps) => {
             &nbsp;<span>{userInfo ? userInfo.nickname : '未登录'}</span></div>
           }>
             <ItemGroup title="用户中心">
-              {userInfo && <Menu.Item key={0} onClick={toOkrmWeb}><UserOutlined />编辑个人信息</Menu.Item> }
+              {userInfo && <Menu.Item key={0} onClick={toUpdateProfile}><UserOutlined />编辑个人信息</Menu.Item> }
               {userInfo && <Menu.Item key={1} onClick={toOkrmManage}><UserOutlined />修改密码</Menu.Item> }
               {userInfo && <Menu.Item key={3} onClick={signout}><LogoutOutlined />退出登录</Menu.Item> }
               {!userInfo && <Menu.Item key={2} onClick={() => history.push('/portal/signin') }><LoginOutlined />登录</Menu.Item> }
@@ -90,6 +93,7 @@ const UserInfo = (props: IProps) => {
           </SubMenu>
         </Menu>
       </div>
+      <UpdateProfile visible={isUpdateProfileOpened} close={() => setIsUpdateProfileOpened(false)} />
     </div>
   )
 }

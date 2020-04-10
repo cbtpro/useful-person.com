@@ -1,10 +1,10 @@
-import originAxios from 'axios'
-import qs from 'qs'
 import { message as Message } from 'antd';
+import originAxios from 'axios';
+import qs from 'qs';
+import HttpStatus from '../constants/HttpStatus';
+import MediaType from '../constants/MediaType';
+import ReturnCode from '../constants/ReturnCode';
 import { IResponseData } from '../interfaces/ResponseData';
-import MediaType from '../constants/MediaType'
-import HttpStatus from '../constants/HttpStatus'
-import ReturnCode from '../constants/ReturnCode'
 
 
 const axios = originAxios.create({
@@ -42,8 +42,7 @@ export function get<T>(url: string, data = {}) {
   })
   .then(res => res.data)
   .catch(error => {
-    console.log(error)
-    return undefined
+    return error
   })
 }
 
@@ -53,11 +52,9 @@ export function post<T>(url: string, data: any) {
   })
 }
 
-export function put(url: string, data: any) {
-  return axios({
-    method: 'put',
-    url,
-    data
+export function put<T>(url: string, data: any) {
+  return axios.put<IResponseData<T>>(url, qs.stringify(data), {
+    headers: { 'content-type': MediaType.APPLICATION_FORM_URLENCODED_VALUE }
   })
 }
 

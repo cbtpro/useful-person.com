@@ -4,5 +4,5 @@ interface IPane {
     content: JSX.Element;
 }
 interface ITabs {
-    [x: string]: JSX.Element
+    [x: string]: JSX.Element;
 }
