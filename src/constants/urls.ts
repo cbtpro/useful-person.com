@@ -15,3 +15,7 @@ export const SIGNOUT_URL = '/api/logout'
 export const SEND_EMAIL_URL = '/api/code/mail'
 
 export const UPDATE_EMAIL_URL = '/api/user/email'
+
+export const UNBIND_EMAIL_URL = '/api/user/email/unbindOldEmail'
+
+export const UNBIND_MOBILE_URL = '/api/user/mobile/unbindOldMobile'

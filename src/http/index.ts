@@ -1,4 +1,4 @@
-import { message as Message } from 'antd';
+import { message as Message, notification } from 'antd';
 import originAxios from 'axios';
 import qs from 'qs';
 import HttpStatus from '../constants/HttpStatus';
@@ -12,22 +12,34 @@ const axios = originAxios.create({
 })
 
 axios.interceptors.response.use(
-  function(response) {
+  function (response) {
     if (response.data && response.data.code === ReturnCode.ERROR) {
-        let errorMsg = response.data.content;
-        Message.error(errorMsg);
-        return Promise.reject(errorMsg);
+      let errorMsg = response.data.content;
+      errorMsg && notification.error({
+        message: '消息',
+        description: errorMsg
+      });
+      return Promise.reject(errorMsg);
+    } else {
+      let { content } = response.data
+        content && notification.info({
+            message: '消息',
+            description: content
+        })
     }
     return response.data;
   },
-  function(error) {
+  function (error) {
     let { response } = error
     if (response) {
       let { status, data: { content } } = response
       if (status === HttpStatus.UNAUTHORIZED) {
         Message.error('用户未登录，请登录！');
       } else if (status === HttpStatus.INTERNAL_SERVER_ERROR || status === HttpStatus.BAD_REQUEST) {
-        Message.error(content)
+        content && notification.error({
+          message: '消息',
+          description: content
+        })
       } else if (status === HttpStatus.GATEWAY_TIMEOUT) {
         Message.error('服务器好像出问题了😅！')
       }
@@ -37,18 +49,24 @@ axios.interceptors.response.use(
 )
 
 export function get<T>(url: string, data = {}) {
-  return axios.get<IResponseData<T>>(url, {
-    params: data
-  })
-  .then(res => res.data)
-  .catch(error => {
-    return error
+  return new Promise((resolve, reject) => {
+    axios.get<IResponseData<T>>(url, {
+      params: data
+    })
+      .then(res => {
+        resolve(res.data)
+      })
+      .catch(error => {
+        reject(error)
+      })
   })
 }
 
 export function post<T>(url: string, data: any) {
-  return axios.post<IResponseData<T>>(url, qs.stringify(data), {
-    headers: { 'content-type': MediaType.APPLICATION_FORM_URLENCODED_VALUE }
+  return new Promise((resolve, reject) => {
+    axios.post<IResponseData<T>>(url, qs.stringify(data), {
+      headers: { 'content-type': MediaType.APPLICATION_FORM_URLENCODED_VALUE }
+    }).then(res => resolve(res.data)).catch(error => reject(error))
   })
 }
 

@@ -9,9 +9,11 @@ import { AVATAR_ACCEPT_IMAGE } from '../../../constants/App';
 import ReturnCode from '../../../constants/ReturnCode';
 import { IUserInfo } from '../../../interfaces/UserInfo';
 import { getUserInfoMe } from '../../../redux/userInfo';
-import ModifyEmail from './update/modifyEmail';
+import BindEmail from './update/bindEmail';
+import UnBindEmail from './update/unbindEmail';
 
 interface IProps {
+    onGetUserInfoMe(callback?: () => void): void;
     close: () => void
     visible: boolean
     userInfo: IUserInfo
@@ -23,22 +25,21 @@ const layout = {
 }
 
 const UpdateProfile = (props: IProps) => {
-    let { userInfo } = props
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(false)
     const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined)
     const [modifyEmailOpened, setModifyEmailOpened] = useState(false)
     useEffect(() => {
-        setAvatarUrl(userInfo?.avatar)
-    }, [avatarUrl, userInfo])
+        setAvatarUrl(props?.userInfo?.avatar)
+        props?.userInfo && form.setFieldsValue(props?.userInfo)
+    }, [avatarUrl, form, props])
     const handleCancel = () => {
         props.close()
     }
     const handleOk = async () => {
         setLoading(true)
         try {
-            let response = await form.validateFields()
-            debugger
+            await form.validateFields()
             props.close()
         } finally {
             setLoading(false)
@@ -50,9 +51,7 @@ const UpdateProfile = (props: IProps) => {
             <div className="ant-upload-text">Upload</div>
         </div>
     );
-    const beforeUpload = (file: RcFile, fileList: RcFile[]): boolean | PromiseLike<void> => {
-        return true
-    }
+    const beforeUpload = (file: RcFile, fileList: RcFile[]): boolean | PromiseLike<void> => true
     const avatarChange = (info: UploadChangeParam<UploadFile<any>>) => {
         let { file } = info
         let { status, response } = file
@@ -76,6 +75,10 @@ const UpdateProfile = (props: IProps) => {
             }
         }
     }
+    const onSuccess = () => {
+        props.onGetUserInfoMe()
+        setModifyEmailOpened(false)
+    }
     return (
         <Modal
             visible={props.visible}
@@ -86,7 +89,7 @@ const UpdateProfile = (props: IProps) => {
                 <Button key="submit" type="primary" loading={loading} onClick={handleOk}>保存</Button>,
             ]}>
             <Form form={form} {...layout} onFinish={() => { }}
-                initialValues={userInfo}>
+                initialValues={props?.userInfo}>
                 <Form.Item
                     label="头像"
                     name="avatar"
@@ -132,7 +135,7 @@ const UpdateProfile = (props: IProps) => {
                     <Input disabled />
                 </Form.Item>
             </Form>
-            <ModifyEmail visible={modifyEmailOpened} email={userInfo?.email} onSuccess={(v: string) => { alert(v) }} onClose={() => setModifyEmailOpened(false)} />
+        { props?.userInfo?.email ? <UnBindEmail visible={modifyEmailOpened} email={props?.userInfo?.email} onSuccess={onSuccess} onClose={() => setModifyEmailOpened(false)} /> :  <BindEmail visible={modifyEmailOpened} onSuccess={onSuccess} onClose={() => setModifyEmailOpened(false)} /> }
         </Modal>
     )
 }
