@@ -1,8 +1,8 @@
 import { Button, Col, Form, Input, Modal, Row } from 'antd'
 import { useForm } from 'antd/lib/form/util'
 import React, { useState } from 'react'
-import { sendEmailCode, updateEmail } from '../../../../utils/sendValidatorCode'
-import ImageCode from '../../../imageCode'
+import { sendEmailCode, updateEmail } from '../../../../../utils/sendValidatorCode'
+import ImageCode from '../../../../imageCode'
 
 interface IProps {
     onSuccess: () => void
@@ -47,7 +47,7 @@ export default (props: IProps) => {
             <Button key="cancel" onClick={close}>取消</Button>,
             <Button key="submit" loading={loading} onClick={ok}>确认</Button>
         ]}>
-            <Form form={sendEmailCodeForm} initialValues={{ email: '' }} {...layout}>
+            <Form form={sendEmailCodeForm} {...layout}>
                 <Form.Item label="电子邮箱" name="email" rules={[{ required: true, message: '电子邮箱不能为空！' }, { type: 'email', message: '电子邮箱格式不正确！' }]}>
                     <Input onChange={e => bindNewEmailForm.setFieldsValue({ email: e.target.value})} />
                 </Form.Item>
@@ -65,13 +65,13 @@ export default (props: IProps) => {
                 </Form.Item>
             </Form>
             <Form form={bindNewEmailForm} {...layout}>
-                <Form.Item label="电子邮箱" name="email" rules={[{ required: true, message: '电子邮箱不能为空！' }, { type: 'email', message: '电子邮箱格式不正确！' }]} className="hidden">
+                <Form.Item label="电子邮箱" name="email" className="hidden">
                     <Input />
                 </Form.Item>
                 <Form.Item label="邮箱验证码">
                     <Row gutter={8}>
                         <Col span={16}>
-                            <Form.Item name="emailCode" rules={[{ required: true, message: '邮箱验证码不能为空！' }, { pattern: /[0-9A-Za-z]{4,}/, message: '邮箱验证码只能是4位数字和字母，大小写忽略！' }]}>
+                            <Form.Item name="emailCode" rules={[{ required: true, message: '邮箱验证码不能为空！' }, { pattern: /[0-9A-Za-z]{4,}/, message: '邮箱验证码只能是4位数字和字母，大小写忽略！' }]} noStyle >
                                 <Input />
                             </Form.Item>
                         </Col>

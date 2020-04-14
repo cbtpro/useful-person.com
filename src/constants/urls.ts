@@ -12,10 +12,16 @@ export const SIGNUP_URL = '/api/signup'
 
 export const SIGNOUT_URL = '/api/logout'
 
+// 发送邮箱验证码
 export const SEND_EMAIL_URL = '/api/code/mail'
-
+// 绑定邮箱
 export const UPDATE_EMAIL_URL = '/api/user/email'
-
+// 解绑邮箱
 export const UNBIND_EMAIL_URL = '/api/user/email/unbindOldEmail'
-
+// 发送短信验证码
+export const SEND_SMS_URL = '/api/code/sms'
+// 绑定手机号
+export const UPDATE_MOBILE_URL = '/api/user/mobile'
+// 解绑手机号
 export const UNBIND_MOBILE_URL = '/api/user/mobile/unbindOldMobile'
+

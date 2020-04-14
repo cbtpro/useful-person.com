@@ -11,3 +11,8 @@ export interface IValidatorEmailCodeRequest {
     email: string;
     emailCode: string;
 }
+
+export interface IValidatorSmsCodeRequest {
+    mobile: string;
+    smsCode: string;
+}

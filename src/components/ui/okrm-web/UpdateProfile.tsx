@@ -9,8 +9,10 @@ import { AVATAR_ACCEPT_IMAGE } from '../../../constants/App';
 import ReturnCode from '../../../constants/ReturnCode';
 import { IUserInfo } from '../../../interfaces/UserInfo';
 import { getUserInfoMe } from '../../../redux/userInfo';
-import BindEmail from './update/bindEmail';
-import UnBindEmail from './update/unbindEmail';
+import BindEmail from './update/email/bindEmail';
+import UnBindEmail from './update/email/unbindEmail';
+import BindMobile from './update/mobile/bindMobile';
+import UnBindMobile from './update/mobile/unbindMobile';
 
 interface IProps {
     onGetUserInfoMe(callback?: () => void): void;
@@ -29,10 +31,14 @@ const UpdateProfile = (props: IProps) => {
     const [loading, setLoading] = useState(false)
     const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined)
     const [modifyEmailOpened, setModifyEmailOpened] = useState(false)
+    const [modifyMobileOpened, setModifyMobileOpened] = useState(false)
+
     useEffect(() => {
         setAvatarUrl(props?.userInfo?.avatar)
+    }, [avatarUrl, props])
+    useEffect(() => {
         props?.userInfo && form.setFieldsValue(props?.userInfo)
-    }, [avatarUrl, form, props])
+    }, [form, props])
     const handleCancel = () => {
         props.close()
     }
@@ -78,9 +84,10 @@ const UpdateProfile = (props: IProps) => {
     const onSuccess = () => {
         props.onGetUserInfoMe()
         setModifyEmailOpened(false)
+        setModifyMobileOpened(false)
     }
     return (
-        <Modal
+        <Modal forceRender
             visible={props.visible}
             title="更新信息"
             onCancel={handleCancel}
@@ -107,7 +114,7 @@ const UpdateProfile = (props: IProps) => {
                 <Form.Item label="电子邮箱" rules={[{ required: true }]} >
                     <Row gutter={6}>
                         <Col span={16}>
-                            <Form.Item name="email" rules={[{ required: true, message: '电子邮箱不能为空！' }, { type: "email", message: "电子邮箱格式不正确！"}]}>
+                            <Form.Item name="email" rules={[{ required: true, message: '电子邮箱不能为空！' }, { type: "email", message: "电子邮箱格式不正确！"}]} noStyle>
                                 <Input disabled />
                             </Form.Item>
                         </Col>
@@ -119,12 +126,12 @@ const UpdateProfile = (props: IProps) => {
                 <Form.Item label="手机号" >
                     <Row gutter={6}>
                         <Col span={16}>
-                            <Form.Item name="mobile" rules={[{ required: true, message: '手机号不能为空！' } ]}>
+                            <Form.Item name="mobile" rules={[{ required: true, message: '手机号不能为空！' } ]} noStyle>
                                 <Input disabled />
                             </Form.Item>
                         </Col>
                         <Col span={8}>
-                            <Button>更改手机号</Button>
+                            <Button onClick={() => setModifyMobileOpened(true)}>更改手机号</Button>
                         </Col>
                     </Row>
                 </Form.Item>
@@ -135,7 +142,8 @@ const UpdateProfile = (props: IProps) => {
                     <Input disabled />
                 </Form.Item>
             </Form>
-        { props?.userInfo?.email ? <UnBindEmail visible={modifyEmailOpened} email={props?.userInfo?.email} onSuccess={onSuccess} onClose={() => setModifyEmailOpened(false)} /> :  <BindEmail visible={modifyEmailOpened} onSuccess={onSuccess} onClose={() => setModifyEmailOpened(false)} /> }
+            { props?.userInfo?.email ? <UnBindEmail visible={modifyEmailOpened} email={props?.userInfo?.email} onSuccess={onSuccess} onClose={() => setModifyEmailOpened(false)} /> :  <BindEmail visible={modifyEmailOpened} onSuccess={onSuccess} onClose={() => setModifyEmailOpened(false)} /> }
+            { props?.userInfo?.mobile ? <UnBindMobile visible={modifyMobileOpened} mobile={props?.userInfo?.mobile} onSuccess={onSuccess} onClose={() => setModifyMobileOpened(false)} /> :  <BindMobile visible={modifyMobileOpened} onSuccess={onSuccess} onClose={() => setModifyMobileOpened(false)} /> }
         </Modal>
     )
 }

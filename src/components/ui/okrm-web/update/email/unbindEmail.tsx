@@ -1,8 +1,8 @@
 import { Button, Col, Form, Input, Modal, Row } from 'antd'
 import { useForm } from 'antd/lib/form/util'
 import React, { useState } from 'react'
-import { sendEmailCode, unbindEmail } from '../../../../utils/sendValidatorCode'
-import ImageCode from '../../../imageCode'
+import { sendEmailCode, unbindEmail } from '../../../../../utils/sendValidatorCode'
+import ImageCode from '../../../../imageCode'
 
 interface IProps {
     onSuccess: () => void
@@ -72,7 +72,7 @@ export default (props: IProps) => {
                 <Form.Item label="邮箱验证码">
                     <Row gutter={8}>
                         <Col span={16}>
-                            <Form.Item name="emailCode" rules={[{ required: true, message: '邮箱验证码不能为空！' }, { pattern: /[0-9A-Za-z]{4,}/, message: '邮箱验证码只能是4位数字和字母，大小写忽略！' }]}>
+                            <Form.Item name="emailCode" rules={[{ required: true, message: '邮箱验证码不能为空！' }, { pattern: /[0-9A-Za-z]{4,}/, message: '邮箱验证码只能是4位数字和字母，大小写忽略！' }]} noStyle>
                                 <Input />
                             </Form.Item>
                         </Col>
