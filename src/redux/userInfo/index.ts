@@ -1,10 +1,11 @@
 import { Dispatch } from 'redux'
-
+import { DO_SIGNIN, DO_SIGNOUT, DO_SIGNUP, GET_USERINFO_ME } from '../../constants/actions'
+import { GET_USERINFO_ME_URL, SIGNIN_URL, SIGNOUT_URL, SIGNUP_URL } from '../../constants/urls'
 import { get, post } from '../../http'
-import { GET_USERINFO_ME_URL, SIGNIN_URL, SIGNUP_URL, SIGNOUT_URL } from '../../constants/urls'
-import { GET_USERINFO_ME, DO_SIGNIN, DO_SIGNUP, DO_SIGNOUT } from '../../constants/actions'
 import { IResponseData } from '../../interfaces/ResponseData'
-import { ISigninRequest, IUserInfoResponse, ISignupRequest } from '../../interfaces/UserInfo'
+import { ISigninRequest, ISignupRequest, IUserInfo, IUserInfoResponse } from '../../interfaces/UserInfo'
+import userInfoProcess from '../../utils/userInfoProcess'
+
 
 type State = Readonly<{
   userInfo: IUserInfoResponse;
@@ -24,7 +25,7 @@ export function getUserInfoMe(callback?: () => void) {
     get<IResponseData<IUserInfoResponse>>(GET_USERINFO_ME_URL).then(response => {
       dispatch({
         type: GET_USERINFO_ME,
-        payload: response
+        payload: userInfoProcess(response as IUserInfo)
       })
       callback && callback();
     })

@@ -11,20 +11,21 @@ export interface ISignup {
   imageCode: string;
 }
 export interface IUserInfo {
-  uuid: string;
-  username: string;
-  nickname: string;
-  avatar: string;
-  mobile: string;
-  birthday: string;
-  identityCard: string;
-  email: string;
-  longitude: number | undefined;
-  latitude: number | undefined;
-  hourlyWage: number;
-  updateTime: string;
-  createTime: string;
-  authorities: [{}]
+  uuid?: string;
+  username?: string;
+  nickname?: string;
+  avatar?: string;
+  mobile?: string;
+  birthday?: string;
+  identityCardName?: string;
+  identityCardNo?: string;
+  email?: string;
+  longitude?: number | undefined;
+  latitude?: number | undefined;
+  hourlyWage?: number;
+  updateTime?: string;
+  createTime?: string;
+  authorities?: [{}]
 }
 
 export type ISigninRequest = ISignin

@@ -6,13 +6,18 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { AVATAR_ACCEPT_IMAGE } from '../../../constants/App';
+import MediaType from '../../../constants/MediaType';
 import ReturnCode from '../../../constants/ReturnCode';
+import { UPDATE_USERINFO_URL } from '../../../constants/urls';
+import { put } from '../../../http';
+import { IResponseData } from '../../../interfaces/ResponseData';
 import { IUserInfo } from '../../../interfaces/UserInfo';
 import { getUserInfoMe } from '../../../redux/userInfo';
 import BindEmail from './update/email/bindEmail';
 import UnBindEmail from './update/email/unbindEmail';
 import BindMobile from './update/mobile/bindMobile';
 import UnBindMobile from './update/mobile/unbindMobile';
+import RealnameSystem from './update/realname';
 
 interface IProps {
     onGetUserInfoMe(callback?: () => void): void;
@@ -32,9 +37,10 @@ const UpdateProfile = (props: IProps) => {
     const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined)
     const [modifyEmailOpened, setModifyEmailOpened] = useState(false)
     const [modifyMobileOpened, setModifyMobileOpened] = useState(false)
+    const [realnameOpened, setRealnameOpened] = useState(false)
 
     useEffect(() => {
-        setAvatarUrl(props?.userInfo?.avatar)
+        setAvatarUrl(avatarUrl || props?.userInfo?.avatar)
     }, [avatarUrl, props])
     useEffect(() => {
         props?.userInfo && form.setFieldsValue(props?.userInfo)
@@ -42,11 +48,16 @@ const UpdateProfile = (props: IProps) => {
     const handleCancel = () => {
         props.close()
     }
+    const updateUserInfo = (userInfo: IUserInfo) => {
+        put<IResponseData<string>>(UPDATE_USERINFO_URL, userInfo, { headers: { 'content-type': MediaType.APPLICATION_JSON }})
+    }
     const handleOk = async () => {
         setLoading(true)
         try {
-            await form.validateFields()
-            props.close()
+            const { username, nickname, birthday } = await form.validateFields()
+            let utc = birthday.valueOf()
+            await updateUserInfo({ avatar: avatarUrl, username, nickname, birthday: utc })
+            // props.close()
         } finally {
             setLoading(false)
         }
@@ -85,6 +96,7 @@ const UpdateProfile = (props: IProps) => {
         props.onGetUserInfoMe()
         setModifyEmailOpened(false)
         setModifyMobileOpened(false)
+        setRealnameOpened(false)
     }
     return (
         <Modal forceRender
@@ -96,7 +108,7 @@ const UpdateProfile = (props: IProps) => {
                 <Button key="submit" type="primary" loading={loading} onClick={handleOk}>保存</Button>,
             ]}>
             <Form form={form} {...layout} onFinish={() => { }}
-                initialValues={props?.userInfo}>
+                initialValues={props?.userInfo}>>
                 <Form.Item
                     label="头像"
                     name="avatar"
@@ -126,7 +138,7 @@ const UpdateProfile = (props: IProps) => {
                 <Form.Item label="手机号" >
                     <Row gutter={6}>
                         <Col span={16}>
-                            <Form.Item name="mobile" rules={[{ required: true, message: '手机号不能为空！' } ]} noStyle>
+                            <Form.Item name="mobile" rules={[{ required: true, message: '手机号不能为空！' }]} noStyle>
                                 <Input disabled />
                             </Form.Item>
                         </Col>
@@ -138,12 +150,22 @@ const UpdateProfile = (props: IProps) => {
                 <Form.Item name="birthday" label="生日" >
                     <DatePicker />
                 </Form.Item>
-                <Form.Item name="identityCard" label="实名制" >
-                    <Input disabled />
+                <Form.Item label="实名制" >
+                    <Row gutter={6}>
+                        <Col span={props?.userInfo?.identityCardNo ? 24 : 16}>
+                            <Form.Item name="identityCardNo" rules={[{ required: true, message: '实名制信息不能为空！' }]} noStyle>
+                                <Input disabled />
+                            </Form.Item>
+                        </Col>
+                        { props?.userInfo?.identityCardNo ? '' : <Col span={8}>
+                            <Button onClick={() => setRealnameOpened(true)}>实名制</Button>
+                        </Col>}
+                    </Row>
                 </Form.Item>
             </Form>
             { props?.userInfo?.email ? <UnBindEmail visible={modifyEmailOpened} email={props?.userInfo?.email} onSuccess={onSuccess} onClose={() => setModifyEmailOpened(false)} /> :  <BindEmail visible={modifyEmailOpened} onSuccess={onSuccess} onClose={() => setModifyEmailOpened(false)} /> }
             { props?.userInfo?.mobile ? <UnBindMobile visible={modifyMobileOpened} mobile={props?.userInfo?.mobile} onSuccess={onSuccess} onClose={() => setModifyMobileOpened(false)} /> :  <BindMobile visible={modifyMobileOpened} onSuccess={onSuccess} onClose={() => setModifyMobileOpened(false)} /> }
+            { props?.userInfo?.identityCardNo ? '' : <RealnameSystem visible={realnameOpened} onSuccess={onSuccess} onClose={() => setRealnameOpened(false)} />}
         </Modal>
     )
 }

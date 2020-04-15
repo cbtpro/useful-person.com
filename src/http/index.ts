@@ -1,5 +1,5 @@
 import { message as Message, notification } from 'antd';
-import originAxios from 'axios';
+import originAxios, { AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 import HttpStatus from '../constants/HttpStatus';
 import MediaType from '../constants/MediaType';
@@ -70,14 +70,18 @@ export function post<T>(url: string, data: any) {
   })
 }
 
-export function put<T>(url: string, data: any) {
-  return axios.put<IResponseData<T>>(url, qs.stringify(data), {
-    headers: { 'content-type': MediaType.APPLICATION_FORM_URLENCODED_VALUE }
+export function put<T>(url: string, data: any, config?: AxiosRequestConfig) {
+  return new Promise((resolve, reject) => {
+    axios.put<IResponseData<T>>(url, data, {...{
+      headers: { 'content-type': MediaType.APPLICATION_FORM_URLENCODED_VALUE }
+    }, ...config}).then(res => resolve(res.data)).catch(error => reject(error))
   })
 }
 
 export function del(url: string, data: any) {
-  return axios.delete(url, {
-    params: data
+  return new Promise((resolve, reject) => {
+    axios.delete(url, {
+      params: data
+    }).then(res => resolve(res.data)).catch(error => reject(error))
   })
 }
