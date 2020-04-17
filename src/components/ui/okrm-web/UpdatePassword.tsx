@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
-import { bindActionCreators, Dispatch } from 'redux'
+// import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Modal, Button, Form, Input } from 'antd'
 import { useForm } from 'antd/lib/form/util'
 import { IUserInfo } from '../../../interfaces/UserInfo'
-import { userInfo } from 'os'
 import { put } from '../../../http'
 import { UPDATE_USER_PASSWORD_URL } from '../../../constants/urls'
 import { IResponseData } from '../../../interfaces/ResponseData'
-import MediaType from '../../../constants/MediaType'
 import qs from 'qs'
 
 const layout = {
