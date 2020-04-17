@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-
-import { bindActionCreators, Dispatch } from 'redux'
-import { connect } from 'react-redux'
-
+import { FullscreenExitOutlined, FullscreenOutlined, LoginOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { Avatar, Menu, message as Message } from 'antd'
-import { UserOutlined, LoginOutlined, LogoutOutlined, FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons'
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { bindActionCreators, Dispatch } from 'redux'
 import screenfull from 'screenfull'
-import { IUserInfo } from '../../../interfaces/UserInfo'
-import { getUserInfoMe, doSignout } from '../../../redux/userInfo'
 import { BLANK_AVATAR_URL } from '../../../constants/urls'
-
+import { IUserInfo } from '../../../interfaces/UserInfo'
+import { doSignout, getUserInfoMe } from '../../../redux/userInfo'
+import UpdatePassword from './UpdatePassword'
 import UpdateProfile from './UpdateProfile'
 
 const { SubMenu, ItemGroup } = Menu
@@ -42,6 +40,7 @@ const UserInfo = (props: IProps) => {
   let { userInfo } = props
   let [isFullscreen, setFullscreen] = useState(false)
   let [ isUpdateProfileOpened, setIsUpdateProfileOpened ] = useState(false)
+  let [ isUpdatePasswordOpened, setIsUpdatePasswordOpened] = useState(false)
   let history = useHistory()
   useEffect(() => {
     props.onGetUserInfoMe()
@@ -50,8 +49,8 @@ const UserInfo = (props: IProps) => {
   const toUpdateProfile = () => {
     setIsUpdateProfileOpened(true)
   }
-  const toOkrmManage = () => {
-    history.push('/ui/okrm-manage')
+  const toUpdatePassword = () => {
+    setIsUpdatePasswordOpened(true)
   }
   const signout = () => {
     props.onSignout(() => {
@@ -83,7 +82,7 @@ const UserInfo = (props: IProps) => {
           }>
             <ItemGroup title="用户中心">
               {userInfo && <Menu.Item key={0} onClick={toUpdateProfile}><UserOutlined />编辑个人信息</Menu.Item> }
-              {userInfo && <Menu.Item key={1} onClick={toOkrmManage}><UserOutlined />修改密码</Menu.Item> }
+              {userInfo && <Menu.Item key={1} onClick={toUpdatePassword}><UserOutlined />修改密码</Menu.Item> }
               {userInfo && <Menu.Item key={3} onClick={signout}><LogoutOutlined />退出登录</Menu.Item> }
               {!userInfo && <Menu.Item key={2} onClick={() => history.push('/portal/signin') }><LoginOutlined />登录</Menu.Item> }
             </ItemGroup>
@@ -94,6 +93,7 @@ const UserInfo = (props: IProps) => {
         </Menu>
       </div>
       <UpdateProfile visible={isUpdateProfileOpened} close={() => setIsUpdateProfileOpened(false)} />
+      <UpdatePassword visible={isUpdatePasswordOpened} close={() => setIsUpdatePasswordOpened(false) } />
     </div>
   )
 }

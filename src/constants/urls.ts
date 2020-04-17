@@ -34,3 +34,5 @@ export const UPDATE_REALNAME_URL = '/api/user/realname'
 // 更新用户信息
 export const UPDATE_USERINFO_URL = '/api/user'
 
+// 更新密码
+export const UPDATE_USER_PASSWORD_URL = '/api/user/passwd'
