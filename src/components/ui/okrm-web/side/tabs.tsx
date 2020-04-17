@@ -1,11 +1,12 @@
 import React from 'react'
-import { UserOutlined, DashboardOutlined, QuestionOutlined, InfoCircleOutlined } from '@ant-design/icons'
+import { UserOutlined, DashboardOutlined, QuestionOutlined, InfoCircleOutlined, TeamOutlined, CompassOutlined, EyeOutlined } from '@ant-design/icons'
 
 // import AsyncLoadComponet from '../../../../utils/dynamicLoadingComponent'
 import AsyncLoadComponet from '../../../../utils/asyncComponent'
 
 const Profile = AsyncLoadComponet(import('../profile'))
 const Dashboard = AsyncLoadComponet(import('../dashboard'))
+const UsersManage = AsyncLoadComponet(import('../usersManage'))
 const Map = AsyncLoadComponet(import('../map'))
 const RoadMap = AsyncLoadComponet(import('../roadMap'))
 const Event = AsyncLoadComponet(import('../event'))
@@ -26,7 +27,12 @@ const menu: IMenu[] = [
     {
         name: '上帝视角',
         key: 'dashboard',
-        icon: <DashboardOutlined />
+        icon: <EyeOutlined />
+    },
+    {
+        name: '注册用户列表',
+        key: 'user',
+        icon: <TeamOutlined />
     },
     {
         name: '地图',
@@ -36,7 +42,7 @@ const menu: IMenu[] = [
     {
         name: '路线图',
         key: 'roadMap',
-        icon: <DashboardOutlined />
+        icon: <CompassOutlined />
     },
     {
         name: '事件',
@@ -53,6 +59,7 @@ const menu: IMenu[] = [
 const tabs: ITabs = {
     'profile': <Profile />,
     'dashboard': <Dashboard />,
+    'user': <UsersManage />,
     'map': <Map />,
     'roadMap': <RoadMap />,
     'event': <Event />,

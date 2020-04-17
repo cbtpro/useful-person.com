@@ -36,3 +36,8 @@ export const UPDATE_USERINFO_URL = '/api/user'
 
 // 更新密码
 export const UPDATE_USER_PASSWORD_URL = '/api/user/passwd'
+
+
+
+// 查询用户列表
+export const QUERY_USERS_URL  = '/api/admin/users'

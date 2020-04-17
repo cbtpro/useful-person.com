@@ -27,7 +27,16 @@ export interface IUserInfo {
   createTime?: string;
   authorities?: [{}]
 }
-
+export interface IUsersRequest {
+  username?: string
+  nickname?: string
+  mobile?: string
+  email?: string
+  signUpStartTime?: string
+  signUpEndTime?: string
+  enable?: boolean
+}
 export type ISigninRequest = ISignin
 export type ISignupRequest = ISignup
 export type IUserInfoResponse = IUserInfo | undefined
+export type IUsersResponse = IUserInfo[] | undefined
