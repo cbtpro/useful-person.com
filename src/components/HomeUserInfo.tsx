@@ -50,6 +50,7 @@ const HomeUserInfo = (props: IProps) => {
   const signout = () => {
     props.onSignout(() => {
       Message.info('用户已退出！')
+      props.onGetUserInfoMe()
       history.push('/portal/')
     })
   }

@@ -8,7 +8,7 @@ import ImageCode from '../imageCode'
 import SigninOrSignup from '../signinOrSignup'
 import { useHistory } from 'react-router-dom'
 import { IUserInfo, ISigninRequest } from '../../interfaces/UserInfo'
-import { doSignin } from '../../redux/userInfo'
+import { doSignin, getUserInfoMe } from '../../redux/userInfo'
 
 const layout = {
   labelCol: { span: 8 },
@@ -22,6 +22,7 @@ const onFinishFailed = (e: any) => {
 }
 
 interface IProps {
+  onGetUserInfoMe(callback?: () => void): void;
   onSignin(param: ISigninRequest, callback?: () => void): void
   userInfo: IUserInfo;
 }
@@ -31,6 +32,7 @@ const Signin = (props: IProps) => {
   const submit = (param: any) => {
     props.onSignin(param as ISigninRequest, () => {
       Message.info('登陆成功！')
+      props.onGetUserInfoMe()
       history.push('/portal/profile')
     })
   }
@@ -83,6 +85,7 @@ const mapStateToProps = (state: any) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+  onGetUserInfoMe: getUserInfoMe,
   onSignin: doSignin
 }, dispatch)
 
