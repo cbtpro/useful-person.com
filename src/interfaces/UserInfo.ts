@@ -34,7 +34,9 @@ export interface IUsersRequest {
   email?: string
   signUpStartTime?: string
   signUpEndTime?: string
-  enable?: boolean
+  registerTimeFrom?: string | number
+  registerTimeTo?: string | number
+  enabled?: "true" | "false" | undefined
 }
 export type ISigninRequest = ISignin
 export type ISignupRequest = ISignup

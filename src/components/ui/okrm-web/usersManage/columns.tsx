@@ -1,5 +1,4 @@
 import moment from 'moment'
-import { IUserInfo } from '../../../../interfaces/UserInfo'
 import { ColumnProps } from 'antd/lib/table/Column'
 
 export const usersColumns: ColumnProps<any>[]  = [
@@ -17,7 +16,7 @@ export const usersColumns: ColumnProps<any>[]  = [
         title: '生日',
         dataIndex: 'birthday',
         key: 'birthday',
-        render: (text: string) => text && moment(text).format('YYYY-MM')
+        render: (text: string) => text ? moment(text).format('YYYY-MM') : '-'
     },
     {
         title: '实名制',
@@ -28,12 +27,14 @@ export const usersColumns: ColumnProps<any>[]  = [
     {
         title: '电子邮件',
         dataIndex: 'email',
-        key: 'email'
+        key: 'email',
+        render: (text: string) => text ? text : '-'
     },
     {
         title: '手机号',
         dataIndex: 'mobile',
-        key: 'mobile'
+        key: 'mobile',
+        render: (text: string) => text ? text : '-'
     },
     // {
     //     title: '位置信息',
