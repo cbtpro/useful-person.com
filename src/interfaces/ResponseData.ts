@@ -3,6 +3,8 @@ export interface IResponseData<T> {
   content: string,
   data: T
 }
+
+export interface IPageableParam { size: number, page: number }
 interface ISort { sorted: boolean, unsorted: boolean, empty: boolean }
 export interface IPageable<T> {
   content: T[],

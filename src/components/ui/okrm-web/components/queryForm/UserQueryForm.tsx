@@ -5,7 +5,7 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { PaginationProps } from 'antd/lib/pagination'
 import { IUserInfo, IUsersRequest } from '../../../../../interfaces/UserInfo'
 import { get } from '../../../../../http'
-import { IResponseData, IPageable } from '../../../../../interfaces/ResponseData'
+import { IResponseData, IPageable, IPageableParam } from '../../../../../interfaces/ResponseData'
 import { QUERY_USERS_URL } from '../../../../../constants/urls'
 import './UserQueryForm.less'
 
@@ -14,8 +14,8 @@ const { Option } = Select
 
 interface IProps extends FormProps {
     onDataChange(data: IUserInfo[], pagination: PaginationProps): void
-    pageChange?(callback:() => void): void
-    pagination?: PaginationProps
+    pagination: any
+    submitButton?: React.RefObject<any>
 }
 
 const UserQueryForm = (props: IProps) => {
@@ -40,19 +40,17 @@ const UserQueryForm = (props: IProps) => {
         setEmail(e.currentTarget.value)
     }
     const handleSubmit = () => {
-        queryUsers({ username, nickname, mobile, email, registerTimeFrom, registerTimeTo, enabled })
+        queryUsers()
     }
-    const queryUsers = async (param: IUsersRequest) => {
-        let pageable = {
-            size: 10,
-            page: 0,
-            sord: 'username'
-        }
-        const { content, totalElements, size, number } = await get<IResponseData<IPageable<IUserInfo>>>(QUERY_USERS_URL, {...param, ...pageable}) as IPageable<IUserInfo>
-        props.onDataChange(content as IUserInfo[], { current: number + 1, pageSize: size, total: totalElements })
+    const queryUsers = async () => {
+        let param: IUsersRequest = { username, nickname, mobile, email, registerTimeFrom, registerTimeTo, enabled }
+        let { current, pageSize } = props.pagination
+        let pageableParam: IPageableParam = { size: pageSize, page: current - 1 }
+        const { content, totalElements, size, number } = await get<IResponseData<IPageable<IUserInfo>>>(QUERY_USERS_URL, {...param, ...pageableParam}) as IPageable<IUserInfo>
+        props.onDataChange(content as IUserInfo[], { pageSize: size, total: totalElements })
     }
     useEffect(() => {
-        queryUsers({})
+        queryUsers()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return <>
@@ -109,7 +107,7 @@ const UserQueryForm = (props: IProps) => {
             <Row>
                 <Col>
                     <Form.Item>
-                        <Button type="primary" onClick={handleSubmit}>查询</Button>
+                        <Button type="primary" onClick={handleSubmit} ref={props.submitButton}>查询</Button>
                     </Form.Item>
                 </Col>
                 <Col>                
