@@ -38,7 +38,16 @@ export interface IUsersRequest {
   registerTimeTo?: string | number
   enabled?: "true" | "false" | undefined
 }
+export interface IRole {
+  uuid?: string
+  rolename: string | undefined
+  description?: string
+  updateTime?: string
+  createTime?: string
+}
 export type ISigninRequest = ISignin
 export type ISignupRequest = ISignup
 export type IUserInfoResponse = IUserInfo | undefined
 export type IUsersResponse = IUserInfo[] | undefined
+
+export type IRolesResponse = IRole[] | undefined

@@ -4,9 +4,9 @@ import { DatePicker, Card, Table, Button, Form, Row, Col, Input, Select } from '
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 
 import { usersColumns } from './columns';
-import { IUsersRequest, IUsersResponse, IUserInfo } from '../../../../interfaces/UserInfo';
+import { IUsersResponse, IUserInfo } from '../../../../interfaces/UserInfo';
 
-import { get, post } from '../../../../http'
+import { post } from '../../../../http'
 import { IResponseData, IPageable } from '../../../../interfaces/ResponseData'
 import { QUERY_USERS_URL } from '../../../../constants/urls'
 import { PaginationConfig } from 'antd/lib/pagination/Pagination';
@@ -57,7 +57,7 @@ export default () => {
                 enabled
             }
             const { content, totalElements } = await post<IResponseData<IPageable<IUserInfo>>>(QUERY_USERS_URL, {...params, ...queryParams}) as IPageable<IUserInfo>
-            setPagination({...pagination, ...{total: totalElements}});
+            setPagination({...pagination, ...{total: totalElements}})
             setUsers(content as IUserInfo[]);
         } finally {
             setLoading(false)

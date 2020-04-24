@@ -38,6 +38,12 @@ export const UPDATE_USERINFO_URL = '/api/user'
 export const UPDATE_USER_PASSWORD_URL = '/api/user/passwd'
 
 
-
+// 增加角色、更新角色、删除角色
+export const ADD_ROLE_URL = '/api/admin/role'
+export const UPDATE_ROLE_URL = ADD_ROLE_URL
+export const DEL_ROLE_URL = ADD_ROLE_URL
+// 
+// 查询角色列表
+export const QUERY_ROLES_URL = '/api/admin/roles'
 // 查询用户列表
 export const QUERY_USERS_URL  = '/api/admin/users'

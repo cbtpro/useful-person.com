@@ -1,6 +1,5 @@
 import { message as Message, notification } from 'antd';
 import originAxios, { AxiosRequestConfig } from 'axios';
-import qs from 'qs';
 import HttpStatus from '../constants/HttpStatus';
 import MediaType from '../constants/MediaType';
 import ReturnCode from '../constants/ReturnCode';
@@ -35,6 +34,8 @@ axios.interceptors.response.use(
       let { status, data: { content } } = response
       if (status === HttpStatus.UNAUTHORIZED) {
         Message.error('用户未登录，请登录！');
+      } else if (status === HttpStatus.FORBIDDEN) {
+        Message.error('没有请求的权限！');
       } else if (status === HttpStatus.INTERNAL_SERVER_ERROR || status === HttpStatus.BAD_REQUEST) {
         content && notification.error({
           message: '消息',

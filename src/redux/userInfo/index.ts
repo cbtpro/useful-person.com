@@ -5,6 +5,8 @@ import { get, post } from '../../http'
 import { IResponseData } from '../../interfaces/ResponseData'
 import { ISigninRequest, ISignupRequest, IUserInfo, IUserInfoResponse } from '../../interfaces/UserInfo'
 import userInfoProcess from '../../utils/userInfoProcess'
+import qs from 'qs'
+import MediaType from '../../constants/MediaType'
 
 
 type State = Readonly<{
@@ -34,7 +36,7 @@ export function getUserInfoMe(callback?: () => void) {
 
 export function doSignin(param: ISigninRequest, callback?: () => void) {
   return (dispatch: Dispatch) => {
-    post<IResponseData<IUserInfoResponse>>(SIGNIN_URL, param).then(response => {
+    post<IResponseData<IUserInfoResponse>>(SIGNIN_URL, qs.stringify(param), { headers: { 'content-type': MediaType.APPLICATION_FORM_URLENCODED_VALUE }}).then(response => {
       dispatch({
         type: DO_SIGNIN,
         payload: response
