@@ -45,9 +45,9 @@ const UserQueryForm = (props: IProps) => {
     const queryUsers = async () => {
         let param: IUsersRequest = { username, nickname, mobile, email, registerTimeFrom, registerTimeTo, enabled }
         let { current, pageSize } = props.pagination
-        let pageableParam: IPageableParam = { size: pageSize, page: current - 1 }
-        const { content, totalElements, size, number } = await get<IResponseData<IPageable<IUserInfo>>>(QUERY_USERS_URL, {...param, ...pageableParam}) as IPageable<IUserInfo>
-        props.onDataChange(content as IUserInfo[], { pageSize: size, total: totalElements })
+        let pageableParam: IPageableParam = { size: pageSize, page: current }
+        const { content, totalElements, size } = await get<IResponseData<IPageable<IUserInfo>>>(QUERY_USERS_URL, {...param, ...pageableParam}) as IPageable<IUserInfo>
+        props.onDataChange(content as IUserInfo[], {...props.pagination, ...{ pageSize: size, total: totalElements }})
     }
     useEffect(() => {
         queryUsers()

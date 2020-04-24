@@ -22,10 +22,10 @@ axios.interceptors.response.use(
       return Promise.reject(errorMsg);
     } else {
       let { content } = response.data
-        content && notification.info({
-            message: '消息',
-            description: content
-        })
+      content && notification.info({
+        message: '消息',
+        description: content
+      })
     }
     return response.data;
   },
@@ -62,19 +62,23 @@ export function get<T>(url: string, data = {}) {
   })
 }
 
-export function post<T>(url: string, data: any) {
+export function post<T>(url: string, data: any, config?: AxiosRequestConfig) {
   return new Promise((resolve, reject) => {
-    axios.post<IResponseData<T>>(url, qs.stringify(data), {
-      headers: { 'content-type': MediaType.APPLICATION_FORM_URLENCODED_VALUE }
+    axios.post<IResponseData<T>>(url, data, {
+      ...{
+        headers: { 'content-type': MediaType.APPLICATION_JSON_UTF8_VALUE }
+      }, ...config
     }).then(res => resolve(res.data)).catch(error => reject(error))
   })
 }
 
 export function put<T>(url: string, data: any, config?: AxiosRequestConfig) {
   return new Promise((resolve, reject) => {
-    axios.put<IResponseData<T>>(url, data, {...{
-      headers: { 'content-type': MediaType.APPLICATION_FORM_URLENCODED_VALUE }
-    }, ...config}).then(res => resolve(res.data)).catch(error => reject(error))
+    axios.put<IResponseData<T>>(url, data, {
+      ...{
+        headers: { 'content-type': MediaType.APPLICATION_FORM_URLENCODED_VALUE }
+      }, ...config
+    }).then(res => resolve(res.data)).catch(error => reject(error))
   })
 }
 

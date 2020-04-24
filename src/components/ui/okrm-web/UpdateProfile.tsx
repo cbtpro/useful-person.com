@@ -57,6 +57,7 @@ const UpdateProfile = (props: IProps) => {
             const { username, nickname, birthday } = await form.validateFields()
             let utc = birthday.valueOf()
             await updateUserInfo({ avatar: avatarUrl, username, nickname, birthday: utc })
+            props.onGetUserInfoMe()
             props.close()
         } finally {
             setLoading(false)
@@ -112,7 +113,6 @@ const UpdateProfile = (props: IProps) => {
                 initialValues={props?.userInfo}>
                 <Form.Item
                     label="头像"
-                    name="file"
                     rules={[{ required: true, message: '请选择或上传一张用户头像' }]} valuePropName="fileList">
                     <Upload name="file" action="/api/upload/avatar" multiple={false} listType="picture-card" accept={AVATAR_ACCEPT_IMAGE} className="avtar-uploader" showUploadList={false} beforeUpload={beforeUpload} onChange={avatarChange}>
                         {avatarUrl ? <img src={avatarUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}

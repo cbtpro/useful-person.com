@@ -23,10 +23,7 @@ export const usersColumns: ColumnProps<any>[]  = [
         dataIndex: 'identityCardNo',
         key: 'identityCardNo',
         render: (text: string) => text ? '已实名' : '未实名',
-        filters: [
-            { text: '已实名', value: '' },
-            { text: '未实名', value: '' }
-        ]
+        sorter: true,
     },
     {
         title: '电子邮件',
@@ -49,11 +46,7 @@ export const usersColumns: ColumnProps<any>[]  = [
         title: '状态',
         dataIndex: 'enabled',
         key: 'enabled',
-        render: (text: boolean) => text ? '正常' : '小黑屋',
-        filters: [
-            { text: '正常', value: '' },
-            { text: '小黑屋', value: '' }
-        ]
+        render: (text: boolean) => text ? '正常' : '小黑屋'
     },
     {
         title: '类型',
