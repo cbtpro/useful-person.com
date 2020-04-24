@@ -77,7 +77,7 @@ export function put<T>(url: string, data: any, config?: AxiosRequestConfig) {
   return new Promise((resolve, reject) => {
     axios.put<IResponseData<T>>(url, data, {
       ...{
-        headers: { 'content-type': MediaType.APPLICATION_FORM_URLENCODED_VALUE }
+        headers: { 'content-type': MediaType.APPLICATION_JSON_UTF8_VALUE }
       }, ...config
     }).then(res => resolve(res.data)).catch(error => reject(error))
   })

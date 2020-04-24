@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Modal, Form, Input, Button } from 'antd'
 import { IRole } from '../../../../interfaces/UserInfo'
 import { useForm } from 'antd/lib/form/util'
-import { post } from '../../../../http'
-import { ADD_ROLE_URL } from '../../../../constants/urls'
+import { post, put } from '../../../../http'
+import { ADD_ROLE_URL, UPDATE_ROLE_URL } from '../../../../constants/urls'
 
 const layout = {
     labelCol: { span: 6 },
@@ -14,6 +14,7 @@ interface IProps {
     onCancel(): void
     onSuccess(): void
     visible: boolean
+    role?: IRole
 }
 
 const AddRole = (props: IProps) => {
@@ -26,25 +27,41 @@ const AddRole = (props: IProps) => {
         setLoading(true)
         try {
             const role = await form.validateFields() as IRole
-            await saveRole(role)
+            if (role.uuid) {
+                await updateRole(role)
+            } else {
+                await saveRole(role)
+            }
             props.onSuccess()
         } finally {
             setLoading(false)
         }
     }
+    const updateRole = (param: IRole) => {
+        return put(UPDATE_ROLE_URL, param)
+    }
     const saveRole = (param: IRole) => {
-        post(ADD_ROLE_URL, param)
+        return post(ADD_ROLE_URL, param)
     }
     return <>
-        <Modal visible={props.visible} title="添加角色" footer={[
+        <Modal visible={props.visible} title="保存角色" onCancel={cancel} footer={[
             <Button key="cancel" onClick={cancel}>取消</Button>,
             <Button key="ok" loading={loading} onClick={ok}>确认</Button>
         ]}>
-            <Form form={form} {...layout}>
+            <Form form={form} {...layout} initialValues={props.role}>
+                <Form.Item label="uuid" name="uuid" className="hidden">
+                    <Input />
+                </Form.Item>
                 <Form.Item label="角色名称" name="rolename" rules={[{required: true, message: '角色名称不能为空！'}]}>
                     <Input />
                 </Form.Item>
                 <Form.Item label="角色描述" name="description">
+                    <Input />
+                </Form.Item>
+                <Form.Item label="updateTime" name="updateTime" className="hidden">
+                    <Input />
+                </Form.Item>
+                <Form.Item label="createTime" name="createTime" className="hidden">
                     <Input />
                 </Form.Item>
             </Form>
