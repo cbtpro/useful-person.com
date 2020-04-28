@@ -3,7 +3,7 @@ import React from 'react'
 import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
-import { Tabs } from 'antd'
+import { Tabs, Card } from 'antd'
 import { removePane, togglePane } from '../../../../redux/appSettings'
 import ContainerBackground from './ContainerBackground'
 
@@ -39,7 +39,9 @@ const Container = (props: IProps) => {
                         return <Tabs.TabPane
                             key={pane.key}
                             tab={pane.name}>
-                            {pane.content}
+                            <Card style={{ margin: '24px' }}>
+                                {pane.content}
+                            </Card>
                         </Tabs.TabPane>
                     })
                 }

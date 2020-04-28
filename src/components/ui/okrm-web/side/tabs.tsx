@@ -4,6 +4,16 @@ import { UserOutlined, DashboardOutlined, QuestionOutlined, InfoCircleOutlined, 
 // import AsyncLoadComponet from '../../../../utils/dynamicLoadingComponent'
 import AsyncLoadComponet from '../../../../utils/asyncComponent'
 
+
+// import Profile from '../profile'
+// import Dashboard from '../dashboard'
+// import RolesManage from '../rolesManage'
+// import UsersManage from '../usersManage'
+// import Map from '../map'
+// import RoadMap from '../roadMap'
+// import Event from '../event'
+// import About from '../about'
+
 const Profile = AsyncLoadComponet(import('../profile'))
 const Dashboard = AsyncLoadComponet(import('../dashboard'))
 const RolesManage = AsyncLoadComponet(import('../rolesManage'))

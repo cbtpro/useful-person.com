@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { DatePicker, Card, Table, Button, Form, Row, Col, Input, Select } from 'antd'
+import { DatePicker, Table, Button, Form, Row, Col, Input, Select } from 'antd'
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 
 import { usersColumns } from './columns';
@@ -77,72 +77,70 @@ export default () => {
             ...filters,
         })
     }
-    return <div style={{ padding: 36 }}>
-        <Card bordered={true}>
-            <Form>
-                <Row gutter={24}>
-                    <Col>
-                        <Form.Item>
-                            <Input placeholder="用户名" allowClear value={username} onChange={handleUsernameChange} />
-                        </Form.Item></Col>
-                    <Col>
-                        <Form.Item>
-                            <Input placeholder="昵称" allowClear value={nickname} onChange={handleNicknameChange} />
-                        </Form.Item></Col>
-                    <Col>
-                        <Form.Item>
-                            <Input placeholder="手机号" allowClear value={mobile} onChange={handleMobileChange} />
-                        </Form.Item></Col>
-                    <Col>
-                        <Form.Item>
-                            <Input placeholder="邮箱" allowClear value={email} onChange={handleEmailChange} />
-                        </Form.Item></Col>
+    return <>
+        <Form>
+            <Row gutter={24}>
+                <Col>
+                    <Form.Item>
+                        <Input placeholder="用户名" allowClear value={username} onChange={handleUsernameChange} />
+                    </Form.Item></Col>
+                <Col>
+                    <Form.Item>
+                        <Input placeholder="昵称" allowClear value={nickname} onChange={handleNicknameChange} />
+                    </Form.Item></Col>
+                <Col>
+                    <Form.Item>
+                        <Input placeholder="手机号" allowClear value={mobile} onChange={handleMobileChange} />
+                    </Form.Item></Col>
+                <Col>
+                    <Form.Item>
+                        <Input placeholder="邮箱" allowClear value={email} onChange={handleEmailChange} />
+                    </Form.Item></Col>
 
-                </Row>
-                {
-                    expand ?
-                        <Row gutter={24}>
-                            <Col span={8}>
-                                <Form.Item>
-                                    <RangePicker onChange={dates => {
-                                        if (dates) {
-                                            setRegisterTimeFrom(dates[0]?.valueOf())
-                                            setRegisterTimeTo(dates[1]?.valueOf())
-                                        } else {
-                                            setRegisterTimeFrom(undefined)
-                                            setRegisterTimeTo(undefined)
-                                        }
-                                    }} placeholder={["注册开始日期", "注册结束日期"]} allowEmpty={[true, true]} allowClear />
-                                </Form.Item>
-                            </Col>
-                            <Col span={6}>
-                                <Form.Item>
-                                    <Select onChange={(value) => setEnabled(value)} placeholder="用户状态" optionLabelProp="label" value={enabled} allowClear style={{ width: '100%' }}>
-                                        <Option value="true" label="正常">
-                                            正常
-                                </Option>
-                                        <Option value="false" label="小黑屋">
-                                            小黑屋
-                                </Option>
-                                    </Select>
-                                </Form.Item>
-                            </Col>
-                        </Row> : ''
-                }
-                <Row>
-                    <Col>
-                        <Form.Item>
-                            <Button type="primary" onClick={handleSubmit}>查询</Button>
-                        </Form.Item>
-                    </Col>
-                    <Col>
-                        <Button type="link" style={{ fontSize: 12 }} onClick={() => { setExpand(!expand); }} >
-                            {expand ? <UpOutlined /> : <DownOutlined />} Collapse
-                    </Button>
-                    </Col>
-                </Row>
-            </Form>
-            <Table rowKey="uuid" columns={usersColumns} dataSource={users} pagination={pagination} loading={loading} onChange={onChange} className="table" />
-        </Card>
-    </div>
+            </Row>
+            {
+                expand ?
+                    <Row gutter={24}>
+                        <Col span={8}>
+                            <Form.Item>
+                                <RangePicker onChange={dates => {
+                                    if (dates) {
+                                        setRegisterTimeFrom(dates[0]?.valueOf())
+                                        setRegisterTimeTo(dates[1]?.valueOf())
+                                    } else {
+                                        setRegisterTimeFrom(undefined)
+                                        setRegisterTimeTo(undefined)
+                                    }
+                                }} placeholder={["注册开始日期", "注册结束日期"]} allowEmpty={[true, true]} allowClear />
+                            </Form.Item>
+                        </Col>
+                        <Col span={6}>
+                            <Form.Item>
+                                <Select onChange={(value) => setEnabled(value)} placeholder="用户状态" optionLabelProp="label" value={enabled} allowClear style={{ width: '100%' }}>
+                                    <Option value="true" label="正常">
+                                        正常
+                            </Option>
+                                    <Option value="false" label="小黑屋">
+                                        小黑屋
+                            </Option>
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                    </Row> : ''
+            }
+            <Row>
+                <Col>
+                    <Form.Item>
+                        <Button type="primary" onClick={handleSubmit}>查询</Button>
+                    </Form.Item>
+                </Col>
+                <Col>
+                    <Button type="link" style={{ fontSize: 12 }} onClick={() => { setExpand(!expand); }} >
+                        {expand ? <UpOutlined /> : <DownOutlined />} Collapse
+                </Button>
+                </Col>
+            </Row>
+        </Form>
+        <Table rowKey="uuid" columns={usersColumns} dataSource={users} pagination={pagination} loading={loading} onChange={onChange} className="table" />
+    </>
 }

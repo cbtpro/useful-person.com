@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Table, Button, Popconfirm } from 'antd'
+import { Table, Button, Popconfirm } from 'antd'
 import moment from 'moment'
 import { post, del } from '../../../../http'
 import { QUERY_ROLES_URL, DEL_ROLE_URL } from '../../../../constants/urls'
@@ -107,12 +107,10 @@ const RolesManage = () => {
         fetch()
     }, [])
     return <>
-        <Card style={{ margin: '36px' }}>
-            <Button onClick={addRole}>添加角色</Button>
-            <Table rowKey="uuid" columns={columns} dataSource={roles} pagination={false} onChange={onChange} loading={loading} className="table" />
-            <SaveRole key="addRole" visible={addRoleVisible} onCancel={addRoleCancel} onSuccess={addRoleSuccess} />
-            <SaveRole key="updateRole" visible={roleModalVisible} role={selectRole} onCancel={saveRoleCancel} onSuccess={saveRoleSuccess} />
-        </Card>
+        <Button onClick={addRole}>添加角色</Button>
+        <Table rowKey="uuid" columns={columns} dataSource={roles} pagination={false} onChange={onChange} loading={loading} className="table" />
+        <SaveRole key="addRole" visible={addRoleVisible} onCancel={addRoleCancel} onSuccess={addRoleSuccess} />
+        <SaveRole key="updateRole" visible={roleModalVisible} role={selectRole} onCancel={saveRoleCancel} onSuccess={saveRoleSuccess} />
     </>
 }
 

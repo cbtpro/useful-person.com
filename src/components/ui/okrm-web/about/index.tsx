@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { IUserInfo } from '../../../../interfaces/UserInfo'
 
-import { Descriptions, Card } from 'antd'
+import { Descriptions } from 'antd'
 
 
 interface IProps {
@@ -14,14 +14,12 @@ interface IProps {
 
 const WebAbout = (props: IProps) => {
   let { userInfo } = props
-  return <div style={{ padding: '24px' }}>
-    <Card>
-      <Descriptions title="关于" column={1}>
-        <Descriptions.Item label="登陆用户">{userInfo?.nickname}</Descriptions.Item>
-        <Descriptions.Item label="描述">这个人很懒，什么也没留下</Descriptions.Item>
-        <Descriptions.Item label="版本">v1.0.0</Descriptions.Item>
-      </Descriptions>
-    </Card>
+  return <div>
+    <Descriptions title="关于" column={1}>
+      <Descriptions.Item label="登陆用户">{userInfo?.nickname}</Descriptions.Item>
+      <Descriptions.Item label="描述">这个人很懒，什么也没留下</Descriptions.Item>
+      <Descriptions.Item label="版本">v1.0.0</Descriptions.Item>
+    </Descriptions>
   </div>
 }
 
