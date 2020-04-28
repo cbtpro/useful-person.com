@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Modal, Form, Input, Button } from 'antd'
 import { IRole } from '../../../../interfaces/UserInfo'
 import { useForm } from 'antd/lib/form/util'
@@ -43,12 +43,15 @@ const AddRole = (props: IProps) => {
     const saveRole = (param: IRole) => {
         return post(ADD_ROLE_URL, param)
     }
+    useEffect(() => {
+        props.role && form.setFieldsValue(props.role);
+    }, [form, props.role])
     return <>
-        <Modal visible={props.visible} title="保存角色" onCancel={cancel} footer={[
+        <Modal visible={props.visible} title="保存角色" onCancel={cancel} forceRender={true} footer={[
             <Button key="cancel" onClick={cancel}>取消</Button>,
             <Button key="ok" loading={loading} onClick={ok}>确认</Button>
         ]}>
-            <Form form={form} {...layout} initialValues={props.role}>
+            <Form form={form} {...layout}>
                 <Form.Item label="uuid" name="uuid" className="hidden">
                     <Input />
                 </Form.Item>

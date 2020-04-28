@@ -9,9 +9,10 @@ import { IResponseData } from '../../../../interfaces/ResponseData'
 
 const RolesManage = () => {
     const [loading, setLoading] = useState(false)
+    const [addRoleVisible, setAddRoleVisible] = useState(false)
     const [roleModalVisible, setRoleModalVisible] = useState(false)
     const [roles, setRoles] = useState<IRolesResponse>()
-    const [selectRole, setSelectRole] = useState<IRole | undefined>()
+    const [selectRole, setSelectRole] = useState<IRole>()
 
     const columns = [
         {
@@ -54,7 +55,7 @@ const RolesManage = () => {
         }
     ]
     const updateRole = async (role: IRole) => {
-        await setSelectRole(role)
+        setSelectRole(role)
         setRoleModalVisible(true)
     }
     const deleteRole = async (role: IRole) => {
@@ -85,8 +86,14 @@ const RolesManage = () => {
         })
     }
     const addRole = async () => {
-        await setSelectRole(undefined)
-        setRoleModalVisible(true)
+        setAddRoleVisible(true)
+    }
+    const addRoleCancel = async () => {
+        setAddRoleVisible(false)
+    }
+    const addRoleSuccess = () => {
+        setAddRoleVisible(false)
+        fetch()
     }
     const saveRoleCancel = () => {
         setSelectRole(undefined)
@@ -98,13 +105,13 @@ const RolesManage = () => {
     }
     useEffect(() => {
         fetch()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return <>
         <Card style={{ margin: '36px' }}>
             <Button onClick={addRole}>添加角色</Button>
             <Table rowKey="uuid" columns={columns} dataSource={roles} pagination={false} onChange={onChange} loading={loading} className="table" />
-            <SaveRole visible={roleModalVisible} role={selectRole} onCancel={saveRoleCancel} onSuccess={saveRoleSuccess} />
+            <SaveRole key="addRole" visible={addRoleVisible} onCancel={addRoleCancel} onSuccess={addRoleSuccess} />
+            <SaveRole key="updateRole" visible={roleModalVisible} role={selectRole} onCancel={saveRoleCancel} onSuccess={saveRoleSuccess} />
         </Card>
     </>
 }

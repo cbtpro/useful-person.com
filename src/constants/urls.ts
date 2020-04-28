@@ -42,7 +42,9 @@ export const UPDATE_USER_PASSWORD_URL = '/api/user/passwd'
 export const ADD_ROLE_URL = '/api/admin/role'
 export const UPDATE_ROLE_URL = ADD_ROLE_URL
 export const DEL_ROLE_URL = ADD_ROLE_URL
-// 
+
+// 根据UUID查询角色
+export const QUERY_ROLE_URL = '/api/admin/role'
 // 查询角色列表
 export const QUERY_ROLES_URL = '/api/admin/roles'
 // 查询用户列表
