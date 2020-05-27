@@ -1,27 +1,16 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { UserOutlined, DashboardOutlined, QuestionOutlined, InfoCircleOutlined, TeamOutlined, CompassOutlined, EyeOutlined, KeyOutlined } from '@ant-design/icons'
+import Loading from '../../../loading'
 
-// import AsyncLoadComponet from '../../../../utils/dynamicLoadingComponent'
-import AsyncLoadComponet from '../../../../utils/asyncComponent'
-
-
-// import Profile from '../profile'
-// import Dashboard from '../dashboard'
-// import RolesManage from '../rolesManage'
-// import UsersManage from '../usersManage'
-// import Map from '../map'
-// import RoadMap from '../roadMap'
-// import Event from '../event'
-// import About from '../about'
-
-const Profile = AsyncLoadComponet(import('../profile'))
-const Dashboard = AsyncLoadComponet(import('../dashboard'))
-const RolesManage = AsyncLoadComponet(import('../rolesManage'))
-const UsersManage = AsyncLoadComponet(import('../usersManage'))
-const Map = AsyncLoadComponet(import('../map'))
-const RoadMap = AsyncLoadComponet(import('../roadMap'))
-const Event = AsyncLoadComponet(import('../event'))
-const About = AsyncLoadComponet(import('../about'))
+const Profile = React.lazy(() => import('../profile'))
+const Dashboard = React.lazy(() => import('../dashboard'))
+const RolesManage = React.lazy(() => import('../rolesManage'))
+const AuthorityManagement = React.lazy(() => import('../authorityManagement'))
+const Users = React.lazy(() => import('../users'))
+const Map = React.lazy(() => import('../map'))
+const RoadMap = React.lazy(() => import('../roadMap'))
+const Event = React.lazy(() => import('../event'))
+const About = React.lazy(() => import('../about'))
 
 export interface IMenu {
     name: string;
@@ -42,12 +31,17 @@ const menu: IMenu[] = [
     },
     {
         name: '角色管理',
-        key: 'role',
+        key: 'roleManagement',
+        icon: <KeyOutlined />
+    },
+    {
+        name: '权限管理',
+        key: 'authorityManagement',
         icon: <KeyOutlined />
     },
     {
         name: '注册用户列表',
-        key: 'user',
+        key: 'users',
         icon: <TeamOutlined />
     },
     {
@@ -73,14 +67,15 @@ const menu: IMenu[] = [
 ]
 
 const tabs: ITabs = {
-    'profile': <Profile />,
-    'dashboard': <Dashboard />,
-    'role': <RolesManage />,
-    'user': <UsersManage />,
-    'map': <Map />,
-    'roadMap': <RoadMap />,
-    'event': <Event />,
-    'about': <About />
+    'profile': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><Profile /></Suspense>,
+    'dashboard': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><Dashboard /></Suspense>,
+    'roleManagement': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><RolesManage /></Suspense>,
+    'authorityManagement': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><AuthorityManagement /></Suspense>,
+    'users': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><Users /></Suspense>,
+    'map': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><Map /></Suspense>,
+    'roadMap': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><RoadMap /></Suspense>,
+    'event': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><Event /></Suspense>,
+    'about': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><About /></Suspense>
 }
 
 export {
