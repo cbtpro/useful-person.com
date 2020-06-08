@@ -1,5 +1,6 @@
 import moment from 'moment'
 import { ColumnProps } from 'antd/lib/table/Column'
+import { IRole } from '../../../../interfaces/UserInfo'
 
 export const usersColumns: ColumnProps<any>[]  = [
     {
@@ -46,17 +47,18 @@ export const usersColumns: ColumnProps<any>[]  = [
         title: '状态',
         dataIndex: 'enabled',
         key: 'enabled',
-        render: (text: boolean) => text ? '正常' : '小黑屋'
+        render: (text: boolean) => text === false ? '小黑屋' : '正常'
     },
     {
         title: '类型',
         dataIndex: 'roles',
         key: 'roles',
         filters: [
-            { text: '普通用户', value: 'ROLE_NORMAL' },
-            { text: '机构用户', value: 'ROLE_ORG' },
-            { text: '管理员用户', value: 'ROLE_ADMIN' },
+            { text: '普通用户', value: 'NORMAL' },
+            { text: '机构用户', value: 'ORG' },
+            { text: '管理员用户', value: 'ADMIN' },
         ],
+        render: (roles: IRole[]) => roles.map(role => role.rolename).join(', ')
     },
     // {
     //     title: '最后登陆时间',

@@ -48,7 +48,7 @@ export function doSignin(param: ISigninRequest, callback?: () => void) {
 
 export function doSignup(param: ISignupRequest, callback?: () => void) {
   return (dispatch: Dispatch) => {
-    post<IResponseData<IUserInfoResponse>>(SIGNUP_URL, param).then(response => {
+    post<IResponseData<IUserInfoResponse>>(SIGNUP_URL, qs.stringify(param)).then(response => {
       dispatch({
         type: DO_SIGNUP,
         payload: response
