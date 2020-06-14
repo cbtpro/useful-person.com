@@ -24,7 +24,7 @@ const UpdatePassword = (props: IProps) => {
     const [loading, setLoading] = useState(false)
     const [form] = useForm()
     const updateUserPassword = (request: { oldPassword: string, password: string}) => {
-        return put<IResponseData<String>>(UPDATE_USER_PASSWORD_URL, qs.stringify(request))
+        return put<IResponseData<string>>(UPDATE_USER_PASSWORD_URL, qs.stringify(request))
     }
     const submit = async () => {
         setLoading(true)

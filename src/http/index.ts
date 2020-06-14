@@ -79,9 +79,9 @@ export function put<T>(url: string, data: any, config?: AxiosRequestConfig) {
   })
 }
 
-export function del(url: string, data: any) {
+export function del<T>(url: string, data: any) {
   return new Promise((resolve, reject) => {
-    axios.delete(url, {
+    axios.delete<IResponseData<T>>(url, {
       params: data
     }).then(res => resolve(res.data)).catch(error => reject(error))
   })

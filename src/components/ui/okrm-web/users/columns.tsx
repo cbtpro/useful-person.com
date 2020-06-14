@@ -55,6 +55,7 @@ export const usersColumns: ColumnProps<any>[]  = [
         key: 'roles',
         filters: [
             { text: '普通用户', value: 'NORMAL' },
+            { text: 'VIP用户', value: 'VIP' },
             { text: '机构用户', value: 'ORG' },
             { text: '管理员用户', value: 'ADMIN' },
         ],
