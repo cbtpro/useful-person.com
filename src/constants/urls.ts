@@ -1,8 +1,8 @@
 export const GET_DEMO_URL = '/user/me'
 
-
+export const DEFAULT_X_OSS_PROCESS = '?x-oss-process=style/circle'
 export const DEFAULT_AVATAR_URL = 'https://resources.useful-person.com/avatar/default/avatar.png'
-export const BLANK_AVATAR_URL = 'https://useful-person.com/assets/images/user/blank.png'
+export const BLANK_AVATAR_URL = 'http://resources.useful-person.com/avatar/default/avatar.png'
 
 export const GET_USERINFO_ME_URL = '/user/me'
 
