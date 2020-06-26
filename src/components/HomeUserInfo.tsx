@@ -77,8 +77,7 @@ const HomeUserInfo = (props: IProps) => {
             &nbsp;<span>{userInfo ? userInfo.username : '未登录'}</span></div>
           }>
             <ItemGroup title="用户中心">
-              {userInfo && <Menu.Item key={0} onClick={toOkrmWeb}><UserOutlined />编辑个人信息</Menu.Item> }
-              {userInfo && <Menu.Item key={1} onClick={toOkrmWeb}><UserOutlined />修改密码</Menu.Item> }
+              {userInfo && <Menu.Item key={0} onClick={toOkrmWeb}><UserOutlined />进入后台</Menu.Item> }
               {userInfo && <Menu.Item key={3} onClick={signout}><LogoutOutlined />退出登录</Menu.Item> }
               {!userInfo && <Menu.Item key={2} onClick={() => history.push('/portal/signin') }><LoginOutlined />登录</Menu.Item> }
             </ItemGroup>
