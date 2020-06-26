@@ -1,0 +1,1 @@
+/// <reference path="./okrm-web/index.d.ts">
