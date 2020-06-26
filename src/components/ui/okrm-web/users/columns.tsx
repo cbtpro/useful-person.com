@@ -1,12 +1,20 @@
+import React from 'react'
 import moment from 'moment'
 import { ColumnProps } from 'antd/lib/table/Column'
 import { IRole } from '../../../../interfaces/UserInfo'
 
 export const usersColumns: ColumnProps<any>[]  = [
     {
+        title: '头像',
+        dataIndex: 'avatar',
+        key: 'avatar',
+        render: (avatar) => <img src={avatar} style={{ width: '32px' }} />
+    },
+    {
         title: '用户名',
         dataIndex: 'username',
-        key: 'username'
+        key: 'username',
+        render: (text: string) => text
     },
     {
         title: '昵称',
