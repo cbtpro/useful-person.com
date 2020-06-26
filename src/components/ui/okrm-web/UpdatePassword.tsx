@@ -8,6 +8,7 @@ import { put } from '../../../http'
 import { UPDATE_USER_PASSWORD_URL } from '../../../constants/urls'
 import { IResponseData } from '../../../interfaces/ResponseData'
 import qs from 'qs'
+import MediaType from '../../../constants/MediaType'
 
 const layout = {
     labelCol: { span: 6 },
@@ -24,7 +25,11 @@ const UpdatePassword = (props: IProps) => {
     const [loading, setLoading] = useState(false)
     const [form] = useForm()
     const updateUserPassword = (request: { oldPassword: string, password: string}) => {
-        return put<IResponseData<string>>(UPDATE_USER_PASSWORD_URL, qs.stringify(request))
+        return put<IResponseData<string>>(UPDATE_USER_PASSWORD_URL, qs.stringify(request), {
+            headers: {
+                'content-type': MediaType.APPLICATION_FORM_URLENCODED_VALUE
+            }
+        })
     }
     const submit = async () => {
         setLoading(true)

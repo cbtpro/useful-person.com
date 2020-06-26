@@ -5,8 +5,9 @@ import MediaType from '../constants/MediaType';
 import ReturnCode from '../constants/ReturnCode';
 import { IResponseData } from '../interfaces/ResponseData';
 
-
+const BASE_URL = process.env.REACT_APP_BASE_SERVICE_URL
 const axios = originAxios.create({
+  baseURL: `${BASE_URL}`,
   timeout: 20000
 })
 

@@ -114,7 +114,7 @@ const UpdateProfile = (props: IProps) => {
                 <Form.Item
                     label="头像"
                     rules={[{ required: true, message: '请选择或上传一张用户头像' }]} valuePropName="fileList">
-                    <Upload name="file" action="/api/upload/avatar" multiple={false} listType="picture-card" accept={AVATAR_ACCEPT_IMAGE} className="avtar-uploader" showUploadList={false} beforeUpload={beforeUpload} onChange={avatarChange}>
+                    <Upload name="file" action="/upload/avatar" multiple={false} listType="picture-card" accept={AVATAR_ACCEPT_IMAGE} className="avtar-uploader" showUploadList={false} beforeUpload={beforeUpload} onChange={avatarChange}>
                         {avatarUrl ? <img src={avatarUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                     </Upload>
                 </Form.Item>
