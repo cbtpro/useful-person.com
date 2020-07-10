@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { PageHeader, Tag, Row, Descriptions } from 'antd'
+import { PageHeader, Tag, Row, Descriptions, Button } from 'antd'
 import moment from 'moment'
 import { IUserInfo } from '../../../../interfaces/UserInfo'
 
@@ -47,14 +47,10 @@ class ProfilePage extends React.Component<IUserProp, IUserState> {
           className="site-page-header"
           tags={<Tag color="blue">注册用户</Tag>}
           extra={[
-            // <Button key="1"
-            //   type="primary"
-            //   onClick={() => { }}>修改资料</Button>,
-            // <Button key="2"
-            //   type="danger"
-            //   onClick={() => {
-            //     this.props.onSignout()
-            //   }}>注销登陆</Button>
+            <Button key="2"
+              type="danger"
+              onClick={() => {
+              }}>删除账号</Button>
           ]}
           avatar={{ src: userInfo?.avatar }}
         >

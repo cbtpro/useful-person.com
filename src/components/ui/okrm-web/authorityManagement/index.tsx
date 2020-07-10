@@ -23,8 +23,9 @@ export default () => {
     let fetchUsersHasNoAdmin = debounce(async (value: SelectValue) => {
         setFetching(true)
         setNormalUsers([])
-        const { content, totalElements } = await post<IResponseData<IPageable<IUserInfo[]>>>(QUERY_USERS_URL, { username: value }) as IPageable<IUserInfo>
+        const { content } = await post<IResponseData<IPageable<IUserInfo[]>>>(QUERY_USERS_URL, { username: value }) as IPageable<IUserInfo>
         setNormalUsers(content as IUserInfo[])
+
     }, 800)
     const fetchAdmins = async (params = {}) => {
         setLoading(true)
@@ -153,7 +154,7 @@ export default () => {
             <Form.Item label="用户" name="username">
                 <Row gutter={24}>
                     <Col span="16">
-                        <Select mode="multiple" placeholder="选择一个需要授权的普通用户" onSearch={fetchUsersHasNoAdmin} onChange={handleChange} optionLabelProp="label">
+                        <Select mode="multiple" placeholder="选择一个需要授权的普通用户" onSearch={fetchUsersHasNoAdmin} onChange={handleChange} loading={fetching} optionLabelProp="label">
                             {options}
                         </Select>
                     </Col>
