@@ -34,7 +34,7 @@ axios.interceptors.response.use(
     if (response) {
       let { status, data: { content } } = response
       if (status === HttpStatus.UNAUTHORIZED) {
-        Message.error('用户未登录，请登录！');
+        console.warn('用户未登录，请登录！');
       } else if (status === HttpStatus.FORBIDDEN) {
         Message.error('没有请求的权限！');
       } else if (status === HttpStatus.INTERNAL_SERVER_ERROR || status === HttpStatus.BAD_REQUEST) {
