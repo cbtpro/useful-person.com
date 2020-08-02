@@ -33,7 +33,7 @@ const Signin = (props: IProps) => {
     props.onSignin(param as ISigninRequest, () => {
       Message.info('登陆成功！')
       props.onGetUserInfoMe()
-      history.push('/portal/profile')
+      history.push('/ui/okrm-web')
     })
   }
   return (
