@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { bindActionCreators, Dispatch } from 'redux'
+import { connect } from 'react-redux'
+import { Affix, List, Button, Card, Avatar, Input, Radio, Row, Col } from 'antd'
+import { DownOutlined } from '@ant-design/icons'
 import Loading from '../loading'
 // import UserLocationWindow from './UserLocationWindow'
-
+// import { MapType } from '../../interfaces/QQMap'
+import RadioGroup from 'antd/lib/radio/group'
+const { Search } = Input
 
 const styles = {
     map: {
@@ -9,77 +15,348 @@ const styles = {
         height: 'calc(100vh - 220px)'
     }
 }
-interface IProps {}
-interface IState {
-    ready: boolean
+interface IProps {
+    provinces: IProvinceCascade[]
 }
-class QQMap extends React.Component<IProps, IState> {
-    map: any
-    constructor(props: IProps) {
-        super(props)
-        this.state = {
-            ready: false
-        }
-    }
-    init() {
-        var center = new qq.maps.LatLng(22.56667490058734, 113.95134755566407)
-        this.map = new qq.maps.Map(document.getElementById('container'), {
+const QQMap: React.FC<IProps> = (props: IProps) => {
+    const { provinces } = props
+    const [container, setContainer] = useState(null)
+    // const [mapTypeId, setMapTypeId] = useState(MapType.ROADMAP)
+    const [ready, setReady] = useState(false)
+    const [currentLocation, setCurrentLocation] = useState('获取中...')
+    const [getCurrentLocationLoading, setGetCurrentLocationLoading] = useState(false)
+    const [searchOpened, setSearchOpened] = useState(false)
+    const [map, setMap] = useState()
+    const [citylocation, setCitylocation] = useState()
+    const [showSearchRegion, setShowSearchRegion] = useState(false)
+    const init = () => {
+        const center = new qq.maps.LatLng(22.56667490058734, 113.95134755566407)
+        const map = new qq.maps.Map(document.getElementById('container'), {
+            zoomControl: true, // 启用缩放控件
+            //设置缩放控件的位置和样式
+            zoomControlOptions: {
+                //设置缩放控件的位置为相对左方中间位置对齐.
+                position: qq.maps.ControlPosition.LEFT_CENTER,
+                //设置缩放控件样式为仅包含放大缩小两个按钮
+                style: qq.maps.ZoomControlStyle.SMALL
+            },
+            panControl: false,
+            // mapTypeControl: false,
             center,
             zoom: 12
         });
+        const showUserInfoWindow = (center: LngLat, city?: string) => {
+            return new qq.maps.InfoWindow({
+                map: map,
+                position: center,
+                content: `
+                    <div class="user-location-window">
+                        <p>${city || '当前'}</button>为常用位置。</p>
+                    </div>
+                `,
+                visible: true
+            })
+        }
+        const showUserLocationMarker = (center: LngLat, name?: string) => {
+            const marker = new qq.maps.Marker({
+                position: center,
+                animation: qq.maps.MarkerAnimation.DROP,
+                map: map
+            })
+            const info = showUserInfoWindow(center, name)
+            qq.maps.event.addListener(marker, 'click', function () {
+                info.open();
+                info.setPosition(center);
+            })
+        }
+
         //设置城市信息查询服务
-        var citylocation = new qq.maps.CityService();
+        const citylocation = new qq.maps.CityService();
         //请求成功回调函数
         citylocation.setComplete((result: Result) => {
             const { name, latLng } = result.detail
-            this.map.setCenter(latLng);
-            this.showUserLocationMarker(latLng, name)
+            map.setCenter(latLng);
+            setCurrentLocation(name)
+            setGetCurrentLocationLoading(false)
+            setShowSearchRegion(false)
+            showUserLocationMarker(latLng, name)
         });
         //请求失败回调函数
         citylocation.setError(function () {
             alert("出错了，请输入正确的经纬度！！！")
+            setGetCurrentLocationLoading(false)
+            setShowSearchRegion(false)
         });
+        setGetCurrentLocationLoading(true)
         citylocation.searchLocalCity()
-    }
-    showUserInfoWindow = (center: LngLat, city?: string) => {
-        return new qq.maps.InfoWindow({
-            map: this.map,
-            position: center,
-            content: `
-                <div class="user-location-window">
-                    <p><button>设置${city || '当前'}</button>为常用位置。</p>
-                </div>
-            `,
-            visible: true
+        setCitylocation(citylocation)
+        const markers = []
+        // 设置Poi检索服务，用于本地检索、周边搜索
+        const searchService = new qq.maps.SearchService({
+            complete: function (results: any) {
+
+                //设置回调函数参数
+                var pois = results.detail.pois;
+                var infoWin = new qq.maps.InfoWindow({
+                    map: map
+                });
+                var latlngBounds = new qq.maps.LatLngBounds();
+                for (var i = 0, l = pois.length; i < l; i++) {
+                    var poi = pois[i];
+                    //扩展边界范围，用来包含搜索到的Poi点
+                    latlngBounds.extend(poi.latLng);
+
+                    (function (n) {
+                        var marker = new qq.maps.Marker({
+                            map: map
+                        });
+                        marker.setPosition(pois[n].latLng);
+
+                        marker.setTitle(i + 1);
+                        markers.push(marker);
+
+                        qq.maps.event.addListener(marker, 'click', function () {
+                            infoWin.open();
+                            infoWin.setContent('<div style="width:280px;height:100px;">' + 'POI的ID为：' +
+                                pois[n].id + '，POI的名称为：' + pois[n].name + '，POI的地址为：' + pois[n].address + '，POI的类型为：' + pois[n].type + '</div>');
+                            infoWin.setPosition(pois[n].latLng);
+                        });
+                    })(i);
+                }
+                //调整地图视野
+                map.fitBounds(latlngBounds);
+            },
+            //若服务请求失败，则运行以下函数
+            error: function () {
+                alert("出错了。");
+            }
         })
+
+        //清除地图上的marker
+        function clearOverlays(overlays: any) {
+            var overlay;
+            while (overlay = overlays.pop()) {
+                overlay.setMap(null);
+            }
+        }
+        //设置搜索的范围和关键字等属性
+        function searchKeyword() {
+            var keyword = '龙华公园';
+            var region = '深圳市';
+            // var pageIndex = parseInt(document.getElementById("pageIndex").value);
+            // var pageCapacity = parseInt(document.getElementById("pageCapacity").value);
+            // clearOverlays(markers);
+            //根据输入的城市设置搜索范围
+            searchService.setLocation(region);
+            //设置搜索页码
+            // searchService.setPageIndex(pageIndex);
+            //设置每页的结果数
+            // searchService.setPageCapacity(pageCapacity);
+            //根据输入的关键字在搜索范围内检索
+            searchService.search(keyword);
+            //根据输入的关键字在圆形范围内检索
+            //var region = new qq.maps.LatLng(39.916527,116.397128);
+            //searchService.searchNearBy(keyword, region , 2000);
+            //根据输入的关键字在矩形范围内检索
+            //region = new qq.maps.LatLngBounds(new qq.maps.LatLng(39.936273,116.440043),new qq.maps.LatLng(39.896775,116.354212));
+            //searchService.searchInBounds(keyword, region);
+
+        }
+        searchKeyword()
+        setMap(map)
+        setReady(true)
     }
-    showUserLocationMarker = (center: LngLat, name?: string) => {
-        const marker = new qq.maps.Marker({
-            position: center,
-			animation: qq.maps.MarkerAnimation.DROP,
-            map: this.map
-        })
-        const info = this.showUserInfoWindow(center, name)
-        qq.maps.event.addListener(marker, 'click', function() {
-            info.open(); 
-            info.setPosition(center); 
-        })
-    }
-    destory = () => {
+    const destory = () => {
         console.log('销毁地图！')
     }
-    componentDidMount() {
-        this.setState({ ready: true })
-        this.init()
+    React.useEffect(() => {
+        init()
+        return () => {
+            destory()
+        }
+    }, [props])
+    const data = [
+        {
+            title: 'Ant Design Title 1',
+        },
+        {
+            title: 'Ant Design Title 2',
+        },
+        {
+            title: 'Ant Design Title 3',
+        },
+        {
+            title: 'Ant Design Title 4',
+        },
+    ];
+    // const changeMapType = (e: RadioChangeEvent) => {
+    //     const { value } = e.target
+    //     setMapTypeId(value)
+    //     // @ts-ignore
+    //     map.setOptions({
+    //         mapTypeId: value
+    //     })
+    //     // map.setMapTypeId(value)
+    // }
+    const searchCityHandler = (value: string) => {
+        if (value) {
+            // @ts-ignore
+            citylocation.searchCityByName(value)
+        }
     }
-    render() {
-        const { ready } = this.state
-        return <>
-            { !ready && <Loading /> }
-            <div id="container" style={styles.map}></div>
-        </>
+    const cityClickHandler = (e: any) => {
+        const { value } = e.target.dataset
+        // @ts-ignore
+        citylocation.searchCityByName(value)
     }
-}
+    const localtionSelectPanel = () => {
+        const leftSpan = 4, rightSpan = 20
+        return (
+            <List bordered={true} style={{ overflowY: 'scroll', width: 450, height: '70vh', backgroundColor: '#fff' }}>
+                <List.Item>
+                    <Row>
+                        <Col >{currentLocation}{getCurrentLocationLoading ? null : <Button type="link">设置为默认城市</Button> }</Col>
+                    </Row>
+                </List.Item>
+                <List.Item>
+                    <Search
+                        placeholder="请输入城市名称"
+                        enterButton={searchOpened ? "搜索" : false}
+                        size="small"
+                        onSearch={value => searchCityHandler(value)}
+                        style={{ width: ' 100%' }}
+                    />
+                </List.Item>
+                <List.Item>
+                    <Row>
+                        <Col>热门城市</Col>
+                    </Row>
+                    <Row onClick={cityClickHandler}>
+                        <Col>
+                            <Button type="link" data-value="北京">北京</Button>
+                            <Button type="link" data-value="上海">上海</Button>
+                            <Button type="link" data-value="深圳">深圳</Button>
+                            <Button type="link" data-value="广州">广州</Button>
+                            <Button type="link" data-value="武汉">武汉</Button>
+                            <Button type="link" data-value="杭州">杭州</Button>
+                            <Button type="link" data-value="成都">成都</Button>
+                            <Button type="link" data-value="香港">香港</Button>
+                        </Col>
+                    </Row>
+                </List.Item>
+                <List.Item>
+                    <Row>
+                        <Col>
+                            全国城市列表
+                        </Col>
+                    </Row>
+                    <Row className="hidden">
+                        <Col>
+                            <RadioGroup>
+                                <Radio.Button>按省份</Radio.Button>
+                                <Radio.Button>按拼音</Radio.Button>
+                            </RadioGroup>
+                        </Col>
+                    </Row>
+                </List.Item>
+                <List.Item>
+                    <Row onClick={cityClickHandler}>
+                        <Col>
+                            <Button type="link" value="中国" data-value="中国">中国</Button>
+                        </Col>
+                    </Row>
+                </List.Item>
+                {
+                    provinces.map(province => {
+                        let { label, value, children } = province
+                        return <List.Item key={value}>
+                            <Row onClick={cityClickHandler}>
+                                <Col span={leftSpan}>
+                                    <Button type="link" block={true} data-value={label}>{label}</Button>
+                                </Col>
+                                <Col span={rightSpan}>{
+                                    children && children.map(region => {
+                                        let { label, value } = region
+                                        return <Button type="link" key={value} data-value={label}>{label}</Button>
+                                    })
+                                }</Col>
+                            </Row>
+                        </List.Item>
+                    })
+                }
+            </List>
+        )
+    }
+    return <>
+        {!ready && <Loading />}
+        <div style={{ position: 'absolute', zIndex: 2 }}>
 
-export default QQMap
-export { QQMap }
+            {/* <Dropdown overlay={localtionSelectPanel} trigger={['click']}> */}
+            <Button loading={getCurrentLocationLoading} onClick={() => setShowSearchRegion(!showSearchRegion)}>{currentLocation}<DownOutlined /></Button>
+            {/* </Dropdown> */}
+            {showSearchRegion && localtionSelectPanel()}
+            {/* <Radio.Group value={mapTypeId} onChange={changeMapType}>
+                <Radio.Button value="ROADMAP">地图</Radio.Button>
+                <Radio.Button value="SATELLITE">卫星</Radio.Button>
+                <Radio.Button value="HYBRID">混合</Radio.Button>
+            </Radio.Group> */}
+        </div>
+        <div
+            id="container"
+            ref={setContainer as any}
+            style={styles.map}>
+
+            <Affix
+                target={() => container}
+                style={{ position: 'absolute', top: 36, right: 20, zIndex: 2 }}
+            >
+                <Card>
+                    <Button type="primary">重新获取位置</Button>
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={data}
+                        renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                    title={<a href="https://ant.design">{item.title}</a>}
+                                    description="Ant Design, a design "
+                                />
+                            </List.Item>
+                        )}
+                    />
+                </Card>
+            </Affix>
+            {/* 搜索 */}
+            <Affix
+                target={() => container}
+                style={{
+                    position: 'absolute',
+                    top: 36,
+                    left: '50%',
+                    right: 0,
+                    width: searchOpened ? 'calc(100vw / 5 * 2)' : '140px',
+                    transform: 'translateX(-50%)',
+                    transition: 'width 0.5s',
+                    zIndex: 2
+                }}
+            >
+                <Search
+                    placeholder={searchOpened ? '用户名、地址' : '搜索'}
+                    enterButton={searchOpened ? "搜索" : false}
+                    size="large"
+                    onFocus={() => setSearchOpened(true)}
+                    onBlur={() => setSearchOpened(false)}
+                    onSearch={value => console.log(value)}
+                />
+            </Affix>
+        </div>
+    </>
+}
+const mapStateToProps = (state: any) => ({
+    provinces: state.appSettings.provinces
+})
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+
+}, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(QQMap)

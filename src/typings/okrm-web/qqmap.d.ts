@@ -4,8 +4,13 @@ interface LngLat {
     lat: number
     lng: number
 }
-enum ResultType {
+enum EResultType {
     AREA_INFO = AREA_INFO
+}
+enum EMapType {
+    ROADMAP = ROADMAP,
+    SATELLITE = SATELLITE,
+    HYBRID = HYBRID
 }
 interface ResultDetail {
     name: string
@@ -13,6 +18,6 @@ interface ResultDetail {
     level: number
 }
 interface Result {
-    type: ResultType
+    type: EResultType
     detail: ResultDetail
 }

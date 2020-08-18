@@ -1,10 +1,10 @@
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Form, Input, Modal, notification, Row, Upload } from 'antd';
-import { RcFile, UploadChangeParam } from 'antd/lib/upload';
-import { UploadFile } from 'antd/lib/upload/interface';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Col, Cascader, DatePicker, Form, Input, Modal, notification, Row, Upload } from 'antd';
+import { RcFile, UploadChangeParam } from 'antd/lib/upload';
+import { UploadFile } from 'antd/lib/upload/interface';
 import { AVATAR_ACCEPT_IMAGE } from '../../../constants/App';
 import MediaType from '../../../constants/MediaType';
 import ReturnCode from '../../../constants/ReturnCode';
@@ -18,12 +18,15 @@ import UnBindEmail from './update/email/unbindEmail';
 import BindMobile from './update/mobile/bindMobile';
 import UnBindMobile from './update/mobile/unbindMobile';
 import RealnameSystem from './update/realname';
+import { getProvinces } from '../../../redux/appSettings';
 
 interface IProps {
-    onGetUserInfoMe(callback?: () => void): void;
+    onGetUserInfoMe(callback?: () => void): void
+    onGetProvinces(upperCode?: string): void
     close: () => void
     visible: boolean
     userInfo: IUserInfo
+    provinces: IProvince[]
 }
 
 const layout = {
@@ -32,6 +35,7 @@ const layout = {
 }
 
 const UpdateProfile = (props: IProps) => {
+    const { provinces, onGetProvinces } = props
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(false)
     const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined)
@@ -39,6 +43,9 @@ const UpdateProfile = (props: IProps) => {
     const [modifyMobileOpened, setModifyMobileOpened] = useState(false)
     const [realnameOpened, setRealnameOpened] = useState(false)
 
+    useEffect(() => {
+        onGetProvinces()
+    }, [onGetProvinces])
     useEffect(() => {
         setAvatarUrl(avatarUrl || props?.userInfo?.avatar)
     }, [avatarUrl, props])
@@ -54,9 +61,10 @@ const UpdateProfile = (props: IProps) => {
     const handleOk = async () => {
         setLoading(true)
         try {
-            const { username, nickname, birthday } = await form.validateFields()
+            const { username, nickname, birthday, region } = await form.validateFields()
+            let [ province, city, county ] = region || []
             let utc = birthday.valueOf()
-            await updateUserInfo({ avatar: avatarUrl, username, nickname, birthday: utc })
+            await updateUserInfo({ avatar: avatarUrl, username, nickname, province, city, county, birthday: utc })
             props.onGetUserInfoMe()
             props.close()
         } finally {
@@ -100,6 +108,10 @@ const UpdateProfile = (props: IProps) => {
         setModifyMobileOpened(false)
         setRealnameOpened(false)
     }
+    function onProvinceChange(value: any) {
+        console.log(value);
+    }
+    const { userInfo } = props
     return (
         <Modal forceRender
             visible={props.visible}
@@ -110,7 +122,7 @@ const UpdateProfile = (props: IProps) => {
                 <Button key="submit" type="primary" loading={loading} onClick={handleOk}>保存</Button>,
             ]}>
             <Form form={form} {...layout} onFinish={() => { }}
-                initialValues={props?.userInfo}>
+                initialValues={userInfo}>
                 <Form.Item
                     label="头像"
                     rules={[{ required: true, message: '请选择或上传一张用户头像' }]} valuePropName="fileList">
@@ -148,6 +160,9 @@ const UpdateProfile = (props: IProps) => {
                         </Col>
                     </Row>
                 </Form.Item>
+                <Form.Item name="region" label="所在地区">
+                    <Cascader options={provinces} onChange={onProvinceChange} changeOnSelect />
+                </Form.Item>
                 <Form.Item name="birthday" label="生日" >
                     <DatePicker />
                 </Form.Item>
@@ -173,10 +188,12 @@ const UpdateProfile = (props: IProps) => {
 
 const mapStateToProps = (state: any) => ({
     userInfo: state.userInfo.userInfo,
+    provinces: state.appSettings.provinces
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-    onGetUserInfoMe: getUserInfoMe
+    onGetUserInfoMe: getUserInfoMe,
+    onGetProvinces: getProvinces
 }, dispatch)
 
 export default connect(

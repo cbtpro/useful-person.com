@@ -1,11 +1,17 @@
 import { Dispatch } from 'redux'
-import { GET_SIDE_STATUS, SET_SIDE_STATUS, GET_PANES, ADD_PANE, REMOVE_PANE, TOGGLE_PANE } from '../../constants/actions'
+import { GET_SIDE_STATUS, SET_SIDE_STATUS, GET_PANES, ADD_PANE, REMOVE_PANE, TOGGLE_PANE, GET_PROVINCES } from '../../constants/actions'
+import { GET_PROVINCES_URL } from '../../constants/urls'
+import { IResponseData } from '../../interfaces/ResponseData'
+import { get } from '../../http'
+import { IProvincesResponse } from '../../interfaces/UserInfo'
+import { processProvinces } from '../../utils/dataProcess'
 
 type State = Readonly<{
-  theme: string;
-  sideCollapsed: boolean;
-  activeSideMenu: string | undefined;
-  panes: IPane[];
+  theme: string
+  sideCollapsed: boolean
+  activeSideMenu: string | undefined
+  panes: IPane[]
+  provinces: IProvince[]
 }>
 
 type Action = {
@@ -17,7 +23,8 @@ const initialState: State = {
   theme: 'light',
   sideCollapsed: false,
   activeSideMenu: undefined,
-  panes: []
+  panes: [],
+  provinces: []
 }
 
 // TODO 更改side的函数修改成toggleSideCollapsed
@@ -70,7 +77,16 @@ export function togglePane(key: string) {
     })
   }
 }
-
+export function getProvinces() {
+  return (dispatch: Dispatch) => {
+    get<IResponseData<IProvincesResponse>>(GET_PROVINCES_URL).then(response => {
+      dispatch({
+        type: GET_PROVINCES,
+        payload: response as IProvince[]
+      })
+    })
+  }
+}
 export default function(state = initialState, action: Action) {
   switch (action.type) {
     case GET_SIDE_STATUS:
@@ -121,6 +137,12 @@ export default function(state = initialState, action: Action) {
       return {
         ...state,
         activeSideMenu: action.payload
+      }
+    case GET_PROVINCES:
+      let data = processProvinces([], action.payload as IProvince[])
+      return {
+        ...state,
+        provinces:  data
       }
     default: 
       return state

@@ -4,6 +4,9 @@ export const DEFAULT_X_OSS_PROCESS = '?x-oss-process=style/circle'
 export const DEFAULT_AVATAR_URL = 'https://resources.useful-person.com/avatar/default/avatar.png'
 export const BLANK_AVATAR_URL = 'https://resources.useful-person.com/avatar/default/avatar.png'
 
+export const GET_PROVINCES_URL = '/province'
+export const GET_PROVINCES_CHILD_URL = '/province/child'
+
 export const GET_USERINFO_ME_URL = '/user/me'
 
 export const SIGNIN_URL = '/authentication/form'

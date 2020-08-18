@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { UserOutlined, DashboardOutlined, QuestionOutlined, InfoCircleOutlined, TeamOutlined, CompassOutlined, EyeOutlined, KeyOutlined } from '@ant-design/icons'
+import { UserOutlined, DashboardOutlined, QuestionOutlined, InfoCircleOutlined, TeamOutlined, CompassOutlined, KeyOutlined } from '@ant-design/icons'
 import Loading from '../../../loading'
 
 const Profile = React.lazy(() => import('../profile'))
@@ -27,7 +27,7 @@ const menu: IMenu[] = [
     {
         name: '上帝视角',
         key: 'dashboard',
-        icon: <EyeOutlined />
+        icon: <DashboardOutlined />
     },
     {
         name: '角色管理',
@@ -47,12 +47,12 @@ const menu: IMenu[] = [
     {
         name: '地图',
         key: 'map',
-        icon: <DashboardOutlined />
+        icon: <CompassOutlined />
     },
     {
         name: '路线图',
         key: 'roadMap',
-        icon: <CompassOutlined />
+        icon: <DashboardOutlined />
     },
     {
         name: '事件',

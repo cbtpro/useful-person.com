@@ -11,20 +11,23 @@ export interface ISignup {
   imageCode: string;
 }
 export interface IUserInfo {
-  uuid?: string;
-  username?: string;
-  nickname?: string;
-  avatar?: string;
-  mobile?: string;
-  birthday?: string;
-  identityCardName?: string;
-  identityCardNo?: string;
-  email?: string;
-  longitude?: number | undefined;
-  latitude?: number | undefined;
-  hourlyWage?: number;
-  updateTime?: string;
-  createTime?: string;
+  uuid?: string
+  username?: string
+  nickname?: string
+  avatar?: string
+  mobile?: string
+  birthday?: string
+  identityCardName?: string
+  identityCardNo?: string
+  email?: string
+  longitude?: number | undefined
+  latitude?: number | undefined
+  province?: string
+  city?: string
+  county?: string
+  hourlyWage?: number
+  updateTime?: string
+  createTime?: string
   authorities?: [{}]
 }
 export interface IUsersRequest {
@@ -48,6 +51,7 @@ export interface IRole {
 export type ISigninRequest = ISignin
 export type ISignupRequest = ISignup
 export type IUserInfoResponse = IUserInfo | undefined
+export type IProvincesResponse = IProvince[] | undefined
 export type IUsersResponse = IUserInfo[] | undefined
 
 export type IRolesResponse = IRole[] | undefined
