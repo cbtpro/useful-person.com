@@ -120,7 +120,9 @@ const UpdateProfile = (props: IProps) => {
             footer={[
                 <Button key="cancel" onClick={handleCancel}>取消</Button>,
                 <Button key="submit" type="primary" loading={loading} onClick={handleOk}>保存</Button>,
-            ]}>
+            ]}
+            getContainer={false}
+        >
             <Form form={form} {...layout} onFinish={() => { }}
                 initialValues={userInfo}>
                 <Form.Item

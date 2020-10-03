@@ -242,14 +242,14 @@ class QQMap extends React.Component<IProps, IState> {
                     </List.Item>
                     <List.Item>
                         <Row>
-                            <Col>热门城市</Col>
+                            <Col>热门</Col>
                         </Row>
                         <Row onClick={cityClickHandler}>
                             <Col>
                                 <Button type="link" data-value="北京">北京</Button>
                                 <Button type="link" data-value="上海">上海</Button>
                                 <Button type="link" data-value="深圳">深圳</Button>
-                                <Button type="link" data-value="广州">广州</Button>
+                                {/* <Button type="link" data-value="广州">广州</Button> */}
                                 <Button type="link" data-value="武汉">武汉</Button>
                                 <Button type="link" data-value="杭州">杭州</Button>
                                 <Button type="link" data-value="成都">成都</Button>
@@ -260,7 +260,7 @@ class QQMap extends React.Component<IProps, IState> {
                     <List.Item>
                         <Row>
                             <Col>
-                                全国城市列表
+                                全国
                             </Col>
                         </Row>
                         <Row className="hidden">
@@ -272,13 +272,13 @@ class QQMap extends React.Component<IProps, IState> {
                             </Col>
                         </Row>
                     </List.Item>
-                    <List.Item>
+                    {/* <List.Item>
                         <Row onClick={cityClickHandler}>
                             <Col>
                                 <Button type="link" value="中国" data-value="中国">中国</Button>
                             </Col>
                         </Row>
-                    </List.Item>
+                    </List.Item> */}
                     {
                         provinces.map(province => {
                             let { label, value, children } = province
