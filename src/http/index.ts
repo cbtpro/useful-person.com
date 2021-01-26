@@ -1,9 +1,9 @@
-import { message as Message, notification } from 'antd';
-import originAxios, { AxiosRequestConfig } from 'axios';
-import HttpStatus from '../constants/HttpStatus';
-import MediaType from '../constants/MediaType';
-import ReturnCode from '../constants/ReturnCode';
-import { IResponseData } from '../interfaces/ResponseData';
+import { message as Message, notification } from 'antd'
+import originAxios, { AxiosRequestConfig } from 'axios'
+import HttpStatus from '../constants/HttpStatus'
+import MediaType from '../constants/MediaType'
+import ReturnCode from '../constants/ReturnCode'
+import { IResponseData } from '../interfaces/ResponseData'
 
 const BASE_URL = process.env.REACT_APP_BASE_SERVICE_URL
 const axios = originAxios.create({
@@ -14,12 +14,12 @@ const axios = originAxios.create({
 axios.interceptors.response.use(
   function (response) {
     if (response.data && response.data.code === ReturnCode.ERROR) {
-      let errorMsg = response.data.content;
+      let errorMsg = response.data.content
       errorMsg && notification.error({
         message: '消息',
         description: errorMsg
-      });
-      return Promise.reject(errorMsg);
+      })
+      return Promise.reject(errorMsg)
     } else {
       let { content } = response.data
       content && notification.info({
@@ -27,16 +27,16 @@ axios.interceptors.response.use(
         description: content
       })
     }
-    return response.data;
+    return response.data
   },
   function (error) {
     let { response } = error
     if (response) {
       let { status, data: { content } } = response
       if (status === HttpStatus.UNAUTHORIZED) {
-        console.warn('用户未登录，请登录！');
+        console.warn('用户未登录，请登录！')
       } else if (status === HttpStatus.FORBIDDEN) {
-        Message.error('没有请求的权限！');
+        Message.error('没有请求的权限！')
       } else if (status === HttpStatus.INTERNAL_SERVER_ERROR || status === HttpStatus.BAD_REQUEST) {
         content && notification.error({
           message: '消息',

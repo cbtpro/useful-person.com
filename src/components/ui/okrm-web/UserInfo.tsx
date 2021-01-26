@@ -10,6 +10,7 @@ import { IUserInfo } from '../../../interfaces/UserInfo'
 import { doSignout, getUserInfoMe } from '../../../redux/userInfo'
 import UpdatePassword from './UpdatePassword'
 import UpdateProfile from './UpdateProfile'
+import Login from './Login'
 
 const { SubMenu, ItemGroup } = Menu
 
@@ -95,6 +96,7 @@ const UserInfo = (props: IProps) => {
       </div>
       <UpdateProfile visible={isUpdateProfileOpened} close={() => setIsUpdateProfileOpened(false)} />
       <UpdatePassword visible={isUpdatePasswordOpened} close={() => setIsUpdatePasswordOpened(false) } />
+      <Login />
     </div>
   )
 }
