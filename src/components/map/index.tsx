@@ -169,7 +169,7 @@ class QQMap extends React.Component<IProps, IState> {
             //searchService.searchInBounds(keyword, region);
 
         }
-        searchKeyword()
+        // searchKeyword()
         this.setState({ ready: true })
     }
     destory() {

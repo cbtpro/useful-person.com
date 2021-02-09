@@ -1,5 +1,9 @@
 import React, { Suspense } from 'react'
-import { UserOutlined, DashboardOutlined, QuestionOutlined, InfoCircleOutlined, TeamOutlined, CompassOutlined, KeyOutlined } from '@ant-design/icons'
+import {
+    UserOutlined, DashboardOutlined, QuestionOutlined, InfoCircleOutlined, TeamOutlined, CompassOutlined, KeyOutlined,
+    SettingOutlined,
+} from '@ant-design/icons'
+import IconFont from '../../../icons/iconfont'
 import Loading from '../../../loading'
 
 const Profile = React.lazy(() => import('../profile'))
@@ -10,12 +14,14 @@ const Users = React.lazy(() => import('../users'))
 const Map = React.lazy(() => import('../map'))
 const RoadMap = React.lazy(() => import('../roadMap'))
 const Event = React.lazy(() => import('../event'))
+const Setting = React.lazy(() => import('../setting'))
 const About = React.lazy(() => import('../about'))
 
 export interface IMenu {
     name: string;
     key: string;
-    icon: any
+    icon: any,
+    children?: IMenu[],
 }
 
 const menu: IMenu[] = [
@@ -60,6 +66,20 @@ const menu: IMenu[] = [
         icon: <QuestionOutlined />
     },
     {
+        name: '系统设置',
+        key: 'setting',
+        icon: <SettingOutlined />,
+        children: [{
+            name: '城市设置',
+            key: 'city-setting',
+            icon: <IconFont type='iconcity' />,
+        }, {
+            name: '学院设置',
+            key: 'school-setting',
+            icon: <IconFont type='iconcity' />,
+        }],
+    },
+    {
         name: '关于',
         key: 'about',
         icon: <InfoCircleOutlined />
@@ -75,6 +95,7 @@ const tabs: ITabs = {
     'map': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><Map /></Suspense>,
     'roadMap': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><RoadMap /></Suspense>,
     'event': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><Event /></Suspense>,
+    'setting': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)'}} />}><Setting /></Suspense>,
     'about': <Suspense fallback={<Loading style={{ background: 'none', height: 'calc(100vh - 173px)' }} />}><About /></Suspense>
 }
 

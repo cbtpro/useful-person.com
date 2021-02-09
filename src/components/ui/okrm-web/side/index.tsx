@@ -29,12 +29,22 @@ const Side = (props: IProps) => {
         }
         props.onTogglePane(activeMenu)
     }
-    const renderMenu = (menu: any) => {
-        if (Array.isArray(menu)) {
-            return menu.map(item => {
+    const renderMenu = (menus: IMenu[]) => {
+        if (Array.isArray(menus)) {
+            return menus.map(item => {
+                const { children } = item
+                if (children && children.length > 0) {
+                    return (
+                        <Menu.SubMenu key={item.key} title={item.name} onTitleClick={() => clickMenu(item)}>
+                            {
+                                renderMenu(children)
+                            }
+                        </Menu.SubMenu>
+                    )
+                }
                 return (
-                    <Menu.Item key={item.key}>
-                        <div onClick={() => clickMenu(item)}>{item.icon}<span>{item.name}</span></div>
+                    <Menu.Item key={item.key} title={item.name} onClick={() => clickMenu(item)}>
+                        <div >{item.icon}<span>{item.name}</span></div>
                     </Menu.Item>
                 )
             })
