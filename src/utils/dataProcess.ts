@@ -1,6 +1,6 @@
 import { CascaderOptionType } from "antd/lib/cascader"
 
-export function processProvinces(result: CascaderOptionType[] = [], provinces: IProvince[], parentUpperCode = '86') {
+export function processProvinces(result: CascaderOptionType[] = [], provinces: IProvince[], parentUpperCode: string | number | undefined = '86') {
     if (!Array.isArray(provinces)) {
         return result
     }

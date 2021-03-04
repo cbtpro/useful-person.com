@@ -18,7 +18,7 @@ const Container = (props: IProps) => {
         props.onChangePane(key)
     }
     // 这里key的类型是string，antd的ts类型定义文件写得有问题
-    const tabsEdit = (key: string | React.MouseEvent<HTMLElement>, action: 'add' | 'remove') => {
+    const tabsEdit = (key: string, action: 'add' | 'remove') => {
         if (action === 'remove') {
             props.onClosePane(key as string)
         }

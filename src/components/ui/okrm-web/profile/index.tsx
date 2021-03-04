@@ -48,7 +48,8 @@ class ProfilePage extends React.Component<IUserProp, IUserState> {
           tags={<Tag color="blue">注册用户</Tag>}
           extra={[
             <Button key="2"
-              type="danger"
+              type="primary"
+              danger
               onClick={() => {
               }}>删除账号</Button>
           ]}

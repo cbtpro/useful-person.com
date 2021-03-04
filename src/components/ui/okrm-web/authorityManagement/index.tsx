@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Form, Select, Row, Col, Button, Avatar, Space, Popconfirm } from 'antd'
+import { Table, Form, Select, Row, Col, Button, Avatar, Space, Popconfirm, TablePaginationConfig } from 'antd'
 import debounce from 'lodash/debounce';
 import { post, put, del } from '../../../../http'
 import { QUERY_USERS_HASADMIN, QUERY_USERS_URL, ADD_USERS_TO_ADMIN_ROLE, REMOVE_USER_FROM_ADMIN_ROLE } from '../../../../constants/urls'
@@ -7,12 +7,11 @@ import { IUserInfo, IUsersResponse } from '../../../../interfaces/UserInfo'
 import { SelectValue } from 'antd/lib/select'
 import { IResponseData, IPageable } from '../../../../interfaces/ResponseData'
 import moment from 'moment'
-import { PaginationConfig } from 'antd/lib/pagination/Pagination';
 const { Option } = Select
 
 export default () => {
     let [loading, setLoading] = useState(false)
-    const [pagination, setPagination] = useState<PaginationConfig>({
+    const [pagination, setPagination] = useState<TablePaginationConfig>({
         defaultPageSize: 10,
         position: ['bottomCenter']
     })
@@ -159,7 +158,7 @@ export default () => {
                         </Select>
                     </Col>
                     <Col span="8">
-                        <Button type="danger" htmlType="submit">添加管理员权限</Button>
+                        <Button type="primary" danger htmlType="submit">添加管理员权限</Button>
                     </Col>
                 </Row>
             </Form.Item>

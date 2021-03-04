@@ -77,7 +77,7 @@ const UpdateProfile = (props: IProps) => {
             <div className="ant-upload-text">Upload</div>
         </div>
     );
-    const beforeUpload = (file: RcFile, fileList: RcFile[]): boolean | PromiseLike<void> => true
+    const beforeUpload = (file: RcFile, FileList: RcFile[]): boolean | Promise<void | File | Blob> => true
     const avatarChange = (info: UploadChangeParam<UploadFile<any>>) => {
         let { file } = info
         let { status, response } = file

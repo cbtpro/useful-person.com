@@ -3,13 +3,12 @@ import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import { ColumnProps } from 'antd/lib/table/Column'
-import { DatePicker, Table, Button, Form, Row, Col, Input, Select } from 'antd'
+import { DatePicker, Table, Button, Form, Row, Col, Input, Select, TablePaginationConfig } from 'antd'
 import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import { IUsersResponse, IRole, IUserInfo } from '../../../../interfaces/UserInfo'
 import { post } from '../../../../http'
 import { IResponseData, IPageable } from '../../../../interfaces/ResponseData'
 import { QUERY_USERS_URL } from '../../../../constants/urls'
-import { PaginationConfig } from 'antd/lib/pagination/Pagination'
 import { addPane, togglePane } from '../../../../redux/appSettings'
 import UserDetail from './UserDetail'
 
@@ -33,7 +32,7 @@ const Users = (props: IProps) => {
     let [registerTimeTo, setRegisterTimeTo] = useState<string | number | undefined>()
     let [enabled, setEnabled] = useState<"true" | "false" | undefined>(undefined)
     const [users, setUsers] = useState<IUsersResponse>(undefined)
-    const [pagination, setPagination] = useState<PaginationConfig>({
+    const [pagination, setPagination] = useState<TablePaginationConfig>({
         defaultPageSize: 10,
         position: ['bottomCenter']
     })

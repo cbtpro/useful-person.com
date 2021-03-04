@@ -1,5 +1,4 @@
 import { Button, Col, Form, Input, Modal, Row } from 'antd'
-import { useForm } from 'antd/lib/form/util'
 import React, { useState } from 'react'
 import { sendEmailCode, updateEmail } from '../../../../../utils/sendValidatorCode'
 import ImageCode from '../../../../imageCode'
@@ -16,8 +15,8 @@ const layout = {
 }
 
 export default (props: IProps) => {
-    const [sendEmailCodeForm] = useForm()
-    const [bindNewEmailForm] = useForm()
+    const [sendEmailCodeForm] = Form.useForm()
+    const [bindNewEmailForm] = Form.useForm()
     const [loading, setLoading] = useState(false)
 
     const getEmailCode = async () => {

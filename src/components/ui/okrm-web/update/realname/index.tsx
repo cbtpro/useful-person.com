@@ -1,5 +1,4 @@
 import { Button, Form, Input, Modal } from 'antd'
-import { useForm } from 'antd/lib/form/util'
 import React, { useState } from 'react'
 import { UPDATE_REALNAME_URL } from '../../../../../constants/urls'
 import { put } from '../../../../../http'
@@ -20,7 +19,7 @@ const layout = {
 }
 export default (props: IProps) => {
     const [loading, setLoading] = useState(false)
-    const [form] = useForm()
+    const [form] = Form.useForm()
     const updateRealname = (request : { idcardname: string, idcardno: string }) => {
         put<IResponseData<string>>(UPDATE_REALNAME_URL, qs.stringify(request), {
             headers: {
