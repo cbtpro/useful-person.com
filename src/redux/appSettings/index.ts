@@ -4,7 +4,6 @@ import { GET_PROVINCES_URL } from '../../constants/urls'
 import { IResponseData } from '../../interfaces/ResponseData'
 import { get } from '../../http'
 import { IProvincesResponse } from '../../interfaces/UserInfo'
-import { processProvinces } from '../../utils/dataProcess'
 
 type State = Readonly<{
   theme: string
@@ -139,10 +138,9 @@ export default function(state = initialState, action: Action) {
         activeSideMenu: action.payload
       }
     case GET_PROVINCES:
-      let data = processProvinces([], action.payload as IProvince[])
       return {
         ...state,
-        provinces:  data
+        provinces:  action.payload as IProvince[]
       }
     default: 
       return state

@@ -18,7 +18,7 @@ const Container = (props: IProps) => {
         props.onChangePane(key)
     }
     // 这里key的类型是string，antd的ts类型定义文件写得有问题
-    const tabsEdit = (key: string, action: 'add' | 'remove') => {
+    const tabsEdit = (key: string | React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>, action: 'add' | 'remove') => {
         if (action === 'remove') {
             props.onClosePane(key as string)
         }
@@ -38,8 +38,11 @@ const Container = (props: IProps) => {
                     props.panes.map(pane => {
                         return <Tabs.TabPane
                             key={pane.key}
-                            tab={pane.name}>
-                            <Card style={{ margin: '24px' }}>
+                            tab={
+                                <span>{pane.icon}{pane.name}</span>
+                            }
+                        >
+                            <Card>
                                 {pane.content}
                             </Card>
                         </Tabs.TabPane>

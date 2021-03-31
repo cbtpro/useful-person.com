@@ -7,6 +7,8 @@ import Loading from '../loading'
 // import UserLocationWindow from './UserLocationWindow'
 // import { MapType } from '../../interfaces/QQMap'
 import RadioGroup from 'antd/lib/radio/group'
+import { processProvinces } from '../../utils/dataProcess'
+import { CascaderOptionType } from 'antd/lib/cascader'
 const { Search } = Input
 
 const styles = {
@@ -16,25 +18,25 @@ const styles = {
     }
 }
 interface IProps {
-    provinces: IProvinceCascade[]
+    provinces: IProvince[]
 }
 interface IState {
     map: any
-    provinces: IProvinceCascade[]
-    container: any
-    ready: boolean
-    currentLocation: string
-    getCurrentLocationLoading: boolean
-    searchOpened: boolean
-    citylocation: any
-    showSearchRegion: boolean
+    provincesCascadeData: CascaderOptionType[];
+    container: any;
+    ready: boolean;
+    currentLocation: string;
+    getCurrentLocationLoading: boolean;
+    searchOpened: boolean;
+    citylocation: any;
+    showSearchRegion: boolean;
 }
 class QQMap extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props)
         const { provinces } = props
         this.state = {
-            provinces,
+            provincesCascadeData: processProvinces([], provinces),
             container: null,
             ready: false,
             currentLocation: '获取中...',
@@ -147,9 +149,7 @@ class QQMap extends React.Component<IProps, IState> {
         //     }
         // }
         //设置搜索的范围和关键字等属性
-        function searchKeyword() {
-            var keyword = '龙华公园';
-            var region = '深圳市';
+        function searchKeyword(keyword: string, region: string) {
             // var pageIndex = parseInt(document.getElementById("pageIndex").value);
             // var pageCapacity = parseInt(document.getElementById("pageCapacity").value);
             // clearOverlays(markers);
@@ -169,7 +169,9 @@ class QQMap extends React.Component<IProps, IState> {
             //searchService.searchInBounds(keyword, region);
 
         }
-        // searchKeyword()
+        const keyword = '龙华公园'
+        const region = '深圳市'
+        searchKeyword(keyword, region)
         this.setState({ ready: true })
     }
     destory() {
@@ -222,7 +224,7 @@ class QQMap extends React.Component<IProps, IState> {
             citylocation.searchCityByName(value)
         }
         const localtionSelectPanel = () => {
-            const { currentLocation, getCurrentLocationLoading, searchOpened, provinces } = this.state
+            const { currentLocation, getCurrentLocationLoading, searchOpened, provincesCascadeData } = this.state
             const leftSpan = 4, rightSpan = 20
             return (
                 <List bordered={true} style={{ overflowY: 'scroll', width: 450, height: '70vh', backgroundColor: '#fff' }}>
@@ -280,7 +282,7 @@ class QQMap extends React.Component<IProps, IState> {
                         </Row>
                     </List.Item> */}
                     {
-                        provinces.map(province => {
+                        provincesCascadeData.map(province => {
                             let { label, value, children } = province
                             return <List.Item key={value}>
                                 <Row onClick={cityClickHandler}>

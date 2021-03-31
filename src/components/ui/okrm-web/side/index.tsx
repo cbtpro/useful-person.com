@@ -18,12 +18,16 @@ interface IProps {
 
 const Side = (props: IProps) => {
     const clickMenu = (item: IMenu) => {
+        if (item.children) {
+            return
+        }
         const panes = props.panes.slice()
         const activeMenu = item.key
         if (!panes.some(pane => pane.key === activeMenu)) {
             props.onAddPane({
                 name: item.name,
                 key: item.key,
+                icon: item.icon,
                 content: tabs[item.key]
             })
         }
@@ -35,7 +39,7 @@ const Side = (props: IProps) => {
                 const { children } = item
                 if (children && children.length > 0) {
                     return (
-                        <Menu.SubMenu key={item.key} title={item.name} onTitleClick={() => clickMenu(item)}>
+                        <Menu.SubMenu key={item.key} title={item.name} icon={item.icon} onTitleClick={() => clickMenu(item)}>
                             {
                                 renderMenu(children)
                             }
@@ -56,7 +60,7 @@ const Side = (props: IProps) => {
                 <img src={require('../../../../assets/images/shengerbuyong.svg')} alt="" />
                 <h1>生而不庸</h1>
             </div>
-            <Menu selectedKeys={[props.activeMenu]} theme="light" mode="inline" style={{ paddingTop: 16 }}>
+            <Menu selectedKeys={[props.activeMenu]} theme="light" mode="vertical" style={{ paddingTop: 16 }}>
                 {renderMenu(menu)}
             </Menu>
         </div >

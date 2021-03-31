@@ -19,6 +19,8 @@ import BindMobile from './update/mobile/bindMobile';
 import UnBindMobile from './update/mobile/unbindMobile';
 import RealnameSystem from './update/realname';
 import { getProvinces } from '../../../redux/appSettings';
+import { processProvinces } from '../../../utils/dataProcess';
+import { CascaderOptionType } from 'antd/lib/cascader';
 
 interface IProps {
     onGetUserInfoMe(callback?: () => void): void
@@ -36,6 +38,7 @@ const layout = {
 
 const UpdateProfile = (props: IProps) => {
     const { provinces, onGetProvinces } = props
+    const [provincesCascadeData, setProvinceCascadeData] = useState([] as CascaderOptionType[])
     const [form] = Form.useForm()
     const [loading, setLoading] = useState(false)
     const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined)
@@ -52,6 +55,9 @@ const UpdateProfile = (props: IProps) => {
     useEffect(() => {
         props?.userInfo && form.setFieldsValue(props?.userInfo)
     }, [form, props])
+    useEffect(() => {
+        setProvinceCascadeData(processProvinces([], provinces))
+    }, [props, provinces])
     const handleCancel = () => {
         props.close()
     }
@@ -163,7 +169,7 @@ const UpdateProfile = (props: IProps) => {
                     </Row>
                 </Form.Item>
                 <Form.Item name="region" label="所在地区">
-                    <Cascader options={provinces} onChange={onProvinceChange} changeOnSelect />
+                    <Cascader options={provincesCascadeData} onChange={onProvinceChange} changeOnSelect />
                 </Form.Item>
                 <Form.Item name="birthday" label="生日" >
                     <DatePicker />
