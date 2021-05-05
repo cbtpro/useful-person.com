@@ -8,7 +8,6 @@ import { IUserInfo } from '../../../../interfaces/UserInfo'
 import './index.less'
 import { doSignout } from '../../../../redux/userInfo'
 
-
 const Content = (content: { children: JSX.Element, extraContent: JSX.Element }) => {
   return (
     <Row>
@@ -39,11 +38,15 @@ interface IUserProp {
 }
 class ProfilePage extends React.Component<IUserProp, IUserState> {
   render() {
-    let { userInfo } = this.props
+    let {
+      userInfo,
+    } = this.props
+    const { username, nickname } = userInfo || {}
+    const title = <span><span className="username">{username}</span>#<span className="nickname">{nickname}</span></span>
     return (
       <>
         <PageHeader
-          title={userInfo?.nickname}
+          title={title}
           className="site-page-header"
           tags={<Tag color="blue">注册用户</Tag>}
           extra={[

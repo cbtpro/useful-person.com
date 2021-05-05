@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { withRouter, RouteComponentProps, RouteProps } from 'react-router-dom'
 
 import { Dispatch, bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -12,7 +12,7 @@ import { doSignup } from '../../redux/userInfo'
 
 interface IProps {
   onSignup(param: ISignupRequest, callback?: () => void): void;
-  history: any;
+  history: RouteProps;
 }
 interface IState {}
 

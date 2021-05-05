@@ -1,11 +1,11 @@
 import moment from 'moment'
-import { DEFAULT_X_OSS_PROCESS, BLANK_AVATAR_URL } from '../constants/urls'
+import { BLANK_AVATAR_URL } from '../constants/urls'
 import { IUserInfo } from '../interfaces/UserInfo'
 
 export default (userInfo: IUserInfo) => {
     let { uuid, username, nickname, avatar, mobile, birthday, identityCardName, identityCardNo, email, longitude, latitude, province, city, county, hourlyWage, updateTime, createTime } = userInfo
     // @ts-ignore
-    document.getElementById('favicon').href = (avatar || BLANK_AVATAR_URL) + DEFAULT_X_OSS_PROCESS
+    document.getElementById('favicon').href = (avatar || BLANK_AVATAR_URL)
     return {
         uuid,
         username,

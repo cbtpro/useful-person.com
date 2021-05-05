@@ -22,7 +22,10 @@ type Action = {
 
 const initialState: State = {
   userIsLogin: true,
-  userInfo: undefined
+  userInfo: {
+    username: '未登录',
+    nickname: '未登录',
+  },
 }
 
 export function getUserInfoMe(callback?: () => void) {

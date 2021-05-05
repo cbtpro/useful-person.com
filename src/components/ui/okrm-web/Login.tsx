@@ -10,11 +10,11 @@ interface IProps {
 class Login extends React.Component<IProps, {}> {
     render() {
         const { userIsLogin } = this.props
-        console.log('>>>>>>>>>>>>>>>>>>>>', userIsLogin)
         return (
             <Modal
                 title="登陆"
                 visible={!userIsLogin}
+                footer={false}
             >
                 <Signin />
             </Modal>
