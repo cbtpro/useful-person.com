@@ -15,6 +15,7 @@
 if (process.env.NODE_ENV === 'development') {
     const Mock = require('mockjs')
     require('./services/demo')
+    // require('./services/user/me')
 
     Mock.setup({
         timeout: 800,
