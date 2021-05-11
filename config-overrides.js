@@ -1,6 +1,7 @@
 const { override, fixBabelImports, addLessLoader, addWebpackAlias, addWebpackPlugin } = require('customize-cra')
 const path = require('path')
 const vConsolePlugin = require('vconsole-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const isEnvProduction = process.env.NODE_ENV === 'production'
 
 module.exports = override(
@@ -21,7 +22,12 @@ module.exports = override(
   addWebpackPlugin(
     new vConsolePlugin({
         filter: [],  // 需要过滤的入口文件
-        enable: !isEnvProduction // 发布代码前记得改回 false
+        enable: !isEnvProduction,
+    }),
+  ),
+  addWebpackPlugin(
+    new BundleAnalyzerPlugin({
+      analyzerMode: isEnvProduction ? 'disabled' : 'server',
     }),
   ),
 )
