@@ -17,8 +17,39 @@ import { builder } from '../util'
 
 const demo = () => {
     return builder({
-        data: Date.now(),
+        "code": 0,
+        "data": [
+            {
+            "id": 0,
+            "key": 0,
+            "name": "王祖贤",
+            "sex": "女",
+            "description": "90后美女"
+            },
+            {
+            "id": 1,
+            "key": 1,
+            "name": "彭于晏",
+            "sex": "男",
+            "description": "自律"
+            },
+            {
+            "id": 2,
+            "key": 2,
+            "name": "江疏影",
+            "sex": "女",
+            "description": "上海美女"
+            },
+            {
+            "id": 3,
+            "key": 3,
+            "name": "刘亦菲",
+            "sex": "女",
+            "description": "神仙姐姐"
+            }
+        ],
+        "content": "OK"
     })
 }
 
-Mock.mock(/\/api\/demo/, 'post', demo)
+Mock.mock(/\/api\/demo/, 'get', demo)

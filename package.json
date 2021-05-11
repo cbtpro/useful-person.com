@@ -30,7 +30,6 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build --profile",
     "test": "react-app-rewired test",
-    "server": "cd mock && hs -p 5000 -a localhost",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
