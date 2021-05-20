@@ -18,7 +18,7 @@ const styles = {
     }
 }
 interface IProps {
-    provinces: IProvince[]
+    provinces: IProvince[];
 }
 interface IState {
     map: any
@@ -32,6 +32,10 @@ interface IState {
     showSearchRegion: boolean;
 }
 class QQMap extends React.Component<IProps, IState> {
+    // props默认值
+    static defaultProps = {
+        provinces: [],
+    }
     constructor(props: IProps) {
         super(props)
         const { provinces } = props
