@@ -24,6 +24,9 @@
   ],
   "exclude": [
     "src/*.test.*",
-    "src/test/"
-  ]
+    "src/test/",
+    "node_modules",
+    "dist"
+  ],
+  "extends": "./paths.json"
 }
