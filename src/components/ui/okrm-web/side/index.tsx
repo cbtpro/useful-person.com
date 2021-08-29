@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import { Menu } from 'antd'
 import { IMenu, tabs, menu } from './tabs'
+import ReleaseInfo from './RelaseInfo'
 
 import './index.less'
 import { addPane, togglePane } from '../../../../redux/appSettings'
@@ -63,6 +64,7 @@ const Side = (props: IProps) => {
             <Menu selectedKeys={[props.activeMenu]} theme="light" mode="vertical" style={{ paddingTop: 16 }}>
                 {renderMenu(menu)}
             </Menu>
+            <ReleaseInfo />
         </div >
     )
 }
