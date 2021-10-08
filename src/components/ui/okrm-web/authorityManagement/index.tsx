@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Form, Select, Row, Col, Button, Avatar, Space, Popconfirm } from 'antd'
+import { Table, Form, Select, Row, Col, Button, Avatar, Space, Popconfirm, TablePaginationConfig } from 'antd'
 import debounce from 'lodash/debounce';
 import { post, put, del } from '../../../../http'
 import { QUERY_USERS_HASADMIN, QUERY_USERS_URL, ADD_USERS_TO_ADMIN_ROLE, REMOVE_USER_FROM_ADMIN_ROLE } from '../../../../constants/urls'
@@ -7,12 +7,11 @@ import { IUserInfo, IUsersResponse } from '../../../../interfaces/UserInfo'
 import { SelectValue } from 'antd/lib/select'
 import { IResponseData, IPageable } from '../../../../interfaces/ResponseData'
 import moment from 'moment'
-import { PaginationConfig } from 'antd/lib/pagination/Pagination';
 const { Option } = Select
 
 export default () => {
     let [loading, setLoading] = useState(false)
-    const [pagination, setPagination] = useState<PaginationConfig>({
+    const [pagination, setPagination] = useState<TablePaginationConfig>({
         defaultPageSize: 10,
         position: ['bottomCenter']
     })
@@ -23,8 +22,9 @@ export default () => {
     let fetchUsersHasNoAdmin = debounce(async (value: SelectValue) => {
         setFetching(true)
         setNormalUsers([])
-        const { content, totalElements } = await post<IResponseData<IPageable<IUserInfo[]>>>(QUERY_USERS_URL, { username: value }) as IPageable<IUserInfo>
+        const { content } = await post<IResponseData<IPageable<IUserInfo[]>>>(QUERY_USERS_URL, { username: value }) as IPageable<IUserInfo>
         setNormalUsers(content as IUserInfo[])
+
     }, 800)
     const fetchAdmins = async (params = {}) => {
         setLoading(true)
@@ -153,12 +153,12 @@ export default () => {
             <Form.Item label="用户" name="username">
                 <Row gutter={24}>
                     <Col span="16">
-                        <Select mode="multiple" placeholder="选择一个需要授权的普通用户" onSearch={fetchUsersHasNoAdmin} onChange={handleChange} optionLabelProp="label">
+                        <Select mode="multiple" placeholder="选择一个需要授权的普通用户" onSearch={fetchUsersHasNoAdmin} onChange={handleChange} loading={fetching} optionLabelProp="label">
                             {options}
                         </Select>
                     </Col>
                     <Col span="8">
-                        <Button type="danger" htmlType="submit">添加管理员权限</Button>
+                        <Button type="primary" danger htmlType="submit">添加管理员权限</Button>
                     </Col>
                 </Row>
             </Form.Item>

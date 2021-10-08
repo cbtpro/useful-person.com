@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 // import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Modal, Button, Form, Input } from 'antd'
-import { useForm } from 'antd/lib/form/util'
 import { IUserInfo } from '../../../interfaces/UserInfo'
 import { put } from '../../../http'
 import { UPDATE_USER_PASSWORD_URL } from '../../../constants/urls'
@@ -23,7 +22,7 @@ interface IProps {
 const UpdatePassword = (props: IProps) => {
     let { userInfo } = props
     const [loading, setLoading] = useState(false)
-    const [form] = useForm()
+    const [form] = Form.useForm()
     const updateUserPassword = (request: { oldPassword: string, password: string}) => {
         return put<IResponseData<string>>(UPDATE_USER_PASSWORD_URL, qs.stringify(request), {
             headers: {

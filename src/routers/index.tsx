@@ -10,7 +10,7 @@ const Root = () => (
   <HashRouter>
     <Route path="/" exact component={Entrance} />
     <Route path="/portal/*" exact component={App} />
-    <Route path="/ui/okrm-web" exact component={OkrmWeb} />
+    <Route path="/ui/okrm-web" exact render={() => <OkrmWeb />} />
     <Route path="/ui/okrm-web/about" exact component={WebAbout} />
   </HashRouter>
 )

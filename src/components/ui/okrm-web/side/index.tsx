@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import { Menu } from 'antd'
 import { IMenu, tabs, menu } from './tabs'
+import ReleaseInfo from './RelaseInfo'
 
 import './index.less'
 import { addPane, togglePane } from '../../../../redux/appSettings'
@@ -18,23 +19,37 @@ interface IProps {
 
 const Side = (props: IProps) => {
     const clickMenu = (item: IMenu) => {
+        if (item.children) {
+            return
+        }
         const panes = props.panes.slice()
         const activeMenu = item.key
         if (!panes.some(pane => pane.key === activeMenu)) {
             props.onAddPane({
                 name: item.name,
                 key: item.key,
+                icon: item.icon,
                 content: tabs[item.key]
             })
         }
         props.onTogglePane(activeMenu)
     }
-    const renderMenu = (menu: any) => {
-        if (Array.isArray(menu)) {
-            return menu.map(item => {
+    const renderMenu = (menus: IMenu[]) => {
+        if (Array.isArray(menus)) {
+            return menus.map(item => {
+                const { children } = item
+                if (children && children.length > 0) {
+                    return (
+                        <Menu.SubMenu key={item.key} title={item.name} icon={item.icon} onTitleClick={() => clickMenu(item)}>
+                            {
+                                renderMenu(children)
+                            }
+                        </Menu.SubMenu>
+                    )
+                }
                 return (
-                    <Menu.Item key={item.key}>
-                        <div onClick={() => clickMenu(item)}>{item.icon}<span>{item.name}</span></div>
+                    <Menu.Item key={item.key} title={item.name} onClick={() => clickMenu(item)}>
+                        <div >{item.icon}<span>{item.name}</span></div>
                     </Menu.Item>
                 )
             })
@@ -46,9 +61,10 @@ const Side = (props: IProps) => {
                 <img src={require('../../../../assets/images/shengerbuyong.svg')} alt="" />
                 <h1>生而不庸</h1>
             </div>
-            <Menu selectedKeys={[props.activeMenu]} theme="light" mode="inline" style={{ paddingTop: 16 }}>
+            <Menu selectedKeys={[props.activeMenu]} theme="light" mode="vertical" style={{ paddingTop: 16 }}>
                 {renderMenu(menu)}
             </Menu>
+            <ReleaseInfo />
         </div >
     )
 }

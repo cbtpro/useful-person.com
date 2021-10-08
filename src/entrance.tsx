@@ -5,14 +5,13 @@ export default () => {
   let history = useHistory()
   useEffect(() => {
     console.log('正在进入首页')
+    const toOkrmWeb = () => {
+      history.push('/portal/')
+    }
     setTimeout(() => {
       toOkrmWeb()
     }, 1000)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [history])
   
-  const toOkrmWeb = () => {
-    history.push('/portal/')
-  }
   return <p>正在进入首页</p>
 }

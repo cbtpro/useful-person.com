@@ -29,11 +29,11 @@ interface IProps {
 
 const Signin = (props: IProps) => {
   let history = useHistory()
-  const submit = (param: any) => {
-    props.onSignin(param as ISigninRequest, () => {
+  const submit = (values: ISigninRequest) => {
+    props.onSignin(values, () => {
       Message.info('登陆成功！')
       props.onGetUserInfoMe()
-      history.push('/portal/profile')
+      history.push('/ui/okrm-web')
     })
   }
   return (
@@ -66,14 +66,14 @@ const Signin = (props: IProps) => {
             <ImageCode />
           </Form.Item>
         </Form.Item>
-        <Form.Item label="记住我" name="remember-me" valuePropName="checked">
-          <Switch defaultChecked />
+        <Form.Item label="记住我" name="remember-me" valuePropName="checked" initialValue={true}>
+          <Switch />
         </Form.Item>
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">登陆</Button>
         </Form.Item>
         <Form.Item {...tailLayout}>
-          <SigninOrSignup />
+          <SigninOrSignup type="is-signup" />
         </Form.Item>
       </Form>
     </>

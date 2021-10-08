@@ -1,5 +1,4 @@
 import { Button, Col, Form, Input, Modal, Row } from 'antd'
-import { useForm } from 'antd/lib/form/util'
 import React, { useState } from 'react'
 import { MOBILE_FORM_RULES } from '../../../../../constants/App'
 import { sendSmsCode, unbindMobile } from '../../../../../utils/sendValidatorCode'
@@ -19,8 +18,8 @@ const layout = {
 
 export default (props: IProps) => {
     const [loading, setLoading] = useState(false)
-    const [validatorOldMobileForm] = useForm()
-    const [unbindMobileForm] = useForm()
+    const [validatorOldMobileForm] = Form.useForm()
+    const [unbindMobileForm] = Form.useForm()
 
     const getSmsCode = async () => {
         setLoading(true)

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Form, Input, Button } from 'antd'
 import { IRole } from '../../../../interfaces/UserInfo'
-import { useForm } from 'antd/lib/form/util'
 import { post, put } from '../../../../http'
 import { ADD_ROLE_URL, UPDATE_ROLE_URL } from '../../../../constants/urls'
+import { useForm } from 'antd/lib/form/Form'
 
 const layout = {
     labelCol: { span: 6 },

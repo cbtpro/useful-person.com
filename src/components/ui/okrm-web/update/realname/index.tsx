@@ -1,10 +1,11 @@
 import { Button, Form, Input, Modal } from 'antd'
-import { useForm } from 'antd/lib/form/util'
 import React, { useState } from 'react'
 import { UPDATE_REALNAME_URL } from '../../../../../constants/urls'
 import { put } from '../../../../../http'
 import { IResponseData } from '../../../../../interfaces/ResponseData'
 import { asyncValidatorIdcardNo } from '../../../../../utils/asyncFieldValueValidator'
+import qs from 'qs'
+import MediaType from '../../../../../constants/MediaType'
 
 interface IProps {
     onSuccess: () => void
@@ -18,9 +19,13 @@ const layout = {
 }
 export default (props: IProps) => {
     const [loading, setLoading] = useState(false)
-    const [form] = useForm()
+    const [form] = Form.useForm()
     const updateRealname = (request : { idcardname: string, idcardno: string }) => {
-        put<IResponseData<string>>(UPDATE_REALNAME_URL, request)
+        put<IResponseData<string>>(UPDATE_REALNAME_URL, qs.stringify(request), {
+            headers: {
+                'content-type': MediaType.APPLICATION_FORM_URLENCODED_VALUE
+            }
+        })
     }
     const ok = async () => {
         setLoading(true)

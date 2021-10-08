@@ -34,10 +34,11 @@ interface IProps {
   onGetUserInfoMe(callback?: () => void): void;
   onSignout(callback?: () => void) : void;
   userInfo: IUserInfo;
+  userIsLogin: boolean;
 }
 
 const HomeUserInfo = (props: IProps) => {
-  let { userInfo } = props
+  let { userInfo, userIsLogin } = props
   let [isFullscreen, setFullscreen] = useState(false)
   let history = useHistory()
   useEffect(() => {
@@ -74,13 +75,12 @@ const HomeUserInfo = (props: IProps) => {
           <SubMenu title={
             <div style={styles.avatarBox}>
             <Avatar size='small' src={userInfo ? userInfo.avatar : BLANK_AVATAR_URL} />
-            &nbsp;<span>{userInfo ? userInfo.username : '未登录'}</span></div>
+            &nbsp;<span>{userIsLogin ? userInfo?.username : '未登录'}</span></div>
           }>
             <ItemGroup title="用户中心">
-              {userInfo && <Menu.Item key={0} onClick={toOkrmWeb}><UserOutlined />编辑个人信息</Menu.Item> }
-              {userInfo && <Menu.Item key={1} onClick={toOkrmWeb}><UserOutlined />修改密码</Menu.Item> }
-              {userInfo && <Menu.Item key={3} onClick={signout}><LogoutOutlined />退出登录</Menu.Item> }
-              {!userInfo && <Menu.Item key={2} onClick={() => history.push('/portal/signin') }><LoginOutlined />登录</Menu.Item> }
+              {userIsLogin && <Menu.Item key={0} onClick={toOkrmWeb}><UserOutlined />进入后台</Menu.Item> }
+              {userIsLogin && <Menu.Item key={3} onClick={signout}><LogoutOutlined />退出登录</Menu.Item> }
+              {!userIsLogin && <Menu.Item key={2} onClick={() => history.push('/portal/signin') }><LoginOutlined />登录</Menu.Item> }
             </ItemGroup>
             <ItemGroup title="设置中心">
               <Menu.Item key={4} onClick={toggleFullscreen}>{ isFullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined />}切换全屏</Menu.Item>
@@ -93,7 +93,8 @@ const HomeUserInfo = (props: IProps) => {
 }
 
 const mapStateToProps = (state: any) => ({
-  userInfo: state.userInfo.userInfo
+  userInfo: state.userInfo.userInfo,
+  userIsLogin: state.userInfo.userIsLogin,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({

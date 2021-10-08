@@ -1,10 +1,6 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { Menu } from 'antd'
-
-interface IProps {
-  style?: CSSProperties
-}
 
 const HeaderMenu = (props: any) => {
   let defaultKey = props.match.url || '/portal/'

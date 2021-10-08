@@ -1,13 +1,12 @@
 import React from 'react'
 import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { PageHeader, Tag, Row, Descriptions } from 'antd'
+import { PageHeader, Tag, Row, Descriptions, Button } from 'antd'
 import moment from 'moment'
 import { IUserInfo } from '../../../../interfaces/UserInfo'
 
 import './index.less'
 import { doSignout } from '../../../../redux/userInfo'
-
 
 const Content = (content: { children: JSX.Element, extraContent: JSX.Element }) => {
   return (
@@ -39,22 +38,23 @@ interface IUserProp {
 }
 class ProfilePage extends React.Component<IUserProp, IUserState> {
   render() {
-    let { userInfo } = this.props
+    let {
+      userInfo,
+    } = this.props
+    const { username, nickname } = userInfo || {}
+    const title = <span><span className="username">{username}</span>#<span className="nickname">{nickname}</span></span>
     return (
       <>
         <PageHeader
-          title={userInfo?.nickname}
+          title={title}
           className="site-page-header"
           tags={<Tag color="blue">注册用户</Tag>}
           extra={[
-            // <Button key="1"
-            //   type="primary"
-            //   onClick={() => { }}>修改资料</Button>,
-            // <Button key="2"
-            //   type="danger"
-            //   onClick={() => {
-            //     this.props.onSignout()
-            //   }}>注销登陆</Button>
+            <Button key="2"
+              type="primary"
+              danger
+              onClick={() => {
+              }}>删除账号</Button>
           ]}
           avatar={{ src: userInfo?.avatar }}
         >
