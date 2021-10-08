@@ -1,9 +1,7 @@
 import { Dispatch } from 'redux'
 import { GET_SIDE_STATUS, SET_SIDE_STATUS, GET_PANES, ADD_PANE, REMOVE_PANE, TOGGLE_PANE, GET_PROVINCES } from '../../constants/actions'
 import { GET_PROVINCES_URL } from '../../constants/urls'
-import { IResponseData } from '../../interfaces/ResponseData'
 import { get } from '../../http'
-import { IProvincesResponse } from '../../interfaces/UserInfo'
 
 type State = Readonly<{
   theme: string

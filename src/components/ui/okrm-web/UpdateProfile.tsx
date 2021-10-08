@@ -10,8 +10,6 @@ import MediaType from '../../../constants/MediaType';
 import ReturnCode from '../../../constants/ReturnCode';
 import { UPDATE_USERINFO_URL } from '../../../constants/urls';
 import { put } from '../../../http';
-import { IResponseData } from '../../../interfaces/ResponseData';
-import { IUserInfo } from '../../../interfaces/UserInfo';
 import { getUserInfoMe } from '../../../redux/userInfo';
 import BindEmail from './update/email/bindEmail';
 import UnBindEmail from './update/email/unbindEmail';

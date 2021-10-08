@@ -3,11 +3,10 @@ import { DO_SIGNIN, DO_SIGNOUT, DO_SIGNUP, GET_USERINFO_ME, SET_USERINFO_ME } fr
 import { GET_USERINFO_ME_URL, SIGNIN_URL, SIGNOUT_URL, SIGNUP_URL } from '../../constants/urls'
 import { get, post } from '../../http'
 import HttpStatus from '../../constants/HttpStatus'
-import { IResponseData } from '../../interfaces/ResponseData'
-import { ISigninRequest, ISignupRequest, IUserInfo, IUserInfoResponse } from '../../interfaces/UserInfo'
 import userInfoProcess from '../../utils/userInfoProcess'
 import qs from 'qs'
 import MediaType from '../../constants/MediaType'
+import { AxiosError, AxiosResponse } from 'axios'
 
 
 type State = Readonly<{
@@ -38,8 +37,8 @@ export function getUserInfoMe(callback?: () => void) {
       })
       callback && callback();
     } catch (error) {
-      const { response } = error
-      const { status } = response
+      const { response } = error as AxiosError
+      const { status } = response as AxiosResponse<any>
       if (status === HttpStatus.UNAUTHORIZED) {
         console.error('用户未登录')
       }

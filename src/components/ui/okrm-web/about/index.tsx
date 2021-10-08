@@ -3,8 +3,6 @@ import React from 'react'
 import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
-import { IUserInfo } from '../../../../interfaces/UserInfo'
-
 import { Descriptions } from 'antd'
 
 

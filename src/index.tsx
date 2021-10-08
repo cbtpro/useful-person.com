@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import Root from './routers';
 import store from './redux/store'
-import './commons'
 import './mock'
 import './index.css';
 import * as serviceWorker from './serviceWorker';

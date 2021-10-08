@@ -1,5 +1,4 @@
 import React from 'react'
-import { IUserInfo } from '@/interfaces/UserInfo'
 import { Descriptions, Tag, PageHeader, Row, Button } from 'antd'
 import moment from 'moment'
 

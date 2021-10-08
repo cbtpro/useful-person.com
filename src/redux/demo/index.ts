@@ -3,7 +3,6 @@ import { Dispatch } from 'redux'
 import { get } from '../../http'
 import { GET_DEMO_URL } from '../../constants/urls'
 import { GET_DEMO } from '../../constants/actions'
-import { DemoRequest, DemoResponse } from '../../interfaces/Demo'
 
 type State = Readonly<{
   demoList: DemoResponse;

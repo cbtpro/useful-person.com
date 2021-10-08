@@ -1,8 +1,6 @@
 
 import { SEND_EMAIL_URL, SEND_SMS_URL, UNBIND_EMAIL_URL, UNBIND_MOBILE_URL, UPDATE_EMAIL_URL, UPDATE_MOBILE_URL } from '../constants/urls';
 import { get, post, put } from '../http';
-import { IResponseData } from '../interfaces/ResponseData';
-import { IEmailCodeRequest, ISmsCodeRequest, IValidatorEmailCodeRequest, IValidatorSmsCodeRequest } from '../interfaces/ValidatorCode';
 import qs from 'qs';
 import MediaType from '../constants/MediaType';
 

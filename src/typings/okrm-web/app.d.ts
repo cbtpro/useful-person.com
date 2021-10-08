@@ -40,3 +40,119 @@ interface ISchool {
     updateTime: string; // 更新时间，UTC
     createTime: string; // 创建时间，UTC
 }
+
+interface IResponseData<T> {
+  code: number,
+  content: string,
+  data: T
+}
+
+interface IPageableParam { size: number, page: number }
+interface ISort { sorted: boolean, unsorted: boolean, empty: boolean }
+interface IPageable<T> {
+  content: T[],
+  pageable: {
+    sort: ISort,
+    offset: number,
+    pageSize: number,
+    pageNumber: number,
+    paged: boolean,
+    unpaged: boolean
+  },
+  totalPages: number,
+  totalElements: number,
+  last: boolean,
+  size: number,
+  numberOfElements: number,
+  first: boolean,
+  number: number,
+  sort: ISort,
+  empty: boolean
+}
+
+interface ISignin {
+  username: string;
+  password: string;
+  imageCode: string;
+  'remember-me'?: boolean;
+}
+interface ISignup {
+  username: string;
+  nickname?: string;
+  password: string;
+  imageCode: string;
+}
+interface IUserInfo {
+  uuid?: string
+  username?: string
+  nickname?: string
+  avatar?: string
+  mobile?: string
+  birthday?: string
+  identityCardName?: string
+  identityCardNo?: string
+  email?: string
+  longitude?: number | undefined
+  latitude?: number | undefined
+  province?: string
+  city?: string
+  county?: string
+  hourlyWage?: number
+  updateTime?: string
+  createTime?: string
+  authorities?: [{}]
+}
+interface IUsersRequest {
+  username?: string
+  nickname?: string
+  mobile?: string
+  email?: string
+  signUpStartTime?: string
+  signUpEndTime?: string
+  registerTimeFrom?: string | number
+  registerTimeTo?: string | number
+  enabled?: "true" | "false" | undefined
+}
+interface IRole {
+  uuid?: string
+  rolename: string | undefined
+  description?: string
+  updateTime?: string
+  createTime?: string
+}
+type ISigninRequest = ISignin
+type ISignupRequest = ISignup
+type IUserInfoResponse = IUserInfo | undefined
+type IProvincesResponse = IProvince[] | undefined
+type IUsersResponse = IUserInfo[] | undefined
+
+type IRolesResponse = IRole[] | undefined
+
+interface IEmailCodeRequest {
+  email: string;
+  imageCode: string;
+}
+interface ISmsCodeRequest {
+  mobile: string;
+  imageCode: string;
+}
+
+interface IValidatorEmailCodeRequest {
+  email: string;
+  emailCode: string;
+}
+
+interface IValidatorSmsCodeRequest {
+  mobile: string;
+  smsCode: string;
+}
+
+interface IToast {
+  isError?: boolean;
+  message: string;
+}
+interface INotification {
+  isError?: boolean;
+  message: string;
+  description?: string;
+}

@@ -1,9 +1,13 @@
-import { message as Message, notification } from 'antd'
-import originAxios, { AxiosRequestConfig } from 'axios'
+import { commons, } from '@/commons'
+import originAxios, { AxiosError, AxiosRequestConfig } from 'axios'
 import HttpStatus from '../constants/HttpStatus'
 import MediaType from '../constants/MediaType'
 import ReturnCode from '../constants/ReturnCode'
-import { IResponseData } from '../interfaces/ResponseData'
+
+const { utils: {
+  showNotification,
+  showToast,
+} } = commons
 
 const BASE_URL = process.env.REACT_APP_BASE_SERVICE_URL
 const axios = originAxios.create({
@@ -15,35 +19,43 @@ axios.interceptors.response.use(
   function (response) {
     if (response.data && response.data.code === ReturnCode.ERROR) {
       let errorMsg = response.data.content
-      errorMsg && notification.error({
+      errorMsg && showNotification({
+        isError: true,
         message: '消息',
         description: errorMsg
       })
       return Promise.reject(errorMsg)
     } else {
       let { content } = response.data
-      content && notification.info({
+      content && showNotification({
         message: '消息',
         description: content
       })
     }
     return response.data
   },
-  function (error) {
+  function (error: AxiosError) {
     let { response } = error
     if (response) {
       let { status, data: { content } } = response
       if (status === HttpStatus.UNAUTHORIZED) {
         console.warn('用户未登录，请登录！')
       } else if (status === HttpStatus.FORBIDDEN) {
-        Message.error('没有请求的权限！')
+        showToast({
+          isError: true,
+          message: '没有请求的权限！'
+        })
       } else if (status === HttpStatus.INTERNAL_SERVER_ERROR || status === HttpStatus.BAD_REQUEST) {
-        content && notification.error({
+        content && showNotification({
+          isError: true,
           message: '消息',
           description: content
         })
       } else if (status === HttpStatus.GATEWAY_TIMEOUT) {
-        Message.error('服务器好像出问题了😅！')
+        showToast({
+          isError: true,
+          message: '服务器好像出问题了😅！'
+        })
       }
     }
     return Promise.reject(error)

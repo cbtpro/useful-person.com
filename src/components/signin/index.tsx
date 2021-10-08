@@ -7,7 +7,6 @@ import { Form, Input, Button, Switch, message as Message } from 'antd'
 import ImageCode from '../imageCode'
 import SigninOrSignup from '../signinOrSignup'
 import { useHistory } from 'react-router-dom'
-import { IUserInfo, ISigninRequest } from '../../interfaces/UserInfo'
 import { doSignin, getUserInfoMe } from '../../redux/userInfo'
 
 const layout = {

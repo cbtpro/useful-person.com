@@ -3,7 +3,6 @@ import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { PageHeader, Tag, Row, Descriptions, Button } from 'antd'
 import moment from 'moment'
-import { IUserInfo } from '../../../../interfaces/UserInfo'
 
 import './index.less'
 import { doSignout } from '../../../../redux/userInfo'

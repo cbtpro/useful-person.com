@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import { Avatar, Menu, message as Message } from 'antd'
 import { UserOutlined, LoginOutlined, LogoutOutlined, FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons'
 import screenfull from 'screenfull'
-import { IUserInfo } from '../interfaces/UserInfo'
 import { getUserInfoMe, doSignout } from '../redux/userInfo'
 import { BLANK_AVATAR_URL } from '../constants/urls'
 

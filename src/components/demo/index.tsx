@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import QueryForm from './QueryForm'
 
 import { demoColumns } from './columns'
-import { DemoResponse, DemoRequest } from '../../interfaces/Demo'
 import { getDemo } from '../../redux/demo'
 import './index.less'
 

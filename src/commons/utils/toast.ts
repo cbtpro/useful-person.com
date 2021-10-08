@@ -11,6 +11,37 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-export * from './toast'
+import { message as Message, notification } from 'antd'
+
+export const showToast = (config: IToast) => {
+  const {
+    isError = false,
+    message,
+  } = config
+  if (isError) {
+    Message.error(message)
+  } else {
+    Message.info(message)
+  }
+}
+
+export const showNotification = (config: INotification) => {
+  const {
+    isError = false,
+    message,
+    description,
+  } = config
+  if (isError) {
+    notification.error({
+      message,
+      description,
+    })
+  } else {
+    notification.info({
+      message,
+      description,
+    })
+  }
+}
 
 export default {}

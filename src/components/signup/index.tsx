@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import { Form, Input, Button, message as Message } from 'antd'
 import ImageCode from '../imageCode'
 import SigninOrSignup from '../signinOrSignup'
-import { ISignupRequest } from '../../interfaces/UserInfo'
 import { doSignup } from '../../redux/userInfo'
 
 interface IProps {

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Form, Input, Select, Button } from 'antd'
 import { FormProps } from 'antd/lib/form'
 
-import { DemoRequest } from '../../interfaces/Demo'
-
 const { Option } = Select
 
 interface IProps extends FormProps {

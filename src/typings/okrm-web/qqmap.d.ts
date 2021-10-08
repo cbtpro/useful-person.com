@@ -21,3 +21,8 @@ interface Result {
     type: EResultType
     detail: ResultDetail
 }
+const MapType = {
+  ROADMAP: 'ROADMAP',
+  SATELLITE: 'SATELLITE',
+  HYBRID: 'HYBRID'
+}

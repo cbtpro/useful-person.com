@@ -3,9 +3,7 @@ import { Table, Form, Select, Row, Col, Button, Avatar, Space, Popconfirm, Table
 import debounce from 'lodash/debounce';
 import { post, put, del } from '../../../../http'
 import { QUERY_USERS_HASADMIN, QUERY_USERS_URL, ADD_USERS_TO_ADMIN_ROLE, REMOVE_USER_FROM_ADMIN_ROLE } from '../../../../constants/urls'
-import { IUserInfo, IUsersResponse } from '../../../../interfaces/UserInfo'
 import { SelectValue } from 'antd/lib/select'
-import { IResponseData, IPageable } from '../../../../interfaces/ResponseData'
 import moment from 'moment'
 const { Option } = Select
 

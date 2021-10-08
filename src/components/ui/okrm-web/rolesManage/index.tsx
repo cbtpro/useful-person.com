@@ -3,9 +3,7 @@ import { Table, Button, Popconfirm } from 'antd'
 import moment from 'moment'
 import { post, del } from '../../../../http'
 import { QUERY_ROLES_URL, DEL_ROLE_URL } from '../../../../constants/urls'
-import { IRolesResponse, IRole } from '../../../../interfaces/UserInfo'
 import SaveRole from './saveRole'
-import { IResponseData } from '../../../../interfaces/ResponseData'
 
 const RolesManage = () => {
     const [loading, setLoading] = useState(false)
