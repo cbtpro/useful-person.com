@@ -18,7 +18,7 @@ export const MOBILE_FORM_RULES = [
     { pattern: /1[3456789][0-9]{9}$/, message: '手机号格式不正确！' }]
 
 export const QQ_MAP_KEY = process.env.REACT_APP_QQ_MAP_KEY as string
-// if (!QQ_MAP_KEY) throw Error('请配置腾讯地图KEY！')
+if (!QQ_MAP_KEY) throw Error('请配置腾讯地图KEY！')
 
 export const QQ_MAP_JS_URI = process.env.REACT_APP_QQ_MAP_JS_URI as string
-// if (!QQ_MAP_JS_URI) throw Error('请配置地图js地址！')
+if (!QQ_MAP_JS_URI) throw Error('请配置地图js地址！')

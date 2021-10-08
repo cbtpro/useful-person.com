@@ -1,2 +1,2 @@
-/// <reference path="./app.d.ts">
-/// <reference path="./qqmap.d.ts">
+/// <reference path="./app.d.ts" />
+/// <reference path="./qqmap.d.ts" />

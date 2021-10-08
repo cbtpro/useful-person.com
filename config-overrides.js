@@ -1,4 +1,10 @@
-const { override, fixBabelImports, addLessLoader, addWebpackAlias, addWebpackPlugin } = require('customize-cra')
+const {
+  override,
+  fixBabelImports,
+  addLessLoader,
+  addWebpackAlias,
+  addWebpackPlugin,
+} = require('customize-cra')
 const path = require('path')
 const vConsolePlugin = require('vconsole-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;

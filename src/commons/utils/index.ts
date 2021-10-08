@@ -12,15 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-if (process.env.NODE_ENV === 'development') {
-    const Mock = require('mockjs')
-    // require('./services/demo')
-    // require('./services/user/me')
-
-    Mock.setup({
-        timeout: 800,
-    })
-    console.log('mock initial complete!')
-}
-
-export {}
+export default {}
